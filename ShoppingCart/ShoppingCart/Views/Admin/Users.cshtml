@@ -1,0 +1,45 @@
+﻿@model IQueryable<CommonLayer.User>
+
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/_Shared/_BackEnd.cshtml";
+}
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h2>Users</h2>
+    <p>@Html.ActionLink("Create New", "CreateNewUser")</p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Email)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (CommonLayer.User user in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => user.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => user.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => user.Email)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = user.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id=user.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=user.ID })
+                </td>
+            </tr>
+        }
+    </table>
+</div>

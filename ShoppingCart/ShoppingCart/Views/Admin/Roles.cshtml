@@ -1,0 +1,38 @@
+﻿@model IQueryable<CommonLayer.Role>
+@{
+    ViewBag.Title = "Roles";
+    Layout = "~/Views/_Shared/_BackEnd.cshtml";
+}
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h2>Roles</h2>
+    <p>@Html.ActionLink("Create New", "CreateNewRole")</p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditRole", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "ViewRoleDetails", new { id=item.ID }) |
+                    @Html.ActionLink("Delete", "DeleteRole", new { id=item.ID })
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
