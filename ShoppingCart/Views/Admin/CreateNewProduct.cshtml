@@ -1,0 +1,80 @@
+﻿@model CommonLayer.Product
+
+@{
+    ViewBag.Title = "CreateNewProduct";
+    Layout = "~/Views/_Shared/_BackEnd.cshtml";
+}
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h2>Create New Product</h2>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="ProductName" name="ProductName" data-val="true" data-val-required="Name is required" />
+                    <span class="field-validation-valid" data-valmsg-for="ProductName" data-valmsg-replace="true"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <textarea class="form-control" id="Description" name="Description" data-val="true" data-val-required="Description is required"></textarea>
+                    <span class="field-validation-valid" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Quantity, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="Quantity" name="Quantity" data-val="true" data-val-required="Quantity is required" />
+                    <span class="field-validation-valid" data-valmsg-for="Quantity" data-valmsg-replace="true"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ImageURL, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" class="form-control" id="ImageURL" name="ImageURL" data-val="true" data-val-required="URL is required" />
+                    <span class="field-validation-valid" data-valmsg-for="ImageURL" data-valmsg-replace="true"></span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="Price" name="Price" data-val="true" data-val-required="URL is required" />
+                    <span class="field-validation-valid" data-valmsg-for="Price" data-valmsg-replace="true"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.VATRate, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="VATRate" name="VATRate" data-val="true" data-val-required="URL is required" />
+                    <span class="field-validation-valid" data-valmsg-for="VATRate" data-valmsg-replace="true"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Category, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("ProductType", null, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+    <div>
+        @Html.ActionLink("Back to List", "Products")
+    </div>
+</div>

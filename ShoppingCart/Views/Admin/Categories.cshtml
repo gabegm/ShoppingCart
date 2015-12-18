@@ -1,0 +1,37 @@
+﻿@model IQueryable<CommonLayer.Category>
+@{
+    ViewBag.Title = "Categories";
+    Layout = "~/Views/_Shared/_BackEnd.cshtml";
+}
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h2>Categories</h2>
+    <p>@Html.ActionLink("Create New", "CreateNewCategory")</p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
+            </th>
+        </tr>
+
+        @foreach (CommonLayer.Category category in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => category.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => category.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = category.ID }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </table>
+</div>

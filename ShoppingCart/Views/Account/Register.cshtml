@@ -1,0 +1,46 @@
+﻿@model CommonLayer.User
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/_Shared/_FrontEnd.cshtml";
+}
+
+<h2>Register</h2>
+
+<form action="/account/register" class="form-horizontal" method="post">
+    <div class="form-group">
+        <label for="Email" class="col-sm-2 control-label">Email</label>
+        <div class="col-sm-10">
+            <input type="email" class="form-control" id="Email" name="Email" placeholder="Email">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="FirstName" class="col-sm-2 control-label">First Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="FirstName" placeholder="First name" id="FirstName" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="LastName" class="col-sm-2 control-label">Last Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="LastName" id="LastName" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Password" class="col-sm-2 control-label">Password</label>
+        <div class="col-sm-10">
+            <input type="password" class="form-control" name="Password" id="Password" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="ConfirmPassword" class="col-sm-2 control-label">Confirm Password</label>
+        <div class="col-sm-10">
+            <input type="password" class="form-control" name="ConfirmPassword" id="ConfirmPassword" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Register</button>
+        </div>
+    </div>
+</form>
