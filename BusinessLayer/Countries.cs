@@ -27,5 +27,19 @@ namespace BusinessLayer
                 new DataLayer.DACountries(this.Entities).UpdateCountry(country);
             }
         }
+
+        public CommonLayer.Country GetCountry(string name)
+        {
+            return new DataLayer.DACountries(this.Entities).GetCountry(name);
+        }
+
+        public void DeleteCountry(string name)
+        {
+            CommonLayer.Country country = this.GetCountry(name);
+            if (country != null)
+            {
+                new DataLayer.DACountries(this.Entities).DeleteCountry(country);
+            }
+        }
     }
 }

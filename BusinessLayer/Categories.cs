@@ -17,7 +17,6 @@ namespace BusinessLayer
         public void AddCategoryToDatabase(CommonLayer.Category Category)
         {
             new DataLayer.DACategories(this.Entities).AddCategory(Category);
-
         }
 
         public void UpdateCategory(CommonLayer.Category category)
@@ -25,6 +24,20 @@ namespace BusinessLayer
             if (!string.IsNullOrEmpty(category.Name))
             {
                 new DataLayer.DACategories(this.Entities).UpdateCategory(category);
+            }
+        }
+
+        public CommonLayer.Category GetCategory(Guid ID)
+        {
+            return new DataLayer.DACategories(this.Entities).GetCategory(ID);
+        }
+
+        public void DeleteCategory(Guid ID)
+        {
+            CommonLayer.Category category = this.GetCategory(ID);
+            if (category != null)
+            {
+                new DataLayer.DACategories(this.Entities).DeleteCategory(category);
             }
         }
     }

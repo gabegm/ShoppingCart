@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity.Validation;
 using System.Linq;
 
 namespace DataLayer
@@ -10,22 +11,45 @@ namespace DataLayer
 
         public IQueryable<CommonLayer.Models.ProductsModel> GetProductsAsModel()
         {
-            return (from p
-                    in this.Entities.Products
-                    join types in this.Entities.Categories on p.CategoryID equals types.ID
+            return (from p in this.Entities.Products
+                    join category in this.Entities.Categories on p.CategoryID equals category.ID
                     select new CommonLayer.Models.ProductsModel()
                     {
-                        CategoryID = types.ID,
-                        CategoryName = types.Name,
+                        ID = p.ID,
                         Name = p.Name,
-                        Id = p.ID
+                        Description = p.Description,
+                        ImageURL = p.ImageURL,
+                        Price = (float)p.Price,
+                        VATRate = (float)p.VATRate,
+                        Quantity = p.Quantity,
+                        CategoryID = category.ID,
+                        CategoryName = category.Name
                     });
         }
 
         public void AddNewProduct(CommonLayer.Product product)
         {
-            this.Entities.Products.Add(product);
-            this.Entities.SaveChanges();
+            try
+            {
+                this.Entities.Products.Add(product);
+                this.Entities.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                // Retrieve the error messages as a list of strings.
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+
+                // Join the list to a single string.
+                var fullErrorMessage = string.Join("; ", errorMessages);
+
+                // Combine the original exception message with the new one.
+                var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+
+                // Throw a new DbEntityValidationException with the improved exception message.
+                throw new DbEntityValidationException(exceptionMessage, ex.EntityValidationErrors);
+            }
         }
 
         public IQueryable<CommonLayer.Category> GetProductTypes()
@@ -44,5 +68,18 @@ namespace DataLayer
             this.Entities.Entry(ExistingProduct).CurrentValues.SetValues(product);
             this.Entities.SaveChanges();
         }
+
+        public void DeleteProduct(CommonLayer.Product Product)
+        {
+            this.Entities.Products.Remove(Product);
+            this.Entities.SaveChanges();
+        }
+
+        /*public void AddProductToCart(CommonLayer.Cart Cart, CommonLayer.User User, CommonLayer.Product Product)
+        {
+            this.Entities.Carts.Add(Cart);
+
+            this.Entities.SaveChanges();
+        }*/
     }
 }

@@ -16,8 +16,8 @@ namespace CommonLayer
     {
         public System.Guid ID { get; set; }
         public int ProductQuantity { get; set; }
-        public int ProductPrice { get; set; }
-        public int ProductVATRate { get; set; }
+        public double ProductPrice { get; set; }
+        public double ProductVATRate { get; set; }
         public System.Guid OrderID { get; set; }
         public System.Guid ProductID { get; set; }
     

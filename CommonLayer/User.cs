@@ -17,27 +17,30 @@ namespace CommonLayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            this.Roles = new HashSet<Role>();
             this.Audits = new HashSet<Audit>();
+            this.CartItems = new HashSet<CartItem>();
             this.Orders = new HashSet<Order>();
-            this.ShoppingCartItems = new HashSet<ShoppingCartItem>();
         }
     
         public System.Guid ID { get; set; }
         public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Password { get; set; }
-        public string CountryName { get; set; }
+        public int Contact { get; set; }
+        public System.DateTime DOB { get; set; }
+        public string Gender { get; set; }
+        public string House { get; set; }
+        public string Street { get; set; }
+        public System.Guid TownID { get; set; }
+        public System.Guid UserAccountID { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Role> Roles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Audit> Audits { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<CartItem> CartItems { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ShoppingCartItem> ShoppingCartItems { get; set; }
-        public virtual Country Country { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
+        public virtual Town Town { get; set; }
+        public virtual UserAccount UserAccount { get; set; }
     }
 }

@@ -15,9 +15,9 @@ namespace DataLayer
             return this.Entities.Roles;
         }
 
-        public CommonLayer.Role GetRole(string RoleCode)
+        public CommonLayer.Role GetRole(Guid RoleID)
         {
-            return this.Entities.Roles.SingleOrDefault(p => p.ID == RoleCode);
+            return this.Entities.Roles.SingleOrDefault(p => p.ID == RoleID);
         }
 
 
@@ -39,14 +39,12 @@ namespace DataLayer
         /// </summary>
         /// <param name="UserId"></param>
         /// <returns></returns>
-        public IQueryable<CommonLayer.Role> GetUserRoles(Guid UserId)
+        public IQueryable<CommonLayer.Role> GetUserRoles(Guid UserAccountID)
         {
-            return (from users in
-                        this.Entities.Users
-                    from roles in users.Roles
-                    where users.ID == UserId
+            return (from userAccounts in this.Entities.UserAccounts
+                    from roles in userAccounts.Roles
+                    where userAccounts.ID == UserAccountID
                     select roles);
-
         }
 
         /// <summary>
@@ -54,19 +52,18 @@ namespace DataLayer
         /// </summary>
         /// <param name="UserId"></param>
         /// <returns></returns>
-        public IQueryable<CommonLayer.Role> GetUserRoles(string UserEmail)
+        public IQueryable<CommonLayer.Role> GetUserRoles(string Username)
         {
-            return (from users in
-                        this.Entities.Users
-                    from roles in users.Roles
-                    where users.Email == UserEmail
+            return (from userAccounts in this.Entities.UserAccounts
+                    from roles in userAccounts.Roles
+                    where userAccounts.Username == Username
                     select roles);
 
         }
 
-        public void AllocateUserRole(CommonLayer.User User, CommonLayer.Role Role)
+        public void AllocateUserRole(CommonLayer.UserAccount UserAccount, CommonLayer.Role Role)
         {
-            User.Roles.Add(Role);
+            UserAccount.Roles.Add(Role);
             this.Entities.SaveChanges();
         }
 
@@ -75,16 +72,18 @@ namespace DataLayer
         /// </summary>
         /// <param name="RoleId"></param>
         /// <returns></returns>
-        public IQueryable<CommonLayer.User> GetUsersinRole(String RoleId)
+        public IQueryable<CommonLayer.UserAccount> GetUsersinRole(Guid RoleID)
         {
-            return (from users in
-                        this.Entities.Users
-                    from roles in users.Roles
-                    where roles.ID == RoleId
-                    select users);
-
+            return (from userAccounts in this.Entities.UserAccounts
+                    from roles in userAccounts.Roles
+                    where roles.ID == RoleID
+                    select userAccounts);
         }
 
-
+        public void DeleteRole(CommonLayer.Role Role)
+        {
+            this.Entities.Roles.Remove(Role);
+            this.Entities.SaveChanges();
+        }
     }
 }

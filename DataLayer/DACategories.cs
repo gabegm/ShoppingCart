@@ -32,5 +32,11 @@ namespace DataLayer
             this.Entities.Entry(ExistingCategory).CurrentValues.SetValues(category);
             this.Entities.SaveChanges();
         }
+
+        public void DeleteCategory(CommonLayer.Category Category)
+        {
+            this.Entities.Categories.Remove(Category);
+            this.Entities.SaveChanges();
+        }
     }
 }

@@ -17,13 +17,14 @@ namespace CommonLayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Role()
         {
-            this.Users = new HashSet<User>();
+            this.UserAccounts = new HashSet<UserAccount>();
         }
     
-        public string ID { get; set; }
+        public System.Guid ID { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<UserAccount> UserAccounts { get; set; }
     }
 }

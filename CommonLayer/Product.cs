@@ -17,24 +17,23 @@ namespace CommonLayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
+            this.CartItems = new HashSet<CartItem>();
             this.OrderDetails = new HashSet<OrderDetail>();
-            this.ShoppingCartItems = new HashSet<ShoppingCartItem>();
         }
     
         public System.Guid ID { get; set; }
-        public int Quantity { get; set; }
         public string Name { get; set; }
-        public string ImageURL { get; set; }
-        public int Price { get; set; }
-        public int VATRate { get; set; }
-        public System.Guid CategoryID { get; set; }
-        public System.Guid OrderDetailsID { get; set; }
         public string Description { get; set; }
+        public string ImageURL { get; set; }
+        public double Price { get; set; }
+        public double VATRate { get; set; }
+        public int Quantity { get; set; }
+        public System.Guid CategoryID { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CartItem> CartItems { get; set; }
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ShoppingCartItem> ShoppingCartItems { get; set; }
     }
 }

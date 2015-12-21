@@ -1,0 +1,32 @@
+﻿@model IQueryable<CommonLayer.Country>
+@{
+    ViewBag.Title = "Countries";
+    Layout = "~/Views/_Shared/_BackEnd.cshtml";
+}
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h2>Countries</h2>
+    <p>@Html.ActionLink("Create New", "CreateNewCountry")</p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditCountry", new { id = item.Name }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.Name }) |
+                    @Html.ActionLink("Delete", "DeleteCountry", new { id=item.Name })
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+

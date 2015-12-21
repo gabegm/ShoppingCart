@@ -32,5 +32,11 @@ namespace DataLayer
             this.Entities.Entry(ExistingCountry).CurrentValues.SetValues(country);
             this.Entities.SaveChanges();
         }
+
+        public void DeleteCountry(CommonLayer.Country Country)
+        {
+            this.Entities.Countries.Remove(Country);
+            this.Entities.SaveChanges();
+        }
     }
 }

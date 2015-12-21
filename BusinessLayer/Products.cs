@@ -29,6 +29,7 @@ namespace BusinessLayer
         /// <param name="Product"></param>
         public void AddProductToDatabase(CommonLayer.Product Product)
         {
+            //Product.ID = Guid.NewGuid();
             new DataLayer.DAProducts(this.Entities).AddNewProduct(Product);
         }
 
@@ -53,5 +54,25 @@ namespace BusinessLayer
         {
             return new DataLayer.DAProducts(this.Entities).GetProduct(id);
         }
+
+        public void DeleteProduct(Guid ID)
+        {
+            CommonLayer.Product product = this.GetProduct(ID);
+            if (product != null)
+            {
+                new DataLayer.DAProducts(this.Entities).DeleteProduct(product);
+            }
+        }
+
+        /*public void AddProductToCart(Guid ProductID, Guid UserID)
+        {
+            DataLayer.DAProducts dap = new DataLayer.DAProducts(this.Entities);
+            DataLayer.DAUsers dau = new DataLayer.DAUsers(this.Entities);
+
+            CommonLayer.User User = dau.GetUser(UserID);
+            CommonLayer.Product Product = dap.GetProduct(ProductID);
+            
+            new DataLayer.DACarts(this.Entities).AddProductToCart(Product, User);
+        }*/
     }
 }

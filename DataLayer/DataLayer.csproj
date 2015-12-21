@@ -87,10 +87,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnectionClass.cs" />
+    <Compile Include="DACarts.cs" />
     <Compile Include="DACategories.cs" />
     <Compile Include="DACountries.cs" />
     <Compile Include="DAProducts.cs" />
     <Compile Include="DARoles.cs" />
+    <Compile Include="DATowns.cs" />
     <Compile Include="DAUsers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

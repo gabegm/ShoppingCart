@@ -1,0 +1,40 @@
+﻿@model IQueryable<CommonLayer.Models.CartsModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/_Shared/_FrontEnd.cshtml";
+}
+
+<div class="col-md-9">
+    <h2>Cart</h2>
+        <div class="table">
+            <div class="row">
+                <div class="col-lg-1">@Html.DisplayNameFor(model => model.ProductName)</div>
+                <div class="col-lg-1">@Html.DisplayNameFor(model => model.Quantity)</div>
+            </div>
+            @foreach (var item in Model)
+            {
+                <div class="row">
+                    <div class="col-lg-1">@Html.DisplayFor(modelItem => item.ID)</div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-1">@Html.DisplayFor(modelItem => item.Name)</div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-1">
+                        @Html.ActionLink("Edit", "EditRole", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "ViewRoleDetails", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "DeleteRole", new { id = item.ID })
+                    </div>
+                </div>
+            }
+        </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Checkout" class="btn btn-default" />
+        </div>
+    </div>
+    <div>
+        @Html.ActionLink("Back to List", "Roles")
+    </div>
+</div>

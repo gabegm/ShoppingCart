@@ -10,25 +10,39 @@ namespace BusinessLayer
         public Users() : base() { }
 
         /// <summary>
-        /// Returns all users/
+        /// Returns all users and user accounts
         /// </summary>
         /// <returns>All users</returns>
-        public IQueryable<CommonLayer.User> GetUsers()
+        public IQueryable<CommonLayer.Models.UsersModel> GetUsers()
         {
-            DataLayer.DAUsers dauser = new DataLayer.DAUsers(this.Entities);
-            return dauser.GetUsers();
-
-            //2nd method which does the same thing
-            //return new DataLayer.DAUsers().GetUsers();
+            return new DataLayer.DAUsers(this.Entities).GetUsers();
         }
 
         /// <summary>
         /// Returns all roles 
         /// </summary>
         /// <returns></returns>
-        public IQueryable<CommonLayer.Category> GetUserRoles()
+        public IQueryable<CommonLayer.Role> GetUserRoles()
         {
             return new DataLayer.DAUsers(this.Entities).GetUserRoles();
+        }
+
+        /// <summary>
+        /// Returns all countries 
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<CommonLayer.Town> GetUserTowns()
+        {
+            return new DataLayer.DAUsers(this.Entities).GetUserTowns();
+        }
+
+        /// <summary>
+        /// Returns all countries 
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<CommonLayer.Country> GetUserCountries()
+        {
+            return new DataLayer.DAUsers(this.Entities).GetUserCountries();
         }
 
         /// <summary>
@@ -39,8 +53,8 @@ namespace BusinessLayer
         public CommonLayer.User GetUser(string Email)
         {
             return new DataLayer.DAUsers(this.Entities).GetUser(Email);
-
         }
+
         /// <summary>
         /// Gets a user for a specific id passed.
         /// </summary>
@@ -49,41 +63,77 @@ namespace BusinessLayer
         public CommonLayer.User GetUser(Guid UserId)
         {
             return new DataLayer.DAUsers(this.Entities).GetUser(UserId);
+        }
 
+        /// <summary>
+        /// Gets a user for a specific id passed.
+        /// </summary>
+        /// <param name="UserId">Id for which user will be returned.</param>
+        /// <returns>One single user matching the id passed.</returns>
+        public CommonLayer.UserAccount GetUserAccount(Guid UserAccountID)
+        {
+            return new DataLayer.DAUsers(this.Entities).GetUserAccount(UserAccountID);
+        }
+
+        /// <summary>
+        /// Gets a user for a specific id passed.
+        /// </summary>
+        /// <param name="UserId">Id for which user will be returned.</param>
+        /// <returns>One single user matching the id passed.</returns>
+        public CommonLayer.UserAccount GetUserAccount(string Username)
+        {
+            return new DataLayer.DAUsers(this.Entities).GetUserAccount(Username);
         }
 
         /// <summary>
         /// Adds a new to the database.
         /// </summary>
         /// <param name="User">user instance to be added.</param>
-        private void AddUserToDatabase(CommonLayer.User User)
+        private void AddUserToDatabase(CommonLayer.User User, CommonLayer.UserAccount UserAccount)
         {
-            new DataLayer.DAUsers(this.Entities).AddUser(User);
+            new DataLayer.DAUsers(this.Entities).AddUser(User, UserAccount);
         }
 
         /// <summary>
         /// Updates an existing user.
         /// </summary>
         /// <param name="User">User changes to be updated to db.</param>
-        public void UpdateUser(CommonLayer.User User)
+        public void UpdateUser(CommonLayer.User User, CommonLayer.UserAccount UserAccount)
         {
-            new DataLayer.DAUsers(this.Entities).UpdateUser(User);
+            new DataLayer.DAUsers(this.Entities).UpdateUser(User, UserAccount);
+        }
+
+        /// <summary>
+        /// Deletes a user from database.
+        /// </summary>
+        /// <param name="User">User to delete.</param>
+        public void DeleteUser(Guid UserID, Guid UserAccountID)
+        {
+            CommonLayer.User user = this.GetUser(UserID);
+            CommonLayer.UserAccount userAccount = this.GetUserAccount(UserAccountID);
+
+            if (user != null && userAccount != null)
+            {
+                new DataLayer.DAUsers(this.Entities).DeleteUser(user, userAccount);
+            }
         }
 
         /// <summary>
         /// Registers a new user.
         /// </summary>
         /// <param name="User">User to be added.</param>
-        public void RegisterUser(CommonLayer.User User, string ConfirmPassword)
+        public void RegisterUser(CommonLayer.User User, CommonLayer.UserAccount UserAccount, string ConfirmPassword)
         {
-            CommonLayer.User Existing = this.GetUser(User.Email);
-            if (Existing == null)
+            CommonLayer.User ExistingUser = this.GetUser(User.ID);
+            CommonLayer.UserAccount ExistingUserAccount = this.GetUserAccount(UserAccount.ID);
+
+            if (ExistingUser == null && ExistingUserAccount == null)
             {
-                if (User.Password.Equals(ConfirmPassword))
+                if (UserAccount.Password.Equals(ConfirmPassword))
                 {
-                    User.ID = Guid.NewGuid();
-                    User.Password = HashSHA512String(User.Password, User.ID.ToString());
-                    this.AddUserToDatabase(User);
+                    UserAccount.ID = Guid.NewGuid();
+                    UserAccount.Password = HashSHA512String(UserAccount.Password, UserAccount.ID.ToString());
+                    this.AddUserToDatabase(User, UserAccount);
                 }
             }
         }
@@ -94,15 +144,15 @@ namespace BusinessLayer
         /// <param name="Email">User email.</param>
         /// <param name="Password"></param>
         /// <returns>True if valid, false if not.</returns>
-        public bool Login(string Email, string Password)
+        public bool Login(string Username, string Password)
         {
             try
             {
-                CommonLayer.User User = this.GetUser(Email);
-                if (User != null)
+                CommonLayer.UserAccount UserAccount = this.GetUserAccount(Username);
+                if (UserAccount != null)
                 {
-                    string EncPassword = HashSHA512String(Password, User.ID.ToString());
-                    if (EncPassword.Equals(User.Password))
+                    string EncPassword = HashSHA512String(Password, UserAccount.ID.ToString());
+                    if (EncPassword.Equals(UserAccount.Password))
                     {
                         return true;
                     }
@@ -113,11 +163,7 @@ namespace BusinessLayer
             {
                 throw ex;
             }
-
-
         }
-
-
 
         /// <summary>
         /// Hash SHA 512 string.
@@ -133,22 +179,5 @@ namespace BusinessLayer
             buffer = System.Security.Cryptography.SHA512Managed.Create().ComputeHash(buffer);
             return System.Convert.ToBase64String(buffer).Substring(0, 86); // strip padding
         }
-
-        /// <summary>
-        /// Deletes a user from database.
-        /// </summary>
-        /// <param name="User">User to delete.</param>
-        public void DeleteUser(Guid Id)
-        {
-            CommonLayer.User user = this.GetUser(Id);
-            if (user != null)
-            {
-                new DataLayer.DAUsers(this.Entities).DeleteUser(user);
-            }
-
-
-        }
-
     }
-
 }

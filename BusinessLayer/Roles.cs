@@ -27,13 +27,15 @@ namespace BusinessLayer
 
         }
 
-        public void AddUserRole(string RoleCode, Guid UserId)
+        public void AddUserRole(Guid RoleID, Guid UserID)
         {
             DataLayer.DARoles dar = new DataLayer.DARoles(this.Entities);
             DataLayer.DAUsers dau = new DataLayer.DAUsers(this.Entities);
-            CommonLayer.User User = dau.GetUser(UserId);
-            CommonLayer.Role Role = dar.GetRole(RoleCode);
-            dar.AllocateUserRole(User, Role);
+
+            CommonLayer.UserAccount UserAccount = dau.GetUserAccount(UserID);
+            CommonLayer.Role Role = dar.GetRole(RoleID);
+
+            dar.AllocateUserRole(UserAccount, Role);
         }
 
         /// <summary>
@@ -45,6 +47,7 @@ namespace BusinessLayer
         {
             return new DataLayer.DARoles(this.Entities).GetUserRoles(UserId);
         }
+
         /// <summary>
         /// Gets all roles for a specific user.
         /// </summary>
@@ -54,6 +57,20 @@ namespace BusinessLayer
         {
             return new DataLayer.DARoles(this.Entities).GetUserRoles(UserEmail);
 
+        }
+
+        public CommonLayer.Role GetRole(Guid ID)
+        {
+            return new DataLayer.DARoles(this.Entities).GetRole(ID);
+        }
+
+        public void DeleteRole(Guid ID)
+        {
+            CommonLayer.Role role = this.GetRole(ID);
+            if (role != null)
+            {
+                new DataLayer.DARoles(this.Entities).DeleteRole(role);
+            }
         }
     }
 }
