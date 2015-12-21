@@ -14,6 +14,7 @@ namespace BusinessLayer
 
         public void AddRoleToDatabase(CommonLayer.Role Role)
         {
+            Role.ID = Guid.NewGuid();
             new DataLayer.DARoles(this.Entities).AddRole(Role);
 
         }

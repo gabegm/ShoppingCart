@@ -16,8 +16,8 @@ namespace BusinessLayer
 
         public void AddCountryToDatabase(CommonLayer.Country Country)
         {
+            Country.ID = Guid.NewGuid();
             new DataLayer.DACountries(this.Entities).AddCountry(Country);
-
         }
 
         public void UpdateCountry(CommonLayer.Country country)

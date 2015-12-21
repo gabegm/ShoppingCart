@@ -16,6 +16,7 @@ namespace BusinessLayer
 
         public void AddCategoryToDatabase(CommonLayer.Category Category)
         {
+            Category.ID = Guid.NewGuid();
             new DataLayer.DACategories(this.Entities).AddCategory(Category);
         }
 

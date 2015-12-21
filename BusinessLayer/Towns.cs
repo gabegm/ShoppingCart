@@ -16,8 +16,8 @@ namespace BusinessLayer
 
         public void AddTownToDatabase(CommonLayer.Town Town)
         {
+            Town.ID = Guid.NewGuid();
             new DataLayer.DATowns(this.Entities).AddTown(Town);
-
         }
 
         public void UpdateTown(CommonLayer.Town town)
