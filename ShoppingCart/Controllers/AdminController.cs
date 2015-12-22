@@ -394,7 +394,7 @@ namespace ShoppingCart.Controllers
         public ActionResult Towns()
         {
             BusinessLayer.Towns towns = new BusinessLayer.Towns();
-            return View(towns.GetTowns());
+            return View(towns.GetTownsAsModel());
         }
 
         /// <summary>

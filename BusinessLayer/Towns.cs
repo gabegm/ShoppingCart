@@ -14,6 +14,11 @@ namespace BusinessLayer
             return new DataLayer.DATowns(this.Entities).GetTowns();
         }
 
+        public IQueryable<CommonLayer.Models.TownsModel> GetTownsAsModel()
+        {
+            return new DataLayer.DATowns(this.Entities).GetTownsAsModel();
+        }
+
         public void AddTownToDatabase(CommonLayer.Town Town)
         {
             Town.ID = Guid.NewGuid();

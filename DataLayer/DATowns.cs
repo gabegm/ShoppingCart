@@ -15,6 +15,19 @@ namespace DataLayer
             return this.Entities.Towns;
         }
 
+        public IQueryable<CommonLayer.Models.TownsModel> GetTownsAsModel()
+        {
+            return (from town in this.Entities.Towns
+                    join country in this.Entities.Countries on town.CountryID equals country.ID
+                    select new CommonLayer.Models.TownsModel()
+                    {
+                        ID = town.ID,
+                        Name = town.Name,
+                        CountryID = town.CountryID,
+                        CountryName = country.Name
+                    });
+        }
+
         public CommonLayer.Town GetTown(Guid town)
         {
             return this.Entities.Towns.SingleOrDefault(t => t.ID == town);
