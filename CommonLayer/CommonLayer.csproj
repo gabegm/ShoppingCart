@@ -133,6 +133,7 @@
       <DependentUpon>DBModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\CartsModel.cs" />
+    <Compile Include="Models\CategoriesModel.cs" />
     <Compile Include="Models\ProductsModel.cs" />
     <Compile Include="Models\TownsModel.cs" />
     <Compile Include="Models\UsersModel.cs" />

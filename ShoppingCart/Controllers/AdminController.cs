@@ -318,6 +318,14 @@ namespace ShoppingCart.Controllers
         [HttpGet]
         public ActionResult CreateNewCategory()
         {
+            BusinessLayer.Categories c = new BusinessLayer.Categories();
+            List<SelectListItem> SubCategoryItems = (from category in c.GetCategories().ToList()
+                                                     select new SelectListItem()
+                                                     {
+                                                         Text = category.Name,
+                                                         Value = category.ID.ToString()
+                                                     }).ToList();
+            ViewBag.Subcategories = SubCategoryItems;
             return View();
         }
 
@@ -339,9 +347,19 @@ namespace ShoppingCart.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult EditCategory()
+        public ActionResult EditCategory(string ID)
         {
-            return View();
+            BusinessLayer.Categories c = new BusinessLayer.Categories();
+            List<SelectListItem> SubcategoryItems = (from category in c.GetCategories().ToList()
+                                                     select new SelectListItem()
+                                                     {
+                                                         Text = category.Name,
+                                                         Value = category.ParentID.ToString()
+                                                     }).ToList();
+            CommonLayer.Category Category = c.GetCategory(ID);
+            SubcategoryItems.SingleOrDefault(p => p.Value.Equals(Category.ParentID.ToString())).Selected = true;
+            ViewBag.Subcategories = SubcategoryItems;
+            return View(Category);
         }
 
         /// <summary>
@@ -361,7 +379,7 @@ namespace ShoppingCart.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult DeleteCategory(Guid ID)
+        public ActionResult DeleteCategory(string ID)
         {
             BusinessLayer.Categories c = new BusinessLayer.Categories();
             c.DeleteCategory(ID);

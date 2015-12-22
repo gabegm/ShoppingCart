@@ -22,9 +22,9 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ID" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="ParentID" Type="uniqueidentifier" />
+    <Property Name="ParentID" Type="varchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="Countries">
     <Key>
@@ -66,7 +66,7 @@
     <Property Name="Price" Type="float" Nullable="false" />
     <Property Name="VATRate" Type="float" Nullable="false" />
     <Property Name="Quantity" Type="int" Nullable="false" />
-    <Property Name="CategoryID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="CategoryID" Type="varchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <EntityType Name="Roles">
     <Key>

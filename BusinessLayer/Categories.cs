@@ -14,9 +14,14 @@ namespace BusinessLayer
             return new DataLayer.DACategories(this.Entities).GetCategories();
         }
 
+        public IQueryable<CommonLayer.Models.CategoriesModel> GetCategoriesAsModel()
+        {
+            return new DataLayer.DACategories(this.Entities).GetCategoriesAsModel();
+        }
+
         public void AddCategoryToDatabase(CommonLayer.Category Category)
         {
-            Category.ID = Guid.NewGuid();
+            Category.ID = Guid.NewGuid().ToString();
             new DataLayer.DACategories(this.Entities).AddCategory(Category);
         }
 
@@ -28,12 +33,12 @@ namespace BusinessLayer
             }
         }
 
-        public CommonLayer.Category GetCategory(Guid ID)
+        public CommonLayer.Category GetCategory(string ID)
         {
             return new DataLayer.DACategories(this.Entities).GetCategory(ID);
         }
 
-        public void DeleteCategory(Guid ID)
+        public void DeleteCategory(string ID)
         {
             CommonLayer.Category category = this.GetCategory(ID);
             if (category != null)

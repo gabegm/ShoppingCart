@@ -7,6 +7,7 @@
     <EntitySet Name="Countries" EntityType="DBModel.Country" />
     <EntitySet Name="OrderDetails" EntityType="DBModel.OrderDetail" />
     <EntitySet Name="Orders" EntityType="DBModel.Order" />
+    <EntitySet Name="Products" EntityType="DBModel.Product" />
     <EntitySet Name="Roles" EntityType="DBModel.Role" />
     <EntitySet Name="sysdiagrams" EntityType="DBModel.sysdiagram" />
     <EntitySet Name="Towns" EntityType="DBModel.Town" />
@@ -20,9 +21,17 @@
       <End Role="User" EntitySet="Users" />
       <End Role="CartItem" EntitySet="CartItems" />
     </AssociationSet>
+    <AssociationSet Name="FK_ShoppingCartItems_Products" Association="DBModel.FK_ShoppingCartItems_Products">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="CartItem" EntitySet="CartItems" />
+    </AssociationSet>
     <AssociationSet Name="FK_Categories_Categories" Association="DBModel.FK_Categories_Categories">
       <End Role="Category" EntitySet="Categories" />
       <End Role="Category1" EntitySet="Categories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Products_Categories" Association="DBModel.FK_Products_Categories">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Product" EntitySet="Products" />
     </AssociationSet>
     <AssociationSet Name="FK_Towns_Countries" Association="DBModel.FK_Towns_Countries">
       <End Role="Country" EntitySet="Countries" />
@@ -30,6 +39,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_OrderDetails_Orders" Association="DBModel.FK_OrderDetails_Orders">
       <End Role="Order" EntitySet="Orders" />
+      <End Role="OrderDetail" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetails_Products" Association="DBModel.FK_OrderDetails_Products">
+      <End Role="Product" EntitySet="Products" />
       <End Role="OrderDetail" EntitySet="OrderDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_Orders_Users" Association="DBModel.FK_Orders_Users">
@@ -47,19 +60,6 @@
     <AssociationSet Name="UserAccountRoles" Association="DBModel.UserAccountRoles">
       <End Role="UserAccount" EntitySet="UserAccounts" />
       <End Role="Role" EntitySet="Roles" />
-    </AssociationSet>
-    <EntitySet Name="Products" EntityType="DBModel.Product" />
-    <AssociationSet Name="FK_ShoppingCartItems_Products" Association="DBModel.FK_ShoppingCartItems_Products">
-      <End Role="Product" EntitySet="Products" />
-      <End Role="CartItem" EntitySet="CartItems" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Products_Categories" Association="DBModel.FK_Products_Categories">
-      <End Role="Category" EntitySet="Categories" />
-      <End Role="Product" EntitySet="Products" />
-    </AssociationSet>
-    <AssociationSet Name="FK_OrderDetails_Products" Association="DBModel.FK_OrderDetails_Products">
-      <End Role="Product" EntitySet="Products" />
-      <End Role="OrderDetail" EntitySet="OrderDetails" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Audit">
@@ -87,9 +87,9 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="ID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="ParentID" Type="Guid" />
+    <Property Name="ParentID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Categories1" Relationship="DBModel.FK_Categories_Categories" FromRole="Category" ToRole="Category1" />
     <NavigationProperty Name="Category1" Relationship="DBModel.FK_Categories_Categories" FromRole="Category1" ToRole="Category" />
     <NavigationProperty Name="Products" Relationship="DBModel.FK_Products_Categories" FromRole="Category" ToRole="Product" />
@@ -127,6 +127,22 @@
     <Property Name="OrderDetailsID" Type="Guid" Nullable="false" />
     <NavigationProperty Name="OrderDetails" Relationship="DBModel.FK_OrderDetails_Orders" FromRole="Order" ToRole="OrderDetail" />
     <NavigationProperty Name="User" Relationship="DBModel.FK_Orders_Users" FromRole="Order" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="ImageURL" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Price" Type="Double" Nullable="false" />
+    <Property Name="VATRate" Type="Double" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="CategoryID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CartItems" Relationship="DBModel.FK_ShoppingCartItems_Products" FromRole="Product" ToRole="CartItem" />
+    <NavigationProperty Name="Category" Relationship="DBModel.FK_Products_Categories" FromRole="Product" ToRole="Category" />
+    <NavigationProperty Name="OrderDetails" Relationship="DBModel.FK_OrderDetails_Products" FromRole="Product" ToRole="OrderDetail" />
   </EntityType>
   <EntityType Name="Role">
     <Key>
@@ -212,6 +228,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ShoppingCartItems_Products">
+    <End Type="DBModel.Product" Role="Product" Multiplicity="1" />
+    <End Type="DBModel.CartItem" Role="CartItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CartItem">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Categories_Categories">
     <End Type="DBModel.Category" Role="Category" Multiplicity="0..1" />
     <End Type="DBModel.Category" Role="Category1" Multiplicity="*" />
@@ -221,6 +249,18 @@
       </Principal>
       <Dependent Role="Category1">
         <PropertyRef Name="ParentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Products_Categories">
+    <End Type="DBModel.Category" Role="Category" Multiplicity="1" />
+    <End Type="DBModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="CategoryID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -245,6 +285,18 @@
       </Principal>
       <Dependent Role="OrderDetail">
         <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetails_Products">
+    <End Type="DBModel.Product" Role="Product" Multiplicity="1" />
+    <End Type="DBModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="ProductID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -287,57 +339,5 @@
   <Association Name="UserAccountRoles">
     <End Type="DBModel.UserAccount" Role="UserAccount" Multiplicity="*" />
     <End Type="DBModel.Role" Role="Role" Multiplicity="*" />
-  </Association>
-  <EntityType Name="Product">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Guid" Nullable="false" />
-    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Description" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-    <Property Name="ImageURL" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-    <Property Name="Price" Type="Double" Nullable="false" />
-    <Property Name="VATRate" Type="Double" Nullable="false" />
-    <Property Name="Quantity" Type="Int32" Nullable="false" />
-    <Property Name="CategoryID" Type="Guid" Nullable="false" />
-    <NavigationProperty Name="CartItems" Relationship="DBModel.FK_ShoppingCartItems_Products" FromRole="Product" ToRole="CartItem" />
-    <NavigationProperty Name="Category" Relationship="DBModel.FK_Products_Categories" FromRole="Product" ToRole="Category" />
-    <NavigationProperty Name="OrderDetails" Relationship="DBModel.FK_OrderDetails_Products" FromRole="Product" ToRole="OrderDetail" />
-  </EntityType>
-  <Association Name="FK_ShoppingCartItems_Products">
-    <End Type="DBModel.Product" Role="Product" Multiplicity="1" />
-    <End Type="DBModel.CartItem" Role="CartItem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Product">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="CartItem">
-        <PropertyRef Name="ProductID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Products_Categories">
-    <End Type="DBModel.Category" Role="Category" Multiplicity="1" />
-    <End Type="DBModel.Product" Role="Product" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Category">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Product">
-        <PropertyRef Name="CategoryID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_OrderDetails_Products">
-    <End Type="DBModel.Product" Role="Product" Multiplicity="1" />
-    <End Type="DBModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Product">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="OrderDetail">
-        <PropertyRef Name="ProductID" />
-      </Dependent>
-    </ReferentialConstraint>
   </Association>
 </Schema>

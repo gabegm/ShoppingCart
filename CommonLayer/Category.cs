@@ -21,9 +21,9 @@ namespace CommonLayer
             this.Products = new HashSet<Product>();
         }
     
-        public System.Guid ID { get; set; }
+        public string ID { get; set; }
         public string Name { get; set; }
-        public Nullable<System.Guid> ParentID { get; set; }
+        public string ParentID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Category> Categories1 { get; set; }

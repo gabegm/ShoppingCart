@@ -28,7 +28,7 @@ namespace CommonLayer
         public double Price { get; set; }
         public double VATRate { get; set; }
         public int Quantity { get; set; }
-        public System.Guid CategoryID { get; set; }
+        public string CategoryID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CartItem> CartItems { get; set; }

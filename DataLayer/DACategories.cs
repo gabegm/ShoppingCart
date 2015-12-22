@@ -15,7 +15,20 @@ namespace DataLayer
             return this.Entities.Categories;
         }
 
-        public CommonLayer.Category GetCategory(Guid ID)
+        public IQueryable<CommonLayer.Models.CategoriesModel> GetCategoriesAsModel()
+        {
+            return (from Category in this.Entities.Categories
+                    join Subcategory in this.Entities.Categories on Category.ID equals Subcategory.ParentID
+                    select new CommonLayer.Models.CategoriesModel()
+                    {
+                        ID = Category.ID,
+                        Name = Category.Name,
+                        ParentID = Category.ParentID,
+                        ChildName = Subcategory.Name
+                    });
+        }
+
+        public CommonLayer.Category GetCategory(string ID)
         {
             return this.Entities.Categories.SingleOrDefault(c => c.ID == ID);
         }
