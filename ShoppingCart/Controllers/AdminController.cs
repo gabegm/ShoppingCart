@@ -44,28 +44,25 @@ namespace ShoppingCart.Controllers
         public ActionResult CreateNewUser()
         {
             BusinessLayer.Users u = new BusinessLayer.Users();
-            List<SelectListItem> RoleItems = (from p
-                                                         in u.GetUserRoles().ToList()
+            List<SelectListItem> RoleItems = (from roles in u.GetUserRoles().ToList()
                                                      select new SelectListItem()
                                                      {
-                                                         Text = p.Name,
-                                                         Value = p.ID.ToString()
+                                                         Text = roles.Name,
+                                                         Value = roles.ID.ToString()
                                                      }).ToList();
             ViewBag.RoleName = RoleItems;
-            List<SelectListItem> TownItems = (from p
-                                                         in u.GetUserTowns().ToList()
+            List<SelectListItem> TownItems = (from towns in u.GetUserTowns().ToList()
                                               select new SelectListItem()
                                               {
-                                                  Text = p.Name,
-                                                  Value = p.ID.ToString()
-                                                 }).ToList();
+                                                  Text = towns.Name,
+                                                  Value = towns.ID.ToString()
+                                              }).ToList();
             ViewBag.TownName = TownItems;
-            List<SelectListItem> CountryItems = (from p
-                                                         in u.GetUserCountries().ToList()
+            List<SelectListItem> CountryItems = (from countries in u.GetUserCountries().ToList()
                                               select new SelectListItem()
                                               {
-                                                  Text = p.Name,
-                                                  Value = p.ID.ToString()
+                                                  Text = countries.Name,
+                                                  Value = countries.ID.ToString()
                                               }).ToList();
             ViewBag.CountryName = CountryItems;
             return View();

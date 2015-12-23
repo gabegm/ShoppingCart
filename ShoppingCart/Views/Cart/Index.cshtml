@@ -9,22 +9,22 @@
     <h2>Cart</h2>
         <div class="table">
             <div class="row">
-                <div class="col-lg-1">@Html.DisplayNameFor(model => model.ProductName)</div>
-                <div class="col-lg-1">@Html.DisplayNameFor(model => model.Quantity)</div>
+                <div class="col-lg-1">@Html.DisplayNameFor(model => model.FirstOrDefault().ProductName)</div>
+                <div class="col-lg-1">@Html.DisplayNameFor(model => model.FirstOrDefault().Quantity)</div>
             </div>
             @foreach (var item in Model)
             {
                 <div class="row">
-                    <div class="col-lg-1">@Html.DisplayFor(modelItem => item.ID)</div>
+                    <div class="col-lg-1">@Html.DisplayFor(modelItem => item.ProductName)</div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-1">@Html.DisplayFor(modelItem => item.Name)</div>
+                    <div class="col-lg-1">@Html.DisplayFor(modelItem => item.Quantity)</div>
                 </div>
                 <div class="row">
                     <div class="col-lg-1">
-                        @Html.ActionLink("Edit", "EditRole", new { id = item.ID }) |
-                        @Html.ActionLink("Details", "ViewRoleDetails", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "DeleteRole", new { id = item.ID })
+                        @Html.ActionLink("Edit", "EditCartItem", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "ViewCartItemDetails", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "DeleteCartItem", new { id = item.ID })
                     </div>
                 </div>
             }

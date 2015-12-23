@@ -12,7 +12,7 @@ namespace ShoppingCart.Controllers
         public ActionResult Index()
         {
             BusinessLayer.Carts c = new BusinessLayer.Carts();
-            return View(c/*.GetCartProducts()*/);
+            return View(c.GetCartProductsAsModel());
         }
     }
 }

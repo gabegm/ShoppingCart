@@ -15,20 +15,18 @@ namespace ShoppingCart.Controllers
         }
 
         [HttpGet]
-        public ActionResult Detail(int id)
+        public ActionResult Detail(Guid ID)
         {
-            Models.ProductsBL prDet = new Models.ProductsBL();
-            Models.UiModels.Product product = prDet.GetProduct(id);
-            return View(product);
+            //BusinessLayer.Products p = new BusinessLayer.Products();
+            return View(new BusinessLayer.Products().GetProduct(ID));
         }
 
-        /*[HttpPost]
         public ActionResult AddProductToCart(Guid ProductID, Guid UserID)
         {
-            BusinessLayer.Products p = new BusinessLayer.Products();
-            p.AddProductToCart(ProductID, UserID);
-            return RedirectToAction("Index")
-        }*/
+            CommonLayer.User User = new BusinessLayer.Users().GetUser(UserID);
+            new BusinessLayer.Products().AddProductToCart(ProductID, UserID);
+            return RedirectToAction("Index");
+        }
 
     }
 }

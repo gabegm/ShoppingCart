@@ -64,15 +64,13 @@ namespace BusinessLayer
             }
         }
 
-        /*public void AddProductToCart(Guid ProductID, Guid UserID)
+        public void AddProductToCart(Guid ProductID, Guid UserID)
         {
-            DataLayer.DAProducts dap = new DataLayer.DAProducts(this.Entities);
-            DataLayer.DAUsers dau = new DataLayer.DAUsers(this.Entities);
-
-            CommonLayer.User User = dau.GetUser(UserID);
-            CommonLayer.Product Product = dap.GetProduct(ProductID);
+            CommonLayer.CartItem CartItem = new CommonLayer.CartItem();
+            CartItem.ProductID = ProductID;
+            CartItem.UserID = UserID;
             
-            new DataLayer.DACarts(this.Entities).AddProductToCart(Product, User);
-        }*/
+            new DataLayer.DACarts(this.Entities).AddCartItem(CartItem);
+        }
     }
 }

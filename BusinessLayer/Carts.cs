@@ -9,9 +9,9 @@ namespace BusinessLayer
     {
         public Carts() : base() { }
 
-        public IQueryable<CommonLayer.Models.CartsModel> GetCartProducts(Guid ID)
+        public IQueryable<CommonLayer.Models.CartsModel> GetCartProductsAsModel()
         {
-            return new DataLayer.DACarts(this.Entities).GetCartItemsAsModel(ID);
+            return new DataLayer.DACarts(this.Entities).GetCartItemsAsModel();
         }
     }
 }
