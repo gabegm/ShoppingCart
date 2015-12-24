@@ -11,8 +11,15 @@ namespace ShoppingCart.Controllers
         // GET: Cart
         public ActionResult Index()
         {
-            BusinessLayer.Carts c = new BusinessLayer.Carts();
-            return View(c.GetCartProductsAsModel());
+            //BusinessLayer.Carts c = new BusinessLayer.Carts();
+            return View(new BusinessLayer.Carts().GetCartProductsAsModel());
         }
+
+        [HttpPost]
+        public ActionResult Checkout(CommonLayer.CartItem Cart)
+        {
+
+            return RedirectToAction("Index", "Checkout");
+        } 
     }
 }

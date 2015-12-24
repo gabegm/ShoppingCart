@@ -19,6 +19,6 @@ C:\Users\gabri\documents\visual studio 2015\Projects\ShoppingCart\CommonLayer\bi
 C:\Users\gabri\documents\visual studio 2015\Projects\ShoppingCart\CommonLayer\bin\EntityFramework.xml
 C:\Users\gabri\documents\visual studio 2015\Projects\ShoppingCart\CommonLayer\bin\EntityFramework.SqlServer.xml
 C:\Users\gabri\documents\visual studio 2015\Projects\ShoppingCart\CommonLayer\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\gabri\documents\visual studio 2015\Projects\ShoppingCart\CommonLayer\obj\Debug\CommonLayer.csprojResolveAssemblyReference.cache
 C:\Users\gabri\documents\visual studio 2015\Projects\ShoppingCart\CommonLayer\obj\Debug\CommonLayer.dll
 C:\Users\gabri\documents\visual studio 2015\Projects\ShoppingCart\CommonLayer\obj\Debug\CommonLayer.pdb
-C:\Users\gabri\documents\visual studio 2015\Projects\ShoppingCart\CommonLayer\obj\Debug\CommonLayer.csprojResolveAssemblyReference.cache

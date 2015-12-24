@@ -186,6 +186,7 @@
     <Content Include="Views\Admin\EditTown.cshtml" />
     <Content Include="Views\Admin\CreateNewTown.cshtml" />
     <Content Include="Views\Checkout\Index.cshtml" />
+    <Content Include="Views\Admin\Orders.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

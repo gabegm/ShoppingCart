@@ -90,6 +90,7 @@
     <Compile Include="DACarts.cs" />
     <Compile Include="DACategories.cs" />
     <Compile Include="DACountries.cs" />
+    <Compile Include="DAOrders.cs" />
     <Compile Include="DAProducts.cs" />
     <Compile Include="DARoles.cs" />
     <Compile Include="DATowns.cs" />

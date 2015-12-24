@@ -528,5 +528,11 @@ namespace ShoppingCart.Controllers
             c.DeleteCountry(name);
             return RedirectToAction("Countries");
         }
+
+        [HttpGet]
+        public ActionResult Orders()
+        {
+            return View(new BusinessLayer.Orders().GetOrdersAsModel());
+        }
     }
 }

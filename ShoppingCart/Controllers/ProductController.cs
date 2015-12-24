@@ -10,8 +10,8 @@ namespace ShoppingCart.Controllers
         // GET: /Products/
         public ActionResult Index()
         {
-            BusinessLayer.Products pr = new BusinessLayer.Products();
-            return View(pr.GetProductsAsModel());
+            //BusinessLayer.Products pr = new BusinessLayer.Products();
+            return View(new BusinessLayer.Products().GetProductsAsModel());
         }
 
         [HttpGet]
@@ -21,12 +21,12 @@ namespace ShoppingCart.Controllers
             return View(new BusinessLayer.Products().GetProduct(ID));
         }
 
-        public ActionResult AddProductToCart(Guid ProductID, Guid UserID)
+        public ActionResult AddProductToCart(Guid ID)
         {
-            CommonLayer.User User = new BusinessLayer.Users().GetUser(UserID);
-            new BusinessLayer.Products().AddProductToCart(ProductID, UserID);
+            CommonLayer.User User = new BusinessLayer.Users().GetUser(HttpContext.User.Identity.Name);
+            new BusinessLayer.Products().AddProductToCart(ID, User.ID);
             return RedirectToAction("Index");
         }
-
+        
     }
 }
