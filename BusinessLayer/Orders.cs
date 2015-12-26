@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace BusinessLayer
 {
@@ -12,9 +11,27 @@ namespace BusinessLayer
             return new DataLayer.DAOrders(this.Entities).GetOrdersAsModel();
         }
 
-        public void AddOrderToDatabase(CommonLayer.Order Order)
+        public void AddOrder(CommonLayer.CartItem Cart)
         {
-            new DataLayer.DAOrders(this.Entities).AddNewOrder(Order);
+            CommonLayer.Order Order = new CommonLayer.Order();
+            CommonLayer.OrderDetail OrderDetail = new CommonLayer.OrderDetail();
+            CommonLayer.Product Product = new BusinessLayer.Products().GetProduct(Cart.ProductID);
+
+            Order.ID = new Guid();
+            OrderDetail.ID = new Guid();
+
+            Order.UserID = Cart.UserID;
+            OrderDetail.ProductID = Cart.ProductID;
+            OrderDetail.ProductQuantity = Cart.Quantity;
+            OrderDetail.ProductPrice = Product.Price;
+            OrderDetail.ProductVATRate = Product.VATRate;
+
+            this.AddOrderToDatabase(Order, OrderDetail);
+        }
+
+        public void AddOrderToDatabase(CommonLayer.Order Order, CommonLayer.OrderDetail OrderDetail)
+        {
+            new DataLayer.DAOrders(this.Entities).AddNewOrder(Order, OrderDetail);
         }
     }
 }

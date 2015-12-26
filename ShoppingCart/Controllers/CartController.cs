@@ -18,7 +18,7 @@ namespace ShoppingCart.Controllers
         [HttpPost]
         public ActionResult Checkout(CommonLayer.CartItem Cart)
         {
-
+            new BusinessLayer.Orders().AddOrder(Cart);
             return RedirectToAction("Index", "Checkout");
         } 
     }

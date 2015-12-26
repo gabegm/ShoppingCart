@@ -28,9 +28,10 @@ namespace DataLayer
                     });
         }
 
-        public void AddNewOrder(CommonLayer.Order order)
+        public void AddNewOrder(CommonLayer.Order Order, CommonLayer.OrderDetail OrderDetail)
         {
-            this.Entities.Orders.Add(order);
+            this.Entities.Orders.Add(Order);
+            this.Entities.OrderDetails.Add(OrderDetail);
             this.Entities.SaveChanges();
         }
 
