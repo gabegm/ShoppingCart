@@ -15,9 +15,9 @@ namespace DataLayer
             return this.Entities.Countries;
         }
 
-        public CommonLayer.Country GetCountry(string country)
+        public CommonLayer.Country GetCountry(Guid ID)
         {
-            return this.Entities.Countries.SingleOrDefault(c => c.Name == country);
+            return this.Entities.Countries.SingleOrDefault(c => c.ID == ID);
         }
 
         public void AddCountry(CommonLayer.Country country)
@@ -28,7 +28,7 @@ namespace DataLayer
 
         public void UpdateCountry(CommonLayer.Country country)
         {
-            CommonLayer.Country ExistingCountry = this.GetCountry(country.Name);
+            CommonLayer.Country ExistingCountry = this.GetCountry(country.ID);
             this.Entities.Entry(ExistingCountry).CurrentValues.SetValues(country);
             this.Entities.SaveChanges();
         }

@@ -73,6 +73,17 @@
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="CategoryID" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
+        <EntityType Name="Reviews">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Rating" Type="int" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProductID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
         <EntityType Name="Roles">
           <Key>
             <PropertyRef Name="ID" />
@@ -215,6 +226,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Reviews_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reviews">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reviews_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reviews">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ShoppingCartItems_Products">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="CartItems" Type="Self.CartItems" Multiplicity="*" />
@@ -227,15 +262,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Towns_Countries">
+        <Association Name="FK_Towns_Countries1">
           <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
-          <End Role="Towns" Type="Self.Towns" Multiplicity="0..1" />
+          <End Role="Towns" Type="Self.Towns" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Countries">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Towns">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="CountryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -295,6 +330,7 @@
           <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Towns" EntityType="Self.Towns" Schema="dbo" store:Type="Tables" />
@@ -329,11 +365,19 @@
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
+          <AssociationSet Name="FK_Reviews_Products" Association="Self.FK_Reviews_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Reviews" EntitySet="Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reviews_Users" Association="Self.FK_Reviews_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Reviews" EntitySet="Reviews" />
+          </AssociationSet>
           <AssociationSet Name="FK_ShoppingCartItems_Products" Association="Self.FK_ShoppingCartItems_Products">
             <End Role="Products" EntitySet="Products" />
             <End Role="CartItems" EntitySet="CartItems" />
           </AssociationSet>
-          <AssociationSet Name="FK_Towns_Countries" Association="Self.FK_Towns_Countries">
+          <AssociationSet Name="FK_Towns_Countries1" Association="Self.FK_Towns_Countries1">
             <End Role="Countries" EntitySet="Countries" />
             <End Role="Towns" EntitySet="Towns" />
           </AssociationSet>
@@ -366,6 +410,7 @@
           <EntitySet Name="OrderDetails" EntityType="DBModel.OrderDetail" />
           <EntitySet Name="Orders" EntityType="DBModel.Order" />
           <EntitySet Name="Products" EntityType="DBModel.Product" />
+          <EntitySet Name="Reviews" EntityType="DBModel.Review" />
           <EntitySet Name="Roles" EntityType="DBModel.Role" />
           <EntitySet Name="sysdiagrams" EntityType="DBModel.sysdiagram" />
           <EntitySet Name="Towns" EntityType="DBModel.Town" />
@@ -391,7 +436,7 @@
             <End Role="Category" EntitySet="Categories" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK_Towns_Countries" Association="DBModel.FK_Towns_Countries">
+          <AssociationSet Name="FK_Towns_Countries1" Association="DBModel.FK_Towns_Countries1">
             <End Role="Country" EntitySet="Countries" />
             <End Role="Town" EntitySet="Towns" />
           </AssociationSet>
@@ -406,6 +451,14 @@
           <AssociationSet Name="FK_Orders_Users" Association="DBModel.FK_Orders_Users">
             <End Role="User" EntitySet="Users" />
             <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reviews_Products" Association="DBModel.FK_Reviews_Products">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Review" EntitySet="Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reviews_Users" Association="DBModel.FK_Reviews_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Review" EntitySet="Reviews" />
           </AssociationSet>
           <AssociationSet Name="FK_Users_Towns" Association="DBModel.FK_Users_Towns">
             <End Role="Town" EntitySet="Towns" />
@@ -458,7 +511,7 @@
           </Key>
           <Property Name="ID" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Town" Relationship="DBModel.FK_Towns_Countries" FromRole="Country" ToRole="Town" />
+          <NavigationProperty Name="Towns" Relationship="DBModel.FK_Towns_Countries1" FromRole="Country" ToRole="Town" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -501,6 +554,20 @@
           <NavigationProperty Name="CartItems" Relationship="DBModel.FK_ShoppingCartItems_Products" FromRole="Product" ToRole="CartItem" />
           <NavigationProperty Name="Category" Relationship="DBModel.FK_Products_Categories" FromRole="Product" ToRole="Category" />
           <NavigationProperty Name="OrderDetails" Relationship="DBModel.FK_OrderDetails_Products" FromRole="Product" ToRole="OrderDetail" />
+          <NavigationProperty Name="Reviews" Relationship="DBModel.FK_Reviews_Products" FromRole="Product" ToRole="Review" />
+        </EntityType>
+        <EntityType Name="Review">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Rating" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UserID" Type="Guid" Nullable="false" />
+          <Property Name="ProductID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="DBModel.FK_Reviews_Products" FromRole="Review" ToRole="Product" />
+          <NavigationProperty Name="User" Relationship="DBModel.FK_Reviews_Users" FromRole="Review" ToRole="User" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -528,7 +595,7 @@
           <Property Name="ID" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CountryID" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="Country" Relationship="DBModel.FK_Towns_Countries" FromRole="Town" ToRole="Country" />
+          <NavigationProperty Name="Country" Relationship="DBModel.FK_Towns_Countries1" FromRole="Town" ToRole="Country" />
           <NavigationProperty Name="Users" Relationship="DBModel.FK_Users_Towns" FromRole="Town" ToRole="User" />
         </EntityType>
         <EntityType Name="UserAccount">
@@ -559,6 +626,7 @@
           <NavigationProperty Name="Audits" Relationship="DBModel.FK_Audits_Users" FromRole="User" ToRole="Audit" />
           <NavigationProperty Name="CartItems" Relationship="DBModel.FK_CartItems_Users" FromRole="User" ToRole="CartItem" />
           <NavigationProperty Name="Orders" Relationship="DBModel.FK_Orders_Users" FromRole="User" ToRole="Order" />
+          <NavigationProperty Name="Reviews" Relationship="DBModel.FK_Reviews_Users" FromRole="User" ToRole="Review" />
           <NavigationProperty Name="Town" Relationship="DBModel.FK_Users_Towns" FromRole="User" ToRole="Town" />
           <NavigationProperty Name="UserAccount" Relationship="DBModel.FK_Users_UserAccounts" FromRole="User" ToRole="UserAccount" />
         </EntityType>
@@ -622,15 +690,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Towns_Countries">
+        <Association Name="FK_Towns_Countries1">
           <End Type="DBModel.Country" Role="Country" Multiplicity="1" />
-          <End Type="DBModel.Town" Role="Town" Multiplicity="0..1" />
+          <End Type="DBModel.Town" Role="Town" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Country">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Town">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="CountryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -666,6 +734,30 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Order">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reviews_Products">
+          <End Type="DBModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DBModel.Review" Role="Review" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Review">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reviews_Users">
+          <End Type="DBModel.User" Role="User" Multiplicity="1" />
+          <End Type="DBModel.Review" Role="Review" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Review">
               <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
@@ -775,6 +867,18 @@
                 <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reviews">
+            <EntityTypeMapping TypeName="DBModel.Review">
+              <MappingFragment StoreEntitySet="Reviews">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 
@@ -18,12 +19,21 @@ namespace DataLayer
                     join countries in this.Entities.Countries on users.TownID equals countries.ID
                     select new CommonLayer.Models.UsersModel()
                     {
-                        UserAccountID = userAccounts.ID,
-                        UserAccountUsername = userAccounts.Username,
+                        ID = users.ID,
+                        Email = users.Email,
+                        FirstName = users.FirstName,
+                        LastName = users.LastName,
+                        Contact = users.Contact,
+                        DOB = users.DOB,
+                        Gender = users.Gender,
+                        House = users.House,
+                        Street = users.Street,
                         TownID = towns.ID,
                         TownName = towns.Name,
                         CountryID = countries.ID,
-                        CountryName = countries.Name
+                        CountryName = countries.Name,
+                        UserAccountID = userAccounts.ID,
+                        Username = userAccounts.Username,
                     });
         }
 
@@ -62,7 +72,6 @@ namespace DataLayer
         public CommonLayer.User GetUser(string Email)
         {
             return this.Entities.Users.SingleOrDefault(p => p.Email.Equals(Email));
-
         }
 
         /// <summary>
@@ -101,9 +110,28 @@ namespace DataLayer
         /// <param name="User">user instance to be added.</param>
         public void AddUser(CommonLayer.User User, CommonLayer.UserAccount UserAccount)
         {
-            this.Entities.Users.Add(User);
-            this.Entities.UserAccounts.Add(UserAccount);
-            this.Entities.SaveChanges();
+            try
+            {
+                this.Entities.Users.Add(User);
+                this.Entities.UserAccounts.Add(UserAccount);
+                this.Entities.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                // Retrieve the error messages as a list of strings.
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+
+                // Join the list to a single string.
+                var fullErrorMessage = string.Join("; ", errorMessages);
+
+                // Combine the original exception message with the new one.
+                var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+
+                // Throw a new DbEntityValidationException with the improved exception message.
+                throw new DbEntityValidationException(exceptionMessage, ex.EntityValidationErrors);
+            }
         }
 
         /// <summary>

@@ -13,56 +13,110 @@
         <div class="form-horizontal">
             @Html.ValidationSummary(true)
             <div class="form-group">
-                @Html.LabelFor(model => model.FirstName, new { @class = "control-label col-md-2" })
+                @Html.Label("Name", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="FirstName" name="FirstName" data-val="true" data-val-required="First Name is required" />
-                    <span class="field-validation-valid" data-valmsg-for="FirstName" data-valmsg-replace="true"></span>
+                    @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", placeholder = "Enter the first name here..." })
+                    @Html.ValidationMessageFor(model => model.FirstName)
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.LastName, new { @class = "control-label col-md-2" })
+                @Html.Label("Surname", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="LastName" name="LastName" data-val="true" data-val-required="Last Name is required" />
-                    <span class="field-validation-valid" data-valmsg-for="LastName" data-valmsg-replace="true"></span>
+                    @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", placeholder = "Enter the last name here..." })
+                    @Html.ValidationMessageFor(model => model.LastName)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Gender, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Gender", null, new { @class = "form-control" })
                 </div>
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="Email" name="Email" data-val="true" data-val-required="Email is required" />
-                    <span class="field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Enter email here..." })
+                    @Html.ValidationMessageFor(model => model.Email)
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.UserAccountPassword, new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Contact, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    <input type="password" class="form-control" id="Password" name="Password" data-val="true" data-val-required="Password is required" />
-                    <span class="field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                    @Html.TextBoxFor(model => model.Contact, new { @class = "form-control", placeholder = "Enter contact number here..." })
+                    @Html.ValidationMessageFor(model => model.Contact)
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="ConfirmPassword" class="control-label col-md-2">ConfirmPassword</label>
+                @Html.Label("Date of Birth", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" data-val="true" data-val-required="Password is required" />
-                    <span class="field-validation-valid" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
+                    @Html.TextBoxFor(model => model.DOB, new { @class = "form-control datepicker", placeholder = "Enter date of birth here..." })
+                    @Html.ValidationMessageFor(model => model.DOB)
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.RoleName, new { @class = "control-label col-md-2" })
+                @Html.Label("Username", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("RoleName", null, new { @class = "form-control" })
+                    @Html.TextBoxFor(model => model.Username, new { @class = "form-control", placeholder = "Enter username here..." })
+                    @Html.ValidationMessageFor(model => model.Username)
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.CountryName, new { @class = "control-label col-md-2" })
+                @Html.Label("Password", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("CountryName", null, new { @class = "form-control" })
+                    @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Enter password here..." })
+                    @Html.ValidationMessageFor(model => model.Password)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Confirm Password", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.Password("ConfirmPassword", null, new { @class = "form-control", placeholder = "Enter password here..." })
+                    @Html.ValidationMessage("ConfirmPassword")
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Role", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.ListBoxFor(model => model.RoleID, (IEnumerable<SelectListItem>)ViewBag.RoleName, new { @class = "form-control", SelectionMode = "multiple" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.House, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.House, new { @class = "form-control", placeholder = "Enter house name and number here..." })
+                    @Html.ValidationMessageFor(model => model.House)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Street, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Street, new { @class = "form-control", placeholder = "Enter street name here..." })
+                    @Html.ValidationMessageFor(model => model.Street)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Town", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.TownID, (IEnumerable<SelectListItem>)ViewBag.TownName, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Country", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.CountryID, (IEnumerable<SelectListItem>)ViewBag.CountryName, new { @class = "form-control" })
                 </div>
             </div>
 
@@ -74,6 +128,6 @@
         </div>
     }
     <div>
-        @Html.ActionLink("Back to List", "Products")
+        @Html.ActionLink("Back to List", "Users")
     </div>
 </div>

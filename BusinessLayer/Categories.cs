@@ -14,6 +14,11 @@ namespace BusinessLayer
             return new DataLayer.DACategories(this.Entities).GetCategories();
         }
 
+        public IQueryable<CommonLayer.Models.CategoriesModel> GetParentCategoriesAsModel()
+        {
+            return new DataLayer.DACategories(this.Entities).GetParentCategoriesAsModel();
+        }
+
         public IQueryable<CommonLayer.Models.CategoriesModel> GetCategoriesAsModel()
         {
             return new DataLayer.DACategories(this.Entities).GetCategoriesAsModel();

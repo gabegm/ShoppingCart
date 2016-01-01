@@ -1,4 +1,4 @@
-﻿@model IQueryable<CommonLayer.Category>
+﻿@model IQueryable<CommonLayer.Models.CategoriesModel>
 @{
     ViewBag.Title = "Categories";
     Layout = "~/Views/_Shared/_BackEnd.cshtml";
@@ -12,18 +12,23 @@
             <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ParentName)
+            </th>
         </tr>
 
-        @foreach (CommonLayer.Category category in Model)
+        @foreach (var category in Model)
         {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => category.Name)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "EditCategory", new { id = category.ID }) |
-                    @Html.ActionLink("Details", "ViewCategoryDetails", new { id=category.ID }) |
-                    @Html.ActionLink("Delete", "DeleteCategory", new { id=category.ID })
+                    @Html.DisplayFor(modelItem => category.ParentName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditCategory", new { ID = category.ID.ToString() }) |
+                    @Html.ActionLink("Delete", "DeleteCategory", new { ID = category.ID.ToString() })
                 </td>
             </tr>
         }

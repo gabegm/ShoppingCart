@@ -28,14 +28,14 @@ namespace BusinessLayer
             }
         }
 
-        public CommonLayer.Country GetCountry(string name)
+        public CommonLayer.Country GetCountry(Guid ID)
         {
-            return new DataLayer.DACountries(this.Entities).GetCountry(name);
+            return new DataLayer.DACountries(this.Entities).GetCountry(ID);
         }
 
-        public void DeleteCountry(string name)
+        public void DeleteCountry(Guid ID)
         {
-            CommonLayer.Country country = this.GetCountry(name);
+            CommonLayer.Country country = this.GetCountry(ID);
             if (country != null)
             {
                 new DataLayer.DACountries(this.Entities).DeleteCountry(country);

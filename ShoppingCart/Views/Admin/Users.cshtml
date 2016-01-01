@@ -11,9 +11,6 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().ID)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().Email)
             </th>
             <th>
@@ -44,16 +41,16 @@
                 @Html.DisplayNameFor(model => model.FirstOrDefault().CountryName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().UserAccountUsername)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().RoleName)
             </th>
         </tr>
 
         @foreach (var user in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => user.ID)
-                </td>
                 <td>
                     @Html.DisplayFor(modelItem => user.Email)
                 </td>
@@ -85,12 +82,14 @@
                     @Html.DisplayFor(modelItem => user.CountryName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => user.UserAccountUsername)
+                    @Html.DisplayFor(modelItem => user.Username)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "EditUser", new { id = user.ID }) |
-                    @Html.ActionLink("Details", "ViewUserDetails", new { id = user.ID }) |
-                    @Html.ActionLink("Delete", "DeleteUser", new { id = user.ID })
+                    @Html.DisplayNameFor(modelItem => user.RoleName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditUser", new { UserID = user.ID }) |
+                    @Html.ActionLink("Delete", "DeleteUser", new { UserID = user.ID })
                 </td>
             </tr>
         }

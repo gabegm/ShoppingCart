@@ -63,7 +63,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Category, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("ProductType", null, new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.CategoryID, (IEnumerable<SelectListItem>)ViewBag.ProductType, new { @class = "form-control" })
                 </div>
             </div>
 

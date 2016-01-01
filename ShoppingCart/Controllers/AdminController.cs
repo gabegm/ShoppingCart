@@ -32,8 +32,7 @@ namespace ShoppingCart.Controllers
         [HttpGet]
         public ActionResult Users()
         {
-            BusinessLayer.Users us = new BusinessLayer.Users();
-            return View(us.GetUsers());
+            return View(new BusinessLayer.Users().GetUsers());
         }
 
         /// <summary>
@@ -43,6 +42,9 @@ namespace ShoppingCart.Controllers
         [HttpGet]
         public ActionResult CreateNewUser()
         {
+            List<string> GenderItems = new List<string>() { "Male", "Female" };
+            ViewBag.Gender = GenderItems.Select(gender => new SelectListItem { Text = gender, Value = gender }); ;
+
             BusinessLayer.Users u = new BusinessLayer.Users();
             List<SelectListItem> RoleItems = (from roles in u.GetUserRoles().ToList()
                                                      select new SelectListItem()
@@ -112,12 +114,10 @@ namespace ShoppingCart.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPost]
-        public ActionResult DeleteUser(Guid UserID, Guid UserAccountID)
+        public ActionResult DeleteUser(Guid UserID)
         {
-            BusinessLayer.Users u = new BusinessLayer.Users();
-            u.DeleteUser(UserID, UserAccountID);
-            return RedirectToAction("Index");
+            new BusinessLayer.Users().DeleteUser(UserID);
+            return RedirectToAction("Users");
         }
 
         /// <summary>
@@ -127,8 +127,7 @@ namespace ShoppingCart.Controllers
         [HttpGet]
         public ActionResult Products()
         {
-            BusinessLayer.Products pr = new BusinessLayer.Products();
-            return View(pr.GetProductsAsModel());
+            return View(new BusinessLayer.Products().GetProductsAsModel());
         }
 
         /// <summary>
@@ -165,13 +164,11 @@ namespace ShoppingCart.Controllers
                     if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
                     {
                         HttpPostedFileBase imageFile = Request.Files[0];
-                        product.ID = Guid.NewGuid();
-                        string fileName = product.ID + System.IO.Path.GetExtension(imageFile.FileName);
+                        string fileName = Guid.NewGuid() + System.IO.Path.GetExtension(imageFile.FileName);
                         string serverPath = Server.MapPath(@"~\Images\");
                         imageFile.SaveAs(serverPath + fileName);
                         product.ImageURL = @"\images\" + fileName;
-                        BusinessLayer.Products p = new BusinessLayer.Products();
-                        p.AddProductToDatabase(product);
+                        new BusinessLayer.Products().AddProductToDatabase(product);
                     }
                 }
             }
@@ -289,7 +286,6 @@ namespace ShoppingCart.Controllers
         /// Deletes a specific role from the database
         /// </summary>
         /// <returns></returns>
-        [HttpPost]
         public ActionResult DeleteRole(Guid ID)
         {
             BusinessLayer.Roles r = new BusinessLayer.Roles();
@@ -304,8 +300,7 @@ namespace ShoppingCart.Controllers
         [HttpGet]
         public ActionResult Categories()
         {
-            BusinessLayer.Categories categories = new BusinessLayer.Categories();
-            return View(categories.GetCategories());
+            return View(new BusinessLayer.Categories().GetCategoriesAsModel());
         }
         
         /// <summary>
@@ -316,13 +311,13 @@ namespace ShoppingCart.Controllers
         public ActionResult CreateNewCategory()
         {
             BusinessLayer.Categories c = new BusinessLayer.Categories();
-            List<SelectListItem> SubCategoryItems = (from category in c.GetCategories().ToList()
+            List<SelectListItem> ParentCategoryItems = (from category in c.GetParentCategoriesAsModel().ToList()
                                                      select new SelectListItem()
                                                      {
                                                          Text = category.Name,
                                                          Value = category.ID.ToString()
                                                      }).ToList();
-            ViewBag.Subcategories = SubCategoryItems;
+            ViewBag.Subcategories = ParentCategoryItems;
             return View();
         }
 
@@ -375,7 +370,6 @@ namespace ShoppingCart.Controllers
         /// Deletes a specigic category from the database
         /// </summary>
         /// <returns></returns>
-        [HttpPost]
         public ActionResult DeleteCategory(string ID)
         {
             BusinessLayer.Categories c = new BusinessLayer.Categories();
@@ -390,8 +384,7 @@ namespace ShoppingCart.Controllers
         [HttpGet]
         public ActionResult Towns()
         {
-            BusinessLayer.Towns towns = new BusinessLayer.Towns();
-            return View(towns.GetTownsAsModel());
+            return View(new BusinessLayer.Towns().GetTownsAsModel());
         }
 
         /// <summary>
@@ -402,11 +395,11 @@ namespace ShoppingCart.Controllers
         public ActionResult CreateNewTown()
         {
             BusinessLayer.Towns t = new BusinessLayer.Towns();
-            List<SelectListItem> TownLocationItems = (from towns in t.GetCountries().ToList()
+            List<SelectListItem> TownLocationItems = (from countries in t.GetCountries().ToList()
                                                      select new SelectListItem()
                                                      {
-                                                         Text = towns.Name,
-                                                         Value = towns.ID.ToString()
+                                                         Text = countries.Name,
+                                                         Value = countries.ID.ToString()
                                                      }).ToList();
             ViewBag.Countries = TownLocationItems;
             return View();
@@ -420,8 +413,7 @@ namespace ShoppingCart.Controllers
         [HttpPost]
         public ActionResult CreateNewTown(CommonLayer.Town town)
         {
-            BusinessLayer.Towns t = new BusinessLayer.Towns();
-            t.AddTownToDatabase(town);
+            new BusinessLayer.Towns().AddTownToDatabase(town);
             return RedirectToAction("Towns");
         }
 
@@ -443,8 +435,7 @@ namespace ShoppingCart.Controllers
         [HttpPost]
         public ActionResult EditTown(CommonLayer.Town town)
         {
-            BusinessLayer.Towns t = new BusinessLayer.Towns();
-            t.UpdateTown(town);
+            new BusinessLayer.Towns().UpdateTown(town);
             return RedirectToAction("Towns");
         }
 
@@ -452,11 +443,9 @@ namespace ShoppingCart.Controllers
         /// Deletes specific country from the database
         /// </summary>
         /// <returns></returns>
-        [HttpPost]
         public ActionResult DeleteTown(Guid ID)
         {
-            BusinessLayer.Towns t = new BusinessLayer.Towns();
-            t.DeleteTown(ID);
+            new BusinessLayer.Towns().DeleteTown(ID);
             return RedirectToAction("Towns");
         }
 
@@ -521,11 +510,9 @@ namespace ShoppingCart.Controllers
         /// Deletes specific country from the database
         /// </summary>
         /// <returns></returns>
-        [HttpPost]
-        public ActionResult DeleteCountry(string name)
+        public ActionResult DeleteCountry(Guid ID)
         {
-            BusinessLayer.Countries c = new BusinessLayer.Countries();
-            c.DeleteCountry(name);
+            new BusinessLayer.Countries().DeleteCountry(ID);
             return RedirectToAction("Countries");
         }
 

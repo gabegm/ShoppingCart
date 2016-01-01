@@ -12,18 +12,16 @@ namespace CommonLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class Country
+    public partial class Review
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Country()
-        {
-            this.Towns = new HashSet<Town>();
-        }
-    
         public System.Guid ID { get; set; }
-        public string Name { get; set; }
+        public string Description { get; set; }
+        public int Rating { get; set; }
+        public System.DateTime Date { get; set; }
+        public System.Guid UserID { get; set; }
+        public System.Guid ProductID { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Town> Towns { get; set; }
+        public virtual Product Product { get; set; }
+        public virtual User User { get; set; }
     }
 }

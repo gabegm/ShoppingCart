@@ -21,9 +21,9 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.ParentID, new { @class = "control-label col-md-2" })
+                @Html.Label("Parent Category", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("Subcategories", null, new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.ParentID, (IEnumerable<SelectListItem>)ViewBag.Subcategories, string.Empty, new { @class = "form-control" })
                 </div>
             </div>
 

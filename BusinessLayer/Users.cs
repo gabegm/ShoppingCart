@@ -107,10 +107,10 @@ namespace BusinessLayer
         /// Deletes a user from database.
         /// </summary>
         /// <param name="User">User to delete.</param>
-        public void DeleteUser(Guid UserID, Guid UserAccountID)
+        public void DeleteUser(Guid UserID)
         {
             CommonLayer.User user = this.GetUser(UserID);
-            CommonLayer.UserAccount userAccount = this.GetUserAccount(UserAccountID);
+            CommonLayer.UserAccount userAccount = this.GetUserAccount(user.UserAccountID);
 
             if (user != null && userAccount != null)
             {
@@ -131,7 +131,9 @@ namespace BusinessLayer
             {
                 if (UserAccount.Password.Equals(ConfirmPassword))
                 {
+                    User.ID = Guid.NewGuid();
                     UserAccount.ID = Guid.NewGuid();
+                    User.UserAccountID = UserAccount.ID;
                     UserAccount.Password = HashSHA512String(UserAccount.Password, UserAccount.ID.ToString());
                     this.AddUserToDatabase(User, UserAccount);
                 }

@@ -23,7 +23,7 @@ namespace CommonLayer.Models
         public Guid RoleID { get; set; }
         public string RoleName { get; set; }
         public Guid UserAccountID { get; set; }
-        public string UserAccountUsername { get; set; }
-        public string UserAccountPassword { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
     }
 }

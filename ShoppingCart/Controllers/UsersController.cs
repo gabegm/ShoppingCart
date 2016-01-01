@@ -21,10 +21,9 @@ namespace ShoppingCart.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult DeleteUser(Guid UserID, Guid UserAccountID)
+        public ActionResult DeleteUser(Guid UserID)
         {
-            BusinessLayer.Users u = new BusinessLayer.Users();
-            u.DeleteUser(UserID, UserAccountID);
+            new BusinessLayer.Users().DeleteUser(UserID);
             return RedirectToAction("Index");
         }
 

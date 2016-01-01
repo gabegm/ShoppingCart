@@ -29,7 +29,7 @@ namespace BusinessLayer
         /// <param name="Product"></param>
         public void AddProductToDatabase(CommonLayer.Product Product)
         {
-            //Product.ID = Guid.NewGuid();
+            Product.ID = Guid.NewGuid();
             new DataLayer.DAProducts(this.Entities).AddNewProduct(Product);
         }
 

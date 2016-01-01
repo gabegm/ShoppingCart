@@ -18,13 +18,26 @@ namespace DataLayer
         public IQueryable<CommonLayer.Models.CategoriesModel> GetCategoriesAsModel()
         {
             return (from Category in this.Entities.Categories
-                    join Subcategory in this.Entities.Categories on Category.ID equals Subcategory.ParentID
+                    join ParentCategory in this.Entities.Categories on Category.ParentID equals ParentCategory.ID into cs
+                    from Subcategory in cs.DefaultIfEmpty()
                     select new CommonLayer.Models.CategoriesModel()
                     {
                         ID = Category.ID,
                         Name = Category.Name,
                         ParentID = Category.ParentID,
-                        ChildName = Subcategory.Name
+                        ParentName = (Subcategory == null ? String.Empty : Subcategory.Name)
+                    });
+        }
+
+        public IQueryable<CommonLayer.Models.CategoriesModel> GetParentCategoriesAsModel()
+        {
+            return (from Category in this.Entities.Categories
+                    join ParentCategory in this.Entities.Categories on Category.ParentID equals ParentCategory.ID into cs
+                    from Subcategory in cs.DefaultIfEmpty()
+                    select new CommonLayer.Models.CategoriesModel()
+                    {
+                        ParentID = Category.ParentID,
+                        ParentName = (Subcategory == null ? String.Empty : Subcategory.Name)
                     });
         }
 

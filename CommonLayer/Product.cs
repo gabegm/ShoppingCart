@@ -19,6 +19,7 @@ namespace CommonLayer
         {
             this.CartItems = new HashSet<CartItem>();
             this.OrderDetails = new HashSet<OrderDetail>();
+            this.Reviews = new HashSet<Review>();
         }
     
         public System.Guid ID { get; set; }
@@ -35,5 +36,7 @@ namespace CommonLayer
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Review> Reviews { get; set; }
     }
 }
