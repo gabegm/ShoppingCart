@@ -16,7 +16,7 @@ namespace DataLayer
             return (from users in this.Entities.Users
                     join userAccounts in this.Entities.UserAccounts on users.UserAccountID equals userAccounts.ID
                     join towns in this.Entities.Towns on users.TownID equals towns.ID
-                    join countries in this.Entities.Countries on users.TownID equals countries.ID
+                    join countries in this.Entities.Countries on towns.CountryID equals countries.ID
                     select new CommonLayer.Models.UsersModel()
                     {
                         ID = users.ID,
