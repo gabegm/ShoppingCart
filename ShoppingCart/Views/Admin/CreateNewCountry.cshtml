@@ -16,8 +16,8 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="Name" name="Name" data-val="true" data-val-required="Name is required" />
-                    <span class="field-validation-valid" data-valmsg-for="Name" data-valmsg-replace="true"></span>
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Enter the name here..." })
+                    @Html.ValidationMessageFor(model => model.Name)
                 </div>
             </div>
 

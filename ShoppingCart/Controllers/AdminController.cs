@@ -52,7 +52,7 @@ namespace ShoppingCart.Controllers
                                                          Text = roles.Name,
                                                          Value = roles.ID.ToString()
                                                      }).ToList();
-            ViewBag.RoleName = RoleItems;
+            ViewBag.RoleName = new MultiSelectList(RoleItems, "Value", "Text"); ;
             List<SelectListItem> TownItems = (from towns in u.GetUserTowns().ToList()
                                               select new SelectListItem()
                                               {
@@ -77,8 +77,13 @@ namespace ShoppingCart.Controllers
         /// <param name="ConfirmPassword"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult CreateNewUser(CommonLayer.User User, CommonLayer.UserAccount UserAccount, string ConfirmPassword)
+        public ActionResult CreateNewUser(CommonLayer.User User, CommonLayer.UserAccount UserAccount, string ConfirmPassword, Guid[] RoleID)
         {
+            foreach(Guid ID in RoleID)
+            {
+                CommonLayer.Role Role = new BusinessLayer.Roles().GetRole(ID);
+                UserAccount.Roles.Add(Role);
+            }
             new BusinessLayer.Users().RegisterUser(User, UserAccount, ConfirmPassword);
             return RedirectToAction("Users");
         }

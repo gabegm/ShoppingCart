@@ -15,48 +15,48 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="Name" name="Name" data-val="true" data-val-required="Name is required" />
-                    <span class="field-validation-valid" data-valmsg-for="Name" data-valmsg-replace="true"></span>
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Enter the product name here..." })
+                    @Html.ValidationMessageFor(model => model.Name)
                 </div>
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    <textarea class="form-control" id="Description" name="Description" data-val="true" data-val-required="Description is required"></textarea>
-                    <span class="field-validation-valid" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Enter the description here..." })
+                    @Html.ValidationMessageFor(model => model.Description)
                 </div>
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Quantity, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="Quantity" name="Quantity" data-val="true" data-val-required="Quantity is required" />
-                    <span class="field-validation-valid" data-valmsg-for="Quantity" data-valmsg-replace="true"></span>
+                    @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control", placeholder = "Enter the quantity here..." })
+                    @Html.ValidationMessageFor(model => model.Quantity)
                 </div>
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.ImageURL, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    <input type="file" class="form-control" id="ImageURL" name="ImageURL" data-val="true" data-val-required="URL is required" />
-                    <span class="field-validation-valid" data-valmsg-for="ImageURL" data-valmsg-replace="true"></span>
+                    @Html.TextBoxFor(model => model.ImageURL, new { @class = "form-control", placeholder = "Choose the image here...", type = "file" })
+                    @Html.ValidationMessageFor(model => model.ImageURL)
                 </div>
             </div>
             
             <div class="form-group">
                 @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="Price" name="Price" data-val="true" data-val-required="URL is required" />
-                    <span class="field-validation-valid" data-valmsg-for="Price" data-valmsg-replace="true"></span>
+                    @Html.TextBoxFor(model => model.Price, new { @class = "form-control", placeholder = "Enter the price here..." })
+                    @Html.ValidationMessageFor(model => model.Price)
                 </div>
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.VATRate, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="VATRate" name="VATRate" data-val="true" data-val-required="URL is required" />
-                    <span class="field-validation-valid" data-valmsg-for="VATRate" data-valmsg-replace="true"></span>
+                    @Html.TextBoxFor(model => model.VATRate, new { @class = "form-control", placeholder = "Enter the first name here..." })
+                    @Html.ValidationMessageFor(model => model.VATRate)
                 </div>
             </div>
 
