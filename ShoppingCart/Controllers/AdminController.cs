@@ -79,8 +79,7 @@ namespace ShoppingCart.Controllers
         [HttpPost]
         public ActionResult CreateNewUser(CommonLayer.User User, CommonLayer.UserAccount UserAccount, string ConfirmPassword)
         {
-            BusinessLayer.Users u = new BusinessLayer.Users();
-            u.RegisterUser(User, UserAccount, ConfirmPassword);
+            new BusinessLayer.Users().RegisterUser(User, UserAccount, ConfirmPassword);
             return RedirectToAction("Users");
         }
 
@@ -92,8 +91,7 @@ namespace ShoppingCart.Controllers
         [HttpGet]
         public ActionResult ViewUserDetails(Guid id)
         {
-            BusinessLayer.Users users = new BusinessLayer.Users();
-            return View(users.GetUser(id));
+            return View(new BusinessLayer.Users().GetUser(id));
         }
 
         /// <summary>
@@ -104,8 +102,7 @@ namespace ShoppingCart.Controllers
         [HttpPost]
         public ActionResult ViewUserDetails(CommonLayer.User User, CommonLayer.UserAccount UserAccount)
         {
-            BusinessLayer.Users u = new BusinessLayer.Users();
-            u.UpdateUser(User, UserAccount);
+            new BusinessLayer.Users().UpdateUser(User, UserAccount);
             return RedirectToAction("Index");
         }
 
@@ -140,13 +137,11 @@ namespace ShoppingCart.Controllers
             List<string> IsProductActive = new List<string>() { "True", "False" };
             ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
 
-            BusinessLayer.Products pr = new BusinessLayer.Products();
-            List<SelectListItem> ProductTypeItems = (from p
-                                                         in pr.GetProductTypes().ToList()
+            List<SelectListItem> ProductTypeItems = (from category in new BusinessLayer.Products().GetProductTypes().ToList()
                                                      select new SelectListItem()
                                                      {
-                                                         Text = p.Name,
-                                                         Value = p.ID.ToString()
+                                                         Text = category.Name,
+                                                         Value = category.ID.ToString()
                                                      }).ToList();
             ViewBag.ProductType = ProductTypeItems;
             return View();
@@ -200,11 +195,10 @@ namespace ShoppingCart.Controllers
                                                      {
                                                          Text = category.Name,
                                                          Value = category.ID.ToString()
-
                                                      }).ToList();
             CommonLayer.Product Product = pr.GetProduct(ID);
             ProductTypeItems.SingleOrDefault(p => p.Value.Equals(Product.CategoryID.ToString())).Selected = true;
-            ViewBag.ProductTypeId = ProductTypeItems;
+            ViewBag.ProductType = ProductTypeItems;
             return View(Product);
         }
 
@@ -216,7 +210,32 @@ namespace ShoppingCart.Controllers
         [HttpPost]
         public ActionResult EditProduct(CommonLayer.Product product)
         {
-            new BusinessLayer.Products().UpdateProduct(product);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
+                    {
+                        HttpPostedFileBase imageFile = Request.Files[0];
+                        string fileName = Guid.NewGuid() + System.IO.Path.GetExtension(imageFile.FileName);
+                        string serverPath = Server.MapPath(@"~\Images\");
+                        imageFile.SaveAs(serverPath + fileName);
+                        product.ImageURL = @"\images\" + fileName;
+                        new BusinessLayer.Products().UpdateProduct(product);
+                    }
+                    else
+                    {
+                        CommonLayer.Product OldProduct = new BusinessLayer.Products().GetProduct(product.ID);
+                        product.ImageURL = OldProduct.ImageURL;
+                        new BusinessLayer.Products().UpdateProduct(product);
+                    }
+                }
+            }
+            catch (RetryLimitExceededException /* dex */)
+            {
+                //Log the error (uncomment dex variable name and add a line here to write a log.
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+            }
             return RedirectToAction("Products");
         }
 
@@ -233,8 +252,7 @@ namespace ShoppingCart.Controllers
         [HttpGet]
         public ActionResult Roles()
         {
-            BusinessLayer.Roles roles = new BusinessLayer.Roles();
-            return View(roles.GetRoles());
+            return View(new BusinessLayer.Roles().GetRoles());
         }
 
         /// <summary>
@@ -255,8 +273,7 @@ namespace ShoppingCart.Controllers
         [HttpPost]
         public ActionResult CreateNewRole(CommonLayer.Role role)
         {
-            BusinessLayer.Roles r = new BusinessLayer.Roles();
-            r.AddRoleToDatabase(role);
+            new BusinessLayer.Roles().AddRoleToDatabase(role);
             return RedirectToAction("Roles");
         }
 
@@ -268,8 +285,7 @@ namespace ShoppingCart.Controllers
         [HttpPost]
         public ActionResult EditRole(CommonLayer.Role role)
         {
-            BusinessLayer.Roles r = new BusinessLayer.Roles();
-            r.UpdateRole(role);
+            new BusinessLayer.Roles().UpdateRole(role);
             return RedirectToAction("Roles");
         }
 
@@ -279,8 +295,7 @@ namespace ShoppingCart.Controllers
         /// <returns></returns>
         public ActionResult DeleteRole(Guid ID)
         {
-            BusinessLayer.Roles r = new BusinessLayer.Roles();
-            r.DeleteRole(ID);
+            new BusinessLayer.Roles().DeleteRole(ID);
             return RedirectToAction("Roles");
         }
 
@@ -320,8 +335,7 @@ namespace ShoppingCart.Controllers
         [HttpPost]
         public ActionResult CreateNewCategory(CommonLayer.Category category)
         {
-            BusinessLayer.Categories c = new BusinessLayer.Categories();
-            c.AddCategoryToDatabase(category);
+            new BusinessLayer.Categories().AddCategoryToDatabase(category);
             return RedirectToAction("Categories");
         }
 
@@ -352,8 +366,7 @@ namespace ShoppingCart.Controllers
         [HttpPost]
         public ActionResult EditCategory(CommonLayer.Category category)
         {
-            BusinessLayer.Categories c = new BusinessLayer.Categories();
-            c.UpdateCategory(category);
+            new BusinessLayer.Categories().UpdateCategory(category);
             return RedirectToAction("Categories");
         }
 
@@ -363,8 +376,7 @@ namespace ShoppingCart.Controllers
         /// <returns></returns>
         public ActionResult DeleteCategory(string ID)
         {
-            BusinessLayer.Categories c = new BusinessLayer.Categories();
-            c.DeleteCategory(ID);
+            new BusinessLayer.Categories().DeleteCategory(ID);
             return RedirectToAction("Categories");
         }
 
@@ -469,8 +481,7 @@ namespace ShoppingCart.Controllers
         [HttpPost]
         public ActionResult CreateNewCountry(CommonLayer.Country country)
         {
-            BusinessLayer.Countries c = new BusinessLayer.Countries();
-            c.AddCountryToDatabase(country);
+            new BusinessLayer.Countries().AddCountryToDatabase(country);
             return RedirectToAction("Countries");
         }
 
@@ -492,8 +503,7 @@ namespace ShoppingCart.Controllers
         [HttpPost]
         public ActionResult EditCountry(CommonLayer.Country country)
         {
-            BusinessLayer.Countries c = new BusinessLayer.Countries();
-            c.UpdateCountry(country);
+            new BusinessLayer.Countries().UpdateCountry(country);
             return RedirectToAction("Countries");
         }
 
