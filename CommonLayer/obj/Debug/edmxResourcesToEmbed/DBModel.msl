@@ -65,6 +65,7 @@
     <EntitySetMapping Name="Products">
       <EntityTypeMapping TypeName="DBModel.Product">
         <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
           <ScalarProperty Name="VATRate" ColumnName="VATRate" />

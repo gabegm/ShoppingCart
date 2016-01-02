@@ -79,7 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLBase.cs" />
-    <Compile Include="Carts.cs" />
+    <Compile Include="CartItems.cs" />
     <Compile Include="Categories.cs" />
     <Compile Include="Countries.cs" />
     <Compile Include="Orders.cs" />

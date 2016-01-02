@@ -153,6 +153,7 @@
     <NavigationProperty Name="Category" Relationship="DBModel.FK_Products_Categories" FromRole="Product" ToRole="Category" />
     <NavigationProperty Name="OrderDetails" Relationship="DBModel.FK_OrderDetails_Products" FromRole="Product" ToRole="OrderDetail" />
     <NavigationProperty Name="Reviews" Relationship="DBModel.FK_Reviews_Products" FromRole="Product" ToRole="Review" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="Review">
     <Key>

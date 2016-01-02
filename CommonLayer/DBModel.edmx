@@ -71,6 +71,7 @@
           <Property Name="Price" Type="float" Nullable="false" />
           <Property Name="VATRate" Type="float" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="CategoryID" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Reviews">
@@ -555,6 +556,7 @@
           <NavigationProperty Name="Category" Relationship="DBModel.FK_Products_Categories" FromRole="Product" ToRole="Category" />
           <NavigationProperty Name="OrderDetails" Relationship="DBModel.FK_OrderDetails_Products" FromRole="Product" ToRole="OrderDetail" />
           <NavigationProperty Name="Reviews" Relationship="DBModel.FK_Reviews_Products" FromRole="Product" ToRole="Review" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Review">
           <Key>
@@ -860,6 +862,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="DBModel.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="VATRate" ColumnName="VATRate" />

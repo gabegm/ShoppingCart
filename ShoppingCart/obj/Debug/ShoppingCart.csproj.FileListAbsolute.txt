@@ -1,14 +1,14 @@
+C:\Users\gabri\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\gabri\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\bin\roslyn\VBCSCompiler.exe
 C:\Users\gabri\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\bin\roslyn\csc.exe
 C:\Users\gabri\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 C:\Users\gabri\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
 C:\Users\gabri\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\bin\roslyn\Microsoft.CodeAnalysis.dll
-C:\Users\gabri\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
 C:\Users\gabri\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\bin\roslyn\Microsoft.CSharp.Core.targets
 C:\Users\gabri\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\bin\roslyn\Microsoft.VisualBasic.Core.targets
 C:\Users\gabri\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\bin\roslyn\System.Collections.Immutable.dll
 C:\Users\gabri\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\bin\roslyn\System.Reflection.Metadata.dll
 C:\Users\gabri\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\bin\roslyn\vbc.exe
-C:\Users\gabri\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\bin\roslyn\VBCSCompiler.exe
 C:\Users\gabri\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\bin\roslyn\VBCSCompiler.exe.config
 C:\Users\gabri\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\bin\ShoppingCart.dll.config
 C:\Users\gabri\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\bin\ShoppingCart.dll

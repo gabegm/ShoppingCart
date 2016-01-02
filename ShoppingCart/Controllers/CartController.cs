@@ -11,15 +11,39 @@ namespace ShoppingCart.Controllers
         // GET: Cart
         public ActionResult Index()
         {
-            //BusinessLayer.Carts c = new BusinessLayer.Carts();
-            return View(new BusinessLayer.Carts().GetCartProductsAsModel());
+            return View(new BusinessLayer.CartItems().GetCartProductsAsModel());
         }
 
-        [HttpPost]
+        /// <summary>
+        /// Adds cart items to checkout
+        /// </summary>
+        /// <param name="Cart"></param>
+        /// <returns></returns>
         public ActionResult Checkout(CommonLayer.CartItem Cart)
         {
             new BusinessLayer.Orders().AddOrder(Cart);
             return RedirectToAction("Index", "Checkout");
-        } 
+        }
+
+        /// <summary>
+        /// Edit cart item quantity
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns></returns>
+        public ActionResult UpdateCartItemQuantity(CommonLayer.CartItem CartItem)
+        {
+            new BusinessLayer.CartItems().UpdateCartItem(CartItem);
+            return RedirectToAction("Index");
+        }
+
+        /// <summary>
+        /// Deletes a specigic category from the database
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DeleteCartItem(Guid ID)
+        {
+            new BusinessLayer.CartItems().DeleteCartItem(ID);
+            return RedirectToAction("Index");
+        }
     }
 }

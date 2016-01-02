@@ -43,7 +43,7 @@ namespace ShoppingCart.Controllers
         public ActionResult CreateNewUser()
         {
             List<string> GenderItems = new List<string>() { "Male", "Female" };
-            ViewBag.Gender = GenderItems.Select(gender => new SelectListItem { Text = gender, Value = gender }); ;
+            ViewBag.Gender = GenderItems.Select(gender => new SelectListItem { Text = gender, Value = gender });
 
             BusinessLayer.Users u = new BusinessLayer.Users();
             List<SelectListItem> RoleItems = (from roles in u.GetUserRoles().ToList()
@@ -137,6 +137,9 @@ namespace ShoppingCart.Controllers
         [HttpGet]
         public ActionResult CreateNewProduct()
         {
+            List<string> IsProductActive = new List<string>() { "True", "False" };
+            ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
+
             BusinessLayer.Products pr = new BusinessLayer.Products();
             List<SelectListItem> ProductTypeItems = (from p
                                                          in pr.GetProductTypes().ToList()
@@ -181,35 +184,25 @@ namespace ShoppingCart.Controllers
         }
 
         /// <summary>
-        /// Returns the details of a specific product
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public ActionResult ViewProductDetails(int id) {
-            ShoppingCart.Models.ProductsBL prDet = new Models.ProductsBL();
-            Models.UiModels.Product product = prDet.GetProduct(id);
-            return View(product);
-        }
-
-        /// <summary>
         /// Returns list of categories to edit a specific product
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult EditProduct(Guid id)
+        public ActionResult EditProduct(Guid ID)
         {
+            List<string> IsProductActive = new List<string>() { "True", "False" };
+            ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
+
             BusinessLayer.Products pr = new BusinessLayer.Products();
-            List<SelectListItem> ProductTypeItems = (from p
-                                                         in pr.GetProductTypes().ToList()
+            List<SelectListItem> ProductTypeItems = (from category in pr.GetProductTypes().ToList()
                                                      select new SelectListItem()
                                                      {
-                                                         Text = p.Name,
-                                                         Value = p.ID.ToString()
+                                                         Text = category.Name,
+                                                         Value = category.ID.ToString()
 
                                                      }).ToList();
-            CommonLayer.Product Product = pr.GetProduct(id);
+            CommonLayer.Product Product = pr.GetProduct(ID);
             ProductTypeItems.SingleOrDefault(p => p.Value.Equals(Product.CategoryID.ToString())).Selected = true;
             ViewBag.ProductTypeId = ProductTypeItems;
             return View(Product);
@@ -223,15 +216,13 @@ namespace ShoppingCart.Controllers
         [HttpPost]
         public ActionResult EditProduct(CommonLayer.Product product)
         {
-            BusinessLayer.Products pr = new BusinessLayer.Products();
-            pr.UpdateProduct(product);
+            new BusinessLayer.Products().UpdateProduct(product);
             return RedirectToAction("Products");
         }
 
         public ActionResult DeleteProduct(Guid ID)
         {
-            BusinessLayer.Products p = new BusinessLayer.Products();
-            p.DeleteProduct(ID);
+            new BusinessLayer.Products().DeleteProduct(ID);
             return RedirectToAction("Products");
         }
 

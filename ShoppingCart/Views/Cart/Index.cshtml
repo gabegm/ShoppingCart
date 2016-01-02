@@ -1,4 +1,4 @@
-﻿@model IQueryable<CommonLayer.Models.CartsModel>
+﻿@model IQueryable<CommonLayer.Models.CartItemsModel>
 
 @{
     ViewBag.Title = "Index";
@@ -9,20 +9,36 @@
     <h2>Cart</h2>
         <div class="table">
             <div class="row">
-                <div class="col-lg-1">@Html.DisplayNameFor(model => model.FirstOrDefault().ProductName)</div>
-                <div class="col-lg-1">@Html.DisplayNameFor(model => model.FirstOrDefault().Quantity)</div>
+                <div class="col-lg-1">
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().ProductName)
+                </div>
+                <div class="col-lg-1">
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().ProductImageURL)
+                </div>
+                <div class="col-lg-1">
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Quantity)
+                </div>
             </div>
             @foreach (var item in Model)
             {
                 <div class="row">
-                    <div class="col-lg-1">@Html.DisplayFor(modelItem => item.ProductName)</div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-1">@Html.DisplayFor(modelItem => item.Quantity)</div>
+                    <div class="col-lg-1">
+                        @Html.DisplayFor(modelItem => item.ProductName)
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-1">
-                        @Html.ActionLink("Edit", "EditCartItem", new { id = item.ID }) |
+                        @Html.DisplayFor(modelItem => item.ProductImageURL)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-1">
+                        @Html.TextBoxFor(modelItem => item.Quantity)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-1">
+                        @Html.ActionLink("Update", "UpdateCartItemQuantity", new { id = item.ID }) |
                         @Html.ActionLink("Details", "ViewCartItemDetails", new { id = item.ID }) |
                         @Html.ActionLink("Delete", "DeleteCartItem", new { id = item.ID })
                     </div>
@@ -31,10 +47,10 @@
         </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Checkout" class="btn btn-default" />
+            <input type="submit" value="Submit" class="btn btn-default" />
         </div>
     </div>
     <div>
-        @Html.ActionLink("Back to List", "Roles")
+        @Html.ActionLink("Back to Products", "Index", "Product")
     </div>
 </div>

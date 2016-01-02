@@ -22,6 +22,7 @@ namespace DataLayer
                         Price = (float)p.Price,
                         VATRate = (float)p.VATRate,
                         Quantity = p.Quantity,
+                        Active = p.Active,
                         CategoryID = category.ID,
                         CategoryName = category.Name
                     });

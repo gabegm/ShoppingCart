@@ -29,6 +29,9 @@
                 @Html.DisplayNameFor(model => model.FirstOrDefault().Quantity)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Active)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().CategoryName)
             </th>
         </tr>
@@ -55,11 +58,14 @@
                     @Html.DisplayFor(modelItem => item.Quantity)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Active)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.CategoryName)
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "EditProduct", new { ID = item.ID }) |
-                    @Html.ActionLink("Details", "ViewProductDetails", new { ID = item.ID }) |
+                    @Html.ActionLink("View", "ViewProduct", new { ID = item.ID }) |
                     @Html.ActionLink("Delete", "DeleteProduct", new { ID = item.ID })
                 </td>
             </tr>

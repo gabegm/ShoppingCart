@@ -11,6 +11,7 @@ namespace CommonLayer.Models
         public float Price { get; set; }
         public float VATRate { get; set; }
         public int Quantity { get; set; }
+        public Boolean Active { get; set; }
         public string CategoryID { get; set; }
         public string CategoryName { get; set; }
     }

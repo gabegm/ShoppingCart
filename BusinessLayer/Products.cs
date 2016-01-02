@@ -67,10 +67,12 @@ namespace BusinessLayer
         public void AddProductToCart(Guid ProductID, Guid UserID)
         {
             CommonLayer.CartItem CartItem = new CommonLayer.CartItem();
+            CartItem.ID = new Guid();
+            CartItem.Quantity = 1;
             CartItem.ProductID = ProductID;
             CartItem.UserID = UserID;
             
-            new DataLayer.DACarts(this.Entities).AddCartItem(CartItem);
+            new DataLayer.DACartItems(this.Entities).AddCartItem(CartItem);
         }
     }
 }
