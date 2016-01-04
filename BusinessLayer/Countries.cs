@@ -8,6 +8,7 @@ namespace BusinessLayer
     public class Countries : BLBase
     {
         public Countries() : base() { }
+        public Countries(CommonLayer.DBModelEntities Entities) : base(Entities) { }
 
         public IQueryable<CommonLayer.Country> GetCountries()
         {

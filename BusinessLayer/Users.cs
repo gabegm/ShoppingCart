@@ -8,6 +8,7 @@ namespace BusinessLayer
     public class Users : BLBase
     {
         public Users() : base() { }
+        public Users(CommonLayer.DBModelEntities Entities) : base(Entities) { }
 
         /// <summary>
         /// Returns all users and user accounts
@@ -25,6 +26,15 @@ namespace BusinessLayer
         public IQueryable<CommonLayer.Role> GetUserRoles()
         {
             return new DataLayer.DAUsers(this.Entities).GetUserRoles();
+        }
+
+        /// <summary>
+        /// Returns list of user types
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<CommonLayer.UserType> GetUserTypes()
+        {
+            return new DataLayer.DAUserTypes(this.Entities).GetUserTypes();
         }
 
         /// <summary>
@@ -141,9 +151,12 @@ namespace BusinessLayer
         }
 
         /// <summary>
-        /// Registers a new user.
+        /// Registers a new user
         /// </summary>
-        /// <param name="User">User to be added.</param>
+        /// <param name="User"></param>
+        /// <param name="UserAccount"></param>
+        /// <param name="ConfirmPassword"></param>
+        /// <param name="RoleID"></param>
         public void RegisterUser(CommonLayer.User User, CommonLayer.UserAccount UserAccount, string ConfirmPassword, Guid[] RoleID)
         {
             CommonLayer.User ExistingUser = this.GetUser(User.ID);

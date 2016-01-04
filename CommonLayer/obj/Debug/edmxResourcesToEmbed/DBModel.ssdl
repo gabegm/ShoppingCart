@@ -16,6 +16,7 @@
     <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="ImageURL" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="CartItems">
     <Key>
@@ -32,6 +33,7 @@
     </Key>
     <Property Name="ID" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
     <Property Name="ParentID" Type="varchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="Countries">
@@ -40,6 +42,7 @@
     </Key>
     <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="MenuCarouselItems">
     <Key>
@@ -63,7 +66,8 @@
     </Key>
     <Property Name="ID" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="ParentID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+    <Property Name="ParentID" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="OrderDetails">
     <Key>
@@ -118,6 +122,7 @@
     <Property Name="Description" Type="varchar" MaxLength="500" Nullable="false" />
     <Property Name="Rating" Type="int" Nullable="false" />
     <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
     <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="ProductID" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
@@ -128,6 +133,7 @@
     <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Code" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Sales">
     <Key>
@@ -137,6 +143,7 @@
     <Property Name="Value" Type="float" Nullable="false" />
     <Property Name="Start" Type="date" Nullable="false" />
     <Property Name="Stop" Type="date" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -154,6 +161,7 @@
     </Key>
     <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
     <Property Name="CountryID" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
   <EntityType Name="UserAccountRoles">
@@ -171,6 +179,7 @@
     <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
@@ -183,6 +192,7 @@
     <Property Name="Contact" Type="int" Nullable="false" />
     <Property Name="DOB" Type="date" Nullable="false" />
     <Property Name="Gender" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
     <Property Name="House" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Street" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="TownID" Type="uniqueidentifier" Nullable="false" />
@@ -195,6 +205,7 @@
     </Key>
     <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
   </EntityType>
   <Association Name="FK_Audits_Users">
     <End Role="Users" Type="Self.Users" Multiplicity="1" />
@@ -281,7 +292,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Menus_Menus">
-    <End Role="Menus" Type="Self.Menus" Multiplicity="1" />
+    <End Role="Menus" Type="Self.Menus" Multiplicity="0..1" />
     <End Role="Menus1" Type="Self.Menus" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Menus">

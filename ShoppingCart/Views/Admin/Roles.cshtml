@@ -15,6 +15,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Active)
+            </th>
         </tr>
 
         @foreach (var item in Model)
@@ -27,6 +30,9 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Active)
+                </td>
+                <td>
                     @Html.ActionLink("Edit", "EditRole", new { id = item.ID }) |
                     @Html.ActionLink("Details", "ViewRoleDetails", new { id=item.ID }) |
                     @Html.ActionLink("Delete", "DeleteRole", new { id=item.ID })
@@ -35,4 +41,3 @@
         }
     </table>
 </div>
-

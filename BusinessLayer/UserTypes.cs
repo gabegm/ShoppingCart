@@ -8,6 +8,7 @@ namespace BusinessLayer
     public class UserTypes : BLBase
     {
         public UserTypes() : base() { }
+        public UserTypes(CommonLayer.DBModelEntities Entities) : base(Entities) { }
 
         /// <summary>
         /// Returns all users and user accounts
@@ -34,6 +35,7 @@ namespace BusinessLayer
         /// <param name="User">user instance to be added.</param>
         public void AddUserTypeToDatabase(CommonLayer.UserType UserType)
         {
+            UserType.ID = new Guid();
             new DataLayer.DAUserTypes(this.Entities).AddUserType(UserType);
         }
 

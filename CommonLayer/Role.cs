@@ -24,6 +24,7 @@ namespace CommonLayer
         public System.Guid ID { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
+        public bool Active { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Menu> Menus { get; set; }

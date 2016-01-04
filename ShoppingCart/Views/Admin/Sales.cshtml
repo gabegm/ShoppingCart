@@ -1,0 +1,50 @@
+﻿@model IQueryable<CommonLayer.Sale>
+
+@{
+    ViewBag.Title = "Sales";
+    Layout = "~/Views/_Shared/_BackEnd.cshtml";
+}
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h2>Roles</h2>
+    <p>@Html.ActionLink("Create New", "CreateNewSale")</p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Value)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Start)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Stop)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Active)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Value)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Start)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Stop)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Active)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditSale", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "ViewSale", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "DeleteSale", new { id = item.ID })
+                </td>
+            </tr>
+        }
+    </table>
+</div>

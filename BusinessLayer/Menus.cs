@@ -8,6 +8,7 @@ namespace BusinessLayer
     public class Menus : BLBase
     {
         public Menus() : base() { }
+        public Menus(CommonLayer.DBModelEntities Entities) : base(Entities) { }
 
         /// <summary>
         /// Returns all users and user accounts
@@ -34,6 +35,7 @@ namespace BusinessLayer
         /// <param name="User">user instance to be added.</param>
         public void AddMenuToDatabase(CommonLayer.Menu Menu)
         {
+            Menu.ID = new Guid().ToString();
             new DataLayer.DAMenus(this.Entities).AddMenu(Menu);
         }
 

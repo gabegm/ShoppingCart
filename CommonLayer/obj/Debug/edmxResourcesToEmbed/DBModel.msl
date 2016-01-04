@@ -14,6 +14,7 @@
     <EntitySetMapping Name="CarouselItems">
       <EntityTypeMapping TypeName="DBModel.CarouselItem">
         <MappingFragment StoreEntitySet="CarouselItems">
+          <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
           <ScalarProperty Name="ID" ColumnName="ID" />
@@ -34,6 +35,7 @@
       <EntityTypeMapping TypeName="DBModel.Category">
         <MappingFragment StoreEntitySet="Categories">
           <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
@@ -42,6 +44,7 @@
     <EntitySetMapping Name="Countries">
       <EntityTypeMapping TypeName="DBModel.Country">
         <MappingFragment StoreEntitySet="Countries">
+          <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
@@ -51,6 +54,7 @@
       <EntityTypeMapping TypeName="DBModel.Menu">
         <MappingFragment StoreEntitySet="Menus">
           <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
@@ -101,6 +105,7 @@
         <MappingFragment StoreEntitySet="Reviews">
           <ScalarProperty Name="ProductID" ColumnName="ProductID" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="Rating" ColumnName="Rating" />
           <ScalarProperty Name="Description" ColumnName="Description" />
@@ -111,6 +116,7 @@
     <EntitySetMapping Name="Roles">
       <EntityTypeMapping TypeName="DBModel.Role">
         <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Code" ColumnName="Code" />
           <ScalarProperty Name="ID" ColumnName="ID" />
@@ -120,6 +126,7 @@
     <EntitySetMapping Name="Sales">
       <EntityTypeMapping TypeName="DBModel.Sale">
         <MappingFragment StoreEntitySet="Sales">
+          <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="Stop" ColumnName="Stop" />
           <ScalarProperty Name="Start" ColumnName="Start" />
           <ScalarProperty Name="Value" ColumnName="Value" />
@@ -142,6 +149,7 @@
       <EntityTypeMapping TypeName="DBModel.Town">
         <MappingFragment StoreEntitySet="Towns">
           <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
@@ -150,6 +158,7 @@
     <EntitySetMapping Name="UserAccounts">
       <EntityTypeMapping TypeName="DBModel.UserAccount">
         <MappingFragment StoreEntitySet="UserAccounts">
+          <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="Username" ColumnName="Username" />
           <ScalarProperty Name="ID" ColumnName="ID" />
@@ -164,6 +173,7 @@
           <ScalarProperty Name="TownID" ColumnName="TownID" />
           <ScalarProperty Name="Street" ColumnName="Street" />
           <ScalarProperty Name="House" ColumnName="House" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="Gender" ColumnName="Gender" />
           <ScalarProperty Name="DOB" ColumnName="DOB" />
           <ScalarProperty Name="Contact" ColumnName="Contact" />
@@ -177,6 +187,7 @@
     <EntitySetMapping Name="UserTypes">
       <EntityTypeMapping TypeName="DBModel.UserType">
         <MappingFragment StoreEntitySet="UserTypes">
+          <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>

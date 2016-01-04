@@ -22,6 +22,7 @@ namespace CommonLayer
     
         public System.Guid ID { get; set; }
         public string Name { get; set; }
+        public bool Active { get; set; }
         public System.Guid CountryID { get; set; }
     
         public virtual Country Country { get; set; }

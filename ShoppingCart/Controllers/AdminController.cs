@@ -42,6 +42,9 @@ namespace ShoppingCart.Controllers
         [HttpGet]
         public ActionResult CreateNewUser()
         {
+            List<string> IsUserActive = new List<string>() { "True", "False" };
+            ViewBag.Active = IsUserActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
+
             List<string> GenderItems = new List<string>() { "Male", "Female" };
             ViewBag.Gender = GenderItems.Select(gender => new SelectListItem { Text = gender, Value = gender });
 
@@ -53,6 +56,15 @@ namespace ShoppingCart.Controllers
                                                          Value = roles.ID.ToString()
                                                      }).ToList();
             ViewBag.RoleName = new MultiSelectList(RoleItems, "Value", "Text");
+
+            List<SelectListItem> UserTypeItems = (from usertypes in u.GetUserTypes().ToList()
+                                              select new SelectListItem()
+                                              {
+                                                  Text = usertypes.Name,
+                                                  Value = usertypes.ID.ToString()
+                                              }).ToList();
+            ViewBag.UserTypes = new MultiSelectList(UserTypeItems, "Value", "Text");
+
             List<SelectListItem> TownItems = (from towns in u.GetUserTowns().ToList()
                                               select new SelectListItem()
                                               {
@@ -60,6 +72,7 @@ namespace ShoppingCart.Controllers
                                                   Value = towns.ID.ToString()
                                               }).ToList();
             ViewBag.TownName = TownItems;
+
             List<SelectListItem> CountryItems = (from countries in u.GetUserCountries().ToList()
                                               select new SelectListItem()
                                               {
@@ -67,14 +80,17 @@ namespace ShoppingCart.Controllers
                                                   Value = countries.ID.ToString()
                                               }).ToList();
             ViewBag.CountryName = CountryItems;
+
             return View();
         }
 
         /// <summary>
-        /// Saves the new user in the database
+        /// Creates a new user
         /// </summary>
-        /// <param name="user"></param>
+        /// <param name="User"></param>
+        /// <param name="UserAccount"></param>
         /// <param name="ConfirmPassword"></param>
+        /// <param name="RoleID"></param>
         /// <returns></returns>
         [HttpPost]
         public ActionResult CreateNewUser(CommonLayer.User User, CommonLayer.UserAccount UserAccount, string ConfirmPassword, Guid[] RoleID)
@@ -262,6 +278,9 @@ namespace ShoppingCart.Controllers
         [HttpGet]
         public ActionResult CreateNewRole()
         {
+            List<string> IsProductActive = new List<string>() { "True", "False" };
+            ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
+
             return View();
         }
 
@@ -275,6 +294,23 @@ namespace ShoppingCart.Controllers
         {
             new BusinessLayer.Roles().AddRoleToDatabase(role);
             return RedirectToAction("Roles");
+        }
+
+        /// <summary>
+        /// Returns a form to edit a specific role
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult EditRole(Guid ID)
+        {
+            List<string> IsRoleActive = new List<string>() { "True", "False" };
+            ViewBag.Active = IsRoleActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
+
+            CommonLayer.Role Role = new BusinessLayer.Roles().GetRole(ID);
+            //IsRoleActive.SingleOrDefault(r => r.Value.Equals(Role.Active.ToString())).Selected = true;
+
+            return View(Role);
         }
 
         /// <summary>
@@ -316,6 +352,9 @@ namespace ShoppingCart.Controllers
         [HttpGet]
         public ActionResult CreateNewCategory()
         {
+            List<string> IsProductActive = new List<string>() { "True", "False" };
+            ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
+
             BusinessLayer.Categories c = new BusinessLayer.Categories();
             List<SelectListItem> ParentCategoryItems = (from category in c.GetParentCategoriesAsModel().ToList()
                                                      select new SelectListItem()
@@ -346,6 +385,9 @@ namespace ShoppingCart.Controllers
         [HttpGet]
         public ActionResult EditCategory(string ID)
         {
+            List<string> IsProductActive = new List<string>() { "True", "False" };
+            ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
+
             BusinessLayer.Categories c = new BusinessLayer.Categories();
             List<SelectListItem> SubcategoryItems = (from category in c.GetCategories().ToList()
                                                      select new SelectListItem()
@@ -397,6 +439,9 @@ namespace ShoppingCart.Controllers
         [HttpGet]
         public ActionResult CreateNewTown()
         {
+            List<string> IsProductActive = new List<string>() { "True", "False" };
+            ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
+
             BusinessLayer.Towns t = new BusinessLayer.Towns();
             List<SelectListItem> TownLocationItems = (from countries in t.GetCountries().ToList()
                                                      select new SelectListItem()
@@ -427,6 +472,9 @@ namespace ShoppingCart.Controllers
         [HttpGet]
         public ActionResult EditTown()
         {
+            List<string> IsProductActive = new List<string>() { "True", "False" };
+            ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
+
             return View();
         }
 
@@ -469,6 +517,9 @@ namespace ShoppingCart.Controllers
         [HttpGet]
         public ActionResult CreateNewCountry()
         {
+            List<string> IsProductActive = new List<string>() { "True", "False" };
+            ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
+
             return View();
         }
 
@@ -491,6 +542,9 @@ namespace ShoppingCart.Controllers
         [HttpGet]
         public ActionResult EditCountry()
         {
+            List<string> IsProductActive = new List<string>() { "True", "False" };
+            ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
+
             return View();
         }
 
@@ -520,7 +574,6 @@ namespace ShoppingCart.Controllers
         /// Displays all the countries from the database
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
         public ActionResult UserTypes()
         {
             return View(new BusinessLayer.UserTypes().GetUserTypes());
@@ -531,8 +584,11 @@ namespace ShoppingCart.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult CreateUserType()
+        public ActionResult CreateNewUserType()
         {
+            List<string> IsProductActive = new List<string>() { "True", "False" };
+            ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
+
             return View();
         }
 
@@ -542,7 +598,7 @@ namespace ShoppingCart.Controllers
         /// <param name="country"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult CreateUserType(CommonLayer.UserType UserType)
+        public ActionResult CreateNewUserType(CommonLayer.UserType UserType)
         {
             new BusinessLayer.UserTypes().AddUserTypeToDatabase(UserType);
             return RedirectToAction("UserTypes");
@@ -555,6 +611,9 @@ namespace ShoppingCart.Controllers
         [HttpGet]
         public ActionResult EditUserType()
         {
+            List<string> IsProductActive = new List<string>() { "True", "False" };
+            ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
+
             return View();
         }
 
@@ -595,8 +654,11 @@ namespace ShoppingCart.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult CreateMenu()
+        public ActionResult CreateNewMenu()
         {
+            List<string> IsProductActive = new List<string>() { "True", "False" };
+            ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
+
             return View();
         }
 
@@ -606,7 +668,7 @@ namespace ShoppingCart.Controllers
         /// <param name="country"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult CreateMenu(CommonLayer.Menu Menu)
+        public ActionResult CreateNewMenu(CommonLayer.Menu Menu)
         {
             new BusinessLayer.Menus().AddMenuToDatabase(Menu);
             return RedirectToAction("Menus");
@@ -619,6 +681,9 @@ namespace ShoppingCart.Controllers
         [HttpGet]
         public ActionResult EditMenu()
         {
+            List<string> IsProductActive = new List<string>() { "True", "False" };
+            ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
+
             return View();
         }
 
@@ -655,34 +720,15 @@ namespace ShoppingCart.Controllers
         }
 
         /// <summary>
-        /// Displays a form to create a new country
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public ActionResult CreateReview()
-        {
-            return View();
-        }
-
-        /// <summary>
-        /// Saves new country to database
-        /// </summary>
-        /// <param name="country"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public ActionResult CreateReview(CommonLayer.Review Review)
-        {
-            new BusinessLayer.Reviews().AddReviewToDatabase(Review);
-            return RedirectToAction("Reviews");
-        }
-
-        /// <summary>
         /// Returns form to edit specific country
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         public ActionResult EditReview()
         {
+            List<string> IsProductActive = new List<string>() { "True", "False" };
+            ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
+
             return View();
         }
 
@@ -723,8 +769,11 @@ namespace ShoppingCart.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult CreateCarouselItem()
+        public ActionResult CreateNewCarouselItem()
         {
+            List<string> IsProductActive = new List<string>() { "True", "False" };
+            ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
+
             return View();
         }
 
@@ -734,7 +783,7 @@ namespace ShoppingCart.Controllers
         /// <param name="country"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult CreateCarouselItem(CommonLayer.CarouselItem CarouselItem)
+        public ActionResult CreateNewCarouselItem(CommonLayer.CarouselItem CarouselItem)
         {
             new BusinessLayer.CarouselItems().AddCarouselItemToDatabase(CarouselItem);
             return RedirectToAction("CarouselItems");
@@ -747,6 +796,9 @@ namespace ShoppingCart.Controllers
         [HttpGet]
         public ActionResult EditCarouselItem()
         {
+            List<string> IsProductActive = new List<string>() { "True", "False" };
+            ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
+
             return View();
         }
 
@@ -787,8 +839,11 @@ namespace ShoppingCart.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult CreateSale()
+        public ActionResult CreateNewSale()
         {
+            List<string> IsProductActive = new List<string>() { "True", "False" };
+            ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
+
             return View();
         }
 
@@ -798,7 +853,7 @@ namespace ShoppingCart.Controllers
         /// <param name="country"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult CreateSale(CommonLayer.Sale Sale)
+        public ActionResult CreateNewSale(CommonLayer.Sale Sale)
         {
             new BusinessLayer.Sales().AddSaleToDatabase(Sale);
             return RedirectToAction("Sales");
@@ -811,6 +866,9 @@ namespace ShoppingCart.Controllers
         [HttpGet]
         public ActionResult EditSale()
         {
+            List<string> IsProductActive = new List<string>() { "True", "False" };
+            ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
+
             return View();
         }
 
@@ -836,10 +894,22 @@ namespace ShoppingCart.Controllers
             return RedirectToAction("Sales");
         }
 
-        [HttpGet]
+        /// <summary>
+        /// Returns list of orders
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Orders()
         {
             return View(new BusinessLayer.Orders().GetOrdersAsModel());
+        }
+
+        /// <summary>
+        /// Returns a list of audits
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Audits()
+        {
+            return View(new BusinessLayer.Audits().GetAudits());
         }
     }
 }

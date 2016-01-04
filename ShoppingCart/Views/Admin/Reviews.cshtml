@@ -1,0 +1,49 @@
+﻿@model IQueryable<CommonLayer.Review>
+
+@{
+    ViewBag.Title = "Reviews";
+    Layout = "~/Views/_Shared/_BackEnd.cshtml";
+}
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h2>User Types</h2>
+    <p>@Html.ActionLink("Create New", "CreateNewUserType")</p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Rating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Active)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Active)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditUserType", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "DeleteUserType", new { id = item.ID })
+                </td>
+            </tr>
+        }
+    </table>
+</div>

@@ -8,6 +8,7 @@ namespace BusinessLayer
     public class Categories : BLBase
     {
         public Categories() : base() { }
+        public Categories(CommonLayer.DBModelEntities Entities) : base(Entities) { }
 
         public IQueryable<CommonLayer.Category> GetCategories()
         {

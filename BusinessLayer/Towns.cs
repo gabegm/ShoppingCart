@@ -8,6 +8,7 @@ namespace BusinessLayer
     public class Towns : BLBase
     {
         public Towns() : base() { }
+        public Towns(CommonLayer.DBModelEntities Entities) : base(Entities) { }
 
         public IQueryable<CommonLayer.Town> GetTowns()
         {

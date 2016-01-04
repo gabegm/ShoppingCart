@@ -8,6 +8,7 @@ namespace BusinessLayer
     public class Audits : BLBase
     {
         public Audits() : base() { }
+        public Audits(CommonLayer.DBModelEntities Entities) : base(Entities) { }
 
         /// <summary>
         /// Returns all users and user accounts
@@ -34,6 +35,7 @@ namespace BusinessLayer
         /// <param name="User">user instance to be added.</param>
         public void AddAuditToDatabase(CommonLayer.Audit Audit)
         {
+            Audit.ID = new Guid();
             new DataLayer.DAAudits(this.Entities).AddAudit(Audit);
         }
 

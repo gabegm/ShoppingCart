@@ -8,6 +8,7 @@ namespace BusinessLayer
     public class CartItems : BLBase
     {
         public CartItems() : base() { }
+        public CartItems(CommonLayer.DBModelEntities Entities) : base(Entities) { }
 
         public IQueryable<CommonLayer.Models.CartItemsModel> GetCartProductsAsModel()
         {
@@ -17,6 +18,11 @@ namespace BusinessLayer
         public CommonLayer.CartItem GetCartItem(Guid ID)
         {
             return new DataLayer.DACartItems(this.Entities).GetCartItem(ID);
+        }
+
+        private void AddCartItemToDatabase(CommonLayer.CartItem CartItem)
+        {
+            new DataLayer.DACartItems(this.Entities).AddCartItem(CartItem);
         }
 
         public void UpdateCartItem(CommonLayer.CartItem CartItem)

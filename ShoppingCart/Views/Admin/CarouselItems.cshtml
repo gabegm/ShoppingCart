@@ -1,0 +1,44 @@
+﻿@model IQueryable<CommonLayer.CarouselItem>
+
+@{
+    ViewBag.Title = "CarouselItems";
+    Layout = "~/Views/_Shared/_BackEnd.cshtml";
+}
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h2>Carousel Items</h2>
+    <p>@Html.ActionLink("Create New", "CreateNewCarouselItem")</p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ImageURL)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Active)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImageURL)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Active)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditCarouselItems", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "ViewRoleDetails", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "DeleteCarouselItems", new { id = item.ID })
+                </td>
+            </tr>
+        }
+    </table>
+</div>

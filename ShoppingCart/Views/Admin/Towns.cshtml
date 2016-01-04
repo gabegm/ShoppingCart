@@ -14,6 +14,9 @@
                 @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Active)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().CountryName)
             </th>
         </tr>
@@ -23,6 +26,9 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Active)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CountryName)

@@ -6,6 +6,9 @@ namespace BusinessLayer
 {
     public class Orders : BLBase
     {
+        public Orders() : base() { }
+        public Orders(CommonLayer.DBModelEntities Entities) : base(Entities) { }
+
         public IQueryable<CommonLayer.Models.OrdersModel> GetOrdersAsModel()
         {
             return new DataLayer.DAOrders(this.Entities).GetOrdersAsModel();
@@ -31,6 +34,8 @@ namespace BusinessLayer
 
         public void AddOrderToDatabase(CommonLayer.Order Order, CommonLayer.OrderDetail OrderDetail)
         {
+            Order.ID = new Guid();
+            OrderDetail.ID = new Guid();
             new DataLayer.DAOrders(this.Entities).AddNewOrder(Order, OrderDetail);
         }
     }

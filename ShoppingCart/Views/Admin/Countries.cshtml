@@ -12,6 +12,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
             </th>
+            <th>
+                @Html.DisplayNameFor(mode => Model.FirstOrDefault().Active)
+            </th>
         </tr>
 
         @foreach (var item in Model)
@@ -20,6 +23,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
+                <th>
+                    @Html.DisplayFor(modeItem => item.Active)
+                </th>
                 <td>
                     @Html.ActionLink("Edit", "EditCountry", new { ID = item.ID }) |
                     @Html.ActionLink("Delete", "DeleteCountry", new { ID = item.ID })

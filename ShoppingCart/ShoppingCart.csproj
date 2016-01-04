@@ -143,6 +143,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -190,6 +191,21 @@
     <Content Include="Views\Admin\Orders.cshtml" />
     <Content Include="Views\_Shared\_Carousel.cshtml" />
     <Content Include="Views\_Shared\_Login.cshtml" />
+    <Content Include="Views\Admin\UserTypes.cshtml" />
+    <Content Include="Views\Admin\Menus.cshtml" />
+    <Content Include="Views\Admin\Reviews.cshtml" />
+    <Content Include="Views\Admin\CarouselItems.cshtml" />
+    <Content Include="Views\Admin\Sales.cshtml" />
+    <Content Include="Views\Admin\Audits.cshtml" />
+    <Content Include="Views\Admin\CreateNewMenu.cshtml" />
+    <Content Include="Views\Admin\CreateNewCarouselItem.cshtml" />
+    <Content Include="Views\Admin\CreateNewSale.cshtml" />
+    <Content Include="Views\Admin\CreateNewUserType.cshtml" />
+    <Content Include="Views\Admin\EditUserType.cshtml" />
+    <Content Include="Views\Admin\EditMenu.cshtml" />
+    <Content Include="Views\Admin\EditReview.cshtml" />
+    <Content Include="Views\Admin\EditCarouselItem.cshtml" />
+    <Content Include="Views\Admin\EditSale.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -199,6 +215,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Category\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj">

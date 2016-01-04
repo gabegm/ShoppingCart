@@ -21,6 +21,7 @@
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ImageURL" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="CartItems">
           <Key>
@@ -37,6 +38,7 @@
           </Key>
           <Property Name="ID" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="ParentID" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Countries">
@@ -45,6 +47,7 @@
           </Key>
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="MenuCarouselItems">
           <Key>
@@ -68,7 +71,8 @@
           </Key>
           <Property Name="ID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="ParentID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="ParentID" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="OrderDetails">
           <Key>
@@ -123,6 +127,7 @@
           <Property Name="Description" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Rating" Type="int" Nullable="false" />
           <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ProductID" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
@@ -133,6 +138,7 @@
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Code" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Sales">
           <Key>
@@ -142,6 +148,7 @@
           <Property Name="Value" Type="float" Nullable="false" />
           <Property Name="Start" Type="date" Nullable="false" />
           <Property Name="Stop" Type="date" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -159,6 +166,7 @@
           </Key>
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="CountryID" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="UserAccountRoles">
@@ -176,6 +184,7 @@
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -188,6 +197,7 @@
           <Property Name="Contact" Type="int" Nullable="false" />
           <Property Name="DOB" Type="date" Nullable="false" />
           <Property Name="Gender" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="House" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Street" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="TownID" Type="uniqueidentifier" Nullable="false" />
@@ -200,6 +210,7 @@
           </Key>
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_Audits_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
@@ -286,7 +297,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Menus_Menus">
-          <End Role="Menus" Type="Self.Menus" Multiplicity="1" />
+          <End Role="Menus" Type="Self.Menus" Multiplicity="0..1" />
           <End Role="Menus1" Type="Self.Menus" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Menus">
@@ -728,6 +739,7 @@
           <Property Name="ID" Type="Guid" Nullable="false" />
           <Property Name="ImageURL" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Menus" Relationship="DBModel.MenuCarouselItems" FromRole="CarouselItem" ToRole="Menu" />
         </EntityType>
         <EntityType Name="CartItem">
@@ -747,6 +759,7 @@
           </Key>
           <Property Name="ID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
           <Property Name="ParentID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Categories1" Relationship="DBModel.FK_Categories_Categories" FromRole="Category" ToRole="Category1" />
           <NavigationProperty Name="Category1" Relationship="DBModel.FK_Categories_Categories" FromRole="Category1" ToRole="Category" />
@@ -758,6 +771,7 @@
           </Key>
           <Property Name="ID" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Towns" Relationship="DBModel.FK_Towns_Countries1" FromRole="Country" ToRole="Town" />
         </EntityType>
         <EntityType Name="Menu">
@@ -766,7 +780,8 @@
           </Key>
           <Property Name="ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ParentID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="ParentID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Menus1" Relationship="DBModel.FK_Menus_Menus" FromRole="Menu" ToRole="Menu1" />
           <NavigationProperty Name="Menu1" Relationship="DBModel.FK_Menus_Menus" FromRole="Menu1" ToRole="Menu" />
           <NavigationProperty Name="CarouselItems" Relationship="DBModel.MenuCarouselItems" FromRole="Menu" ToRole="CarouselItem" />
@@ -827,6 +842,7 @@
           <Property Name="Description" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Rating" Type="Int32" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
           <Property Name="UserID" Type="Guid" Nullable="false" />
           <Property Name="ProductID" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="DBModel.FK_Reviews_Products" FromRole="Review" ToRole="Product" />
@@ -839,6 +855,7 @@
           <Property Name="ID" Type="Guid" Nullable="false" />
           <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Menus" Relationship="DBModel.MenuRoles" FromRole="Role" ToRole="Menu" />
           <NavigationProperty Name="UserAccounts" Relationship="DBModel.UserAccountRoles" FromRole="Role" ToRole="UserAccount" />
         </EntityType>
@@ -850,6 +867,7 @@
           <Property Name="Value" Type="Double" Nullable="false" />
           <Property Name="Start" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Stop" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Products" Relationship="DBModel.FK_Products_Sales" FromRole="Sale" ToRole="Product" />
         </EntityType>
         <EntityType Name="sysdiagram">
@@ -868,6 +886,7 @@
           </Key>
           <Property Name="ID" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
           <Property Name="CountryID" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Country" Relationship="DBModel.FK_Towns_Countries1" FromRole="Town" ToRole="Country" />
           <NavigationProperty Name="Users" Relationship="DBModel.FK_Users_Towns" FromRole="Town" ToRole="User" />
@@ -879,6 +898,7 @@
           <Property Name="ID" Type="Guid" Nullable="false" />
           <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Users" Relationship="DBModel.FK_Users_UserAccounts" FromRole="UserAccount" ToRole="User" />
           <NavigationProperty Name="Roles" Relationship="DBModel.UserAccountRoles" FromRole="UserAccount" ToRole="Role" />
         </EntityType>
@@ -893,6 +913,7 @@
           <Property Name="Contact" Type="Int32" Nullable="false" />
           <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Gender" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
           <Property Name="House" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Street" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TownID" Type="Guid" Nullable="false" />
@@ -912,6 +933,7 @@
           </Key>
           <Property Name="ID" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Users" Relationship="DBModel.FK_Users_UserTypes" FromRole="UserType" ToRole="User" />
           <NavigationProperty Name="Products" Relationship="DBModel.ProductPrices" FromRole="UserType" ToRole="Product" />
         </EntityType>
@@ -988,7 +1010,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Menus_Menus">
-          <End Type="DBModel.Menu" Role="Menu" Multiplicity="1" />
+          <End Type="DBModel.Menu" Role="Menu" Multiplicity="0..1" />
           <End Type="DBModel.Menu" Role="Menu1" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Menu">
@@ -1142,6 +1164,7 @@
           <EntitySetMapping Name="CarouselItems">
             <EntityTypeMapping TypeName="DBModel.CarouselItem">
               <MappingFragment StoreEntitySet="CarouselItems">
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -1162,6 +1185,7 @@
             <EntityTypeMapping TypeName="DBModel.Category">
               <MappingFragment StoreEntitySet="Categories">
                 <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
@@ -1170,6 +1194,7 @@
           <EntitySetMapping Name="Countries">
             <EntityTypeMapping TypeName="DBModel.Country">
               <MappingFragment StoreEntitySet="Countries">
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
@@ -1179,6 +1204,7 @@
             <EntityTypeMapping TypeName="DBModel.Menu">
               <MappingFragment StoreEntitySet="Menus">
                 <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
@@ -1229,6 +1255,7 @@
               <MappingFragment StoreEntitySet="Reviews">
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -1239,6 +1266,7 @@
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="DBModel.Role">
               <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -1248,6 +1276,7 @@
           <EntitySetMapping Name="Sales">
             <EntityTypeMapping TypeName="DBModel.Sale">
               <MappingFragment StoreEntitySet="Sales">
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Stop" ColumnName="Stop" />
                 <ScalarProperty Name="Start" ColumnName="Start" />
                 <ScalarProperty Name="Value" ColumnName="Value" />
@@ -1270,6 +1299,7 @@
             <EntityTypeMapping TypeName="DBModel.Town">
               <MappingFragment StoreEntitySet="Towns">
                 <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
@@ -1278,6 +1308,7 @@
           <EntitySetMapping Name="UserAccounts">
             <EntityTypeMapping TypeName="DBModel.UserAccount">
               <MappingFragment StoreEntitySet="UserAccounts">
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -1292,6 +1323,7 @@
                 <ScalarProperty Name="TownID" ColumnName="TownID" />
                 <ScalarProperty Name="Street" ColumnName="Street" />
                 <ScalarProperty Name="House" ColumnName="House" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="DOB" ColumnName="DOB" />
                 <ScalarProperty Name="Contact" ColumnName="Contact" />
@@ -1305,6 +1337,7 @@
           <EntitySetMapping Name="UserTypes">
             <EntityTypeMapping TypeName="DBModel.UserType">
               <MappingFragment StoreEntitySet="UserTypes">
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

@@ -30,6 +30,7 @@ namespace CommonLayer
         public int Contact { get; set; }
         public System.DateTime DOB { get; set; }
         public string Gender { get; set; }
+        public bool Active { get; set; }
         public string House { get; set; }
         public string Street { get; set; }
         public System.Guid TownID { get; set; }

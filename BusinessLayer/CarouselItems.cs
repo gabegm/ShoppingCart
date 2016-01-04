@@ -8,6 +8,7 @@ namespace BusinessLayer
     public class CarouselItems : BLBase
     {
         public CarouselItems() : base() { }
+        public CarouselItems(CommonLayer.DBModelEntities Entities) : base(Entities) { }
 
         /// <summary>
         /// Returns all users and user accounts
@@ -34,6 +35,7 @@ namespace BusinessLayer
         /// <param name="User">user instance to be added.</param>
         public void AddCarouselItemToDatabase(CommonLayer.CarouselItem CarouselItem)
         {
+            CarouselItem.ID = new Guid();
             new DataLayer.DACarouselItems(this.Entities).AddCarouselItem(CarouselItem);
         }
 

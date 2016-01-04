@@ -18,6 +18,7 @@ namespace CommonLayer
         public string Description { get; set; }
         public int Rating { get; set; }
         public System.DateTime Date { get; set; }
+        public bool Active { get; set; }
         public System.Guid UserID { get; set; }
         public System.Guid ProductID { get; set; }
     

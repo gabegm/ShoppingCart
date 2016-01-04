@@ -8,6 +8,7 @@ namespace BusinessLayer
     public class Reviews : BLBase
     {
         public Reviews() : base() { }
+        public Reviews(CommonLayer.DBModelEntities Entities) : base(Entities) { }
 
         /// <summary>
         /// Returns all users and user accounts
@@ -34,6 +35,7 @@ namespace BusinessLayer
         /// <param name="User">user instance to be added.</param>
         public void AddReviewToDatabase(CommonLayer.Review Review)
         {
+            Review.ID = new Guid();
             new DataLayer.DAReviews(this.Entities).AddReview(Review);
         }
 

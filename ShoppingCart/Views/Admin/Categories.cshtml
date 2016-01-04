@@ -13,6 +13,9 @@
                 @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
             </th>
             <th>
+                @Html.DisplayNameFor(mode => Model.FirstOrDefault().Active)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().ParentName)
             </th>
         </tr>
@@ -22,6 +25,9 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => category.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => category.Active)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => category.ParentName)

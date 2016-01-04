@@ -8,6 +8,7 @@ namespace BusinessLayer
     public class Sales : BLBase
     {
         public Sales() : base() { }
+        public Sales(CommonLayer.DBModelEntities Entities) : base(Entities) { }
 
         /// <summary>
         /// Returns all users and user accounts
@@ -34,6 +35,7 @@ namespace BusinessLayer
         /// <param name="User">user instance to be added.</param>
         public void AddSaleToDatabase(CommonLayer.Sale Sale)
         {
+            Sale.ID = new Guid();
             new DataLayer.DASales(this.Entities).AddSale(Sale);
         }
 

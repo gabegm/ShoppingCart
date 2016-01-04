@@ -14,6 +14,7 @@ namespace CommonLayer.Models
         public int Contact { get; set; }
         public DateTime DOB { get; set; }
         public string Gender { get; set; }
+        public bool Active { get; set; }
         public string House { get; set; }
         public string Street { get; set; }
         public Guid TownID { get; set; }
@@ -22,6 +23,8 @@ namespace CommonLayer.Models
         public string CountryName { get; set; }
         public Guid RoleID { get; set; }
         public string RoleName { get; set; }
+        public Guid UserTypeID { get; set; }
+        public string UserTypeName { get; set; }
         public Guid UserAccountID { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }

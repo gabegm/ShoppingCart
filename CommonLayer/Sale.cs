@@ -24,6 +24,7 @@ namespace CommonLayer
         public double Value { get; set; }
         public System.DateTime Start { get; set; }
         public System.DateTime Stop { get; set; }
+        public bool Active { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }

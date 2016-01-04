@@ -5,6 +5,9 @@ namespace BusinessLayer
 {
     public class Products : BLBase
     {
+        public Products() : base() { }
+        public Products(CommonLayer.DBModelEntities Entities) : base(Entities) { }
+
         /// <summary>
         /// Returns ProductsModel as a model
         /// </summary>

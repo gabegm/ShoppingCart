@@ -84,9 +84,23 @@
             </div>
 
             <div class="form-group">
+                @Html.LabelFor(model => model.Active, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Active", null, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
                 @Html.Label("Role", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.ListBoxFor(model => model.RoleID, (MultiSelectList)ViewBag.RoleName, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserTypeID, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.UserTypeID, (IEnumerable<SelectListItem>)ViewBag.UserTypes, new { @class = "form-control" })
                 </div>
             </div>
 

@@ -6,6 +6,7 @@ namespace BusinessLayer
     public class Roles : BLBase
     {
         public Roles() : base() { }
+        public Roles(CommonLayer.DBModelEntities Entities) : base(Entities) { }
 
         public IQueryable<CommonLayer.Role> GetRoles()
         {

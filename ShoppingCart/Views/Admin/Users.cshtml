@@ -30,6 +30,9 @@
                     @Html.DisplayNameFor(model => model.FirstOrDefault().Gender)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Active)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.FirstOrDefault().House)
                 </th>
                 <th>
@@ -69,6 +72,9 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => user.Gender)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.Active)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => user.House)
