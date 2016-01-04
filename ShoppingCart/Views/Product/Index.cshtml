@@ -1,4 +1,4 @@
-﻿@model CommonLayer.Product
+﻿@model IQueryable<CommonLayer.Models.ProductsModel>
 
 @{
     ViewBag.Title = "Index";
@@ -23,9 +23,30 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                    <input type="submit" value="Add To Cart" class="btn btn-default" />
                 </div>
             </div>
+
+            <div class="well">
+                @foreach (var review in Model)
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span>review.Username</span>
+                            <span class="pull-right">Review.Date</span>
+                            <p>Review.ReviewDescription</p>
+                        </div>
+                    </div>
+                }
+
+                <div class="">
+                    @Html.TextBoxFor(model => model.ReviewDescription)
+                    <div class="">
+                        <a class="btn btn-success">Leave a Review</a>
+                    </div>
+                </div>
+            </div>
+
         </div>
     }
 </div>

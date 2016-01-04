@@ -14,5 +14,9 @@ namespace CommonLayer.Models
         public Boolean Active { get; set; }
         public string CategoryID { get; set; }
         public string CategoryName { get; set; }
+        public Guid ReviewID { get; set; }
+        public string ReviewDescription { get; set; }
+        public int ReviewRating { get; set; }
+        public DateTime ReviewDate { get; set; }
     }
 }

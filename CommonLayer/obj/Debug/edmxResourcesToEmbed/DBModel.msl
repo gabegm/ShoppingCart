@@ -11,6 +11,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="CarouselItems">
+      <EntityTypeMapping TypeName="DBModel.CarouselItem">
+        <MappingFragment StoreEntitySet="CarouselItems">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="CartItems">
       <EntityTypeMapping TypeName="DBModel.CartItem">
         <MappingFragment StoreEntitySet="CartItems">
@@ -33,6 +42,15 @@
     <EntitySetMapping Name="Countries">
       <EntityTypeMapping TypeName="DBModel.Country">
         <MappingFragment StoreEntitySet="Countries">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Menus">
+      <EntityTypeMapping TypeName="DBModel.Menu">
+        <MappingFragment StoreEntitySet="Menus">
+          <ScalarProperty Name="ParentID" ColumnName="ParentID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
@@ -65,8 +83,9 @@
     <EntitySetMapping Name="Products">
       <EntityTypeMapping TypeName="DBModel.Product">
         <MappingFragment StoreEntitySet="Products">
-          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="SalesID" ColumnName="SalesID" />
           <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
           <ScalarProperty Name="VATRate" ColumnName="VATRate" />
           <ScalarProperty Name="Price" ColumnName="Price" />
@@ -94,6 +113,16 @@
         <MappingFragment StoreEntitySet="Roles">
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sales">
+      <EntityTypeMapping TypeName="DBModel.Sale">
+        <MappingFragment StoreEntitySet="Sales">
+          <ScalarProperty Name="Stop" ColumnName="Stop" />
+          <ScalarProperty Name="Start" ColumnName="Start" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -130,6 +159,7 @@
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="DBModel.User">
         <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
           <ScalarProperty Name="UserAccountID" ColumnName="UserAccountID" />
           <ScalarProperty Name="TownID" ColumnName="TownID" />
           <ScalarProperty Name="Street" ColumnName="Street" />
@@ -144,6 +174,38 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="UserTypes">
+      <EntityTypeMapping TypeName="DBModel.UserType">
+        <MappingFragment StoreEntitySet="UserTypes">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="MenuCarouselItems" TypeName="DBModel.MenuCarouselItems" StoreEntitySet="MenuCarouselItems">
+      <EndProperty Name="Menu">
+        <ScalarProperty Name="ID" ColumnName="MenuID" />
+      </EndProperty>
+      <EndProperty Name="CarouselItem">
+        <ScalarProperty Name="ID" ColumnName="CarouselItemID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="MenuRoles" TypeName="DBModel.MenuRoles" StoreEntitySet="MenuRoles">
+      <EndProperty Name="Role">
+        <ScalarProperty Name="ID" ColumnName="RoleID" />
+      </EndProperty>
+      <EndProperty Name="Menu">
+        <ScalarProperty Name="ID" ColumnName="MenuID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ProductPrices" TypeName="DBModel.ProductPrices" StoreEntitySet="ProductPrices">
+      <EndProperty Name="UserType">
+        <ScalarProperty Name="ID" ColumnName="UserTypeID" />
+      </EndProperty>
+      <EndProperty Name="Product">
+        <ScalarProperty Name="ID" ColumnName="ProductID" />
+      </EndProperty>
+    </AssociationSetMapping>
     <AssociationSetMapping Name="UserAccountRoles" TypeName="DBModel.UserAccountRoles" StoreEntitySet="UserAccountRoles">
       <EndProperty Name="Role">
         <ScalarProperty Name="ID" ColumnName="RoleID" />

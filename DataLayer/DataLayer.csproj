@@ -87,14 +87,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnectionClass.cs" />
+    <Compile Include="DAAudits.cs" />
+    <Compile Include="DACarouselItems.cs" />
     <Compile Include="DACartItems.cs" />
     <Compile Include="DACategories.cs" />
     <Compile Include="DACountries.cs" />
+    <Compile Include="DAMenus.cs" />
     <Compile Include="DAOrders.cs" />
     <Compile Include="DAProducts.cs" />
+    <Compile Include="DAReviews.cs" />
     <Compile Include="DARoles.cs" />
+    <Compile Include="DASales.cs" />
     <Compile Include="DATowns.cs" />
     <Compile Include="DAUsers.cs" />
+    <Compile Include="DAUserTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -78,16 +78,22 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Audits.cs" />
     <Compile Include="BLBase.cs" />
+    <Compile Include="CarouselItems.cs" />
     <Compile Include="CartItems.cs" />
     <Compile Include="Categories.cs" />
     <Compile Include="Countries.cs" />
+    <Compile Include="Menus.cs" />
     <Compile Include="Orders.cs" />
     <Compile Include="Products.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reviews.cs" />
     <Compile Include="Roles.cs" />
+    <Compile Include="Sales.cs" />
     <Compile Include="Towns.cs" />
     <Compile Include="Users.cs" />
+    <Compile Include="UserTypes.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CommonLayer\CommonLayer.csproj">

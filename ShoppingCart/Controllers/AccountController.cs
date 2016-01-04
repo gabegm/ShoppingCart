@@ -13,7 +13,7 @@ namespace ShoppingCart.Controllers
         // GET: /Account/
         public ActionResult Index()
         {
-            return View();
+            return View("Login");
         }
 
         [HttpGet]
@@ -27,16 +27,10 @@ namespace ShoppingCart.Controllers
         [AllowAnonymous]
         public ActionResult Register(CommonLayer.User User, CommonLayer.UserAccount UserAccount, string ConfirmPassword)
         {
-            BusinessLayer.Users u = new BusinessLayer.Users();
-            u.RegisterUser(User, UserAccount, ConfirmPassword);
+            CommonLayer.Role Role = new BusinessLayer.Roles().GetRole("USR"); 
+            UserAccount.Roles.Add(Role);
+            new BusinessLayer.Users().RegisterUser(User, UserAccount, ConfirmPassword);
             return RedirectToAction("Index", "Users");
-        }
-
-        [HttpGet]
-        public ActionResult Logout()
-        {
-            System.Web.Security.FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -52,19 +46,25 @@ namespace ShoppingCart.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Login(string UserEmail, string Password)
+        public ActionResult Login(string Email, string Password)
         {
             BusinessLayer.Users us = new BusinessLayer.Users();
-            if (us.Login(UserEmail, Password) == true)
+            if (us.Login(Email, Password) == true)
             {
-                System.Web.Security.FormsAuthentication.SetAuthCookie(UserEmail, true);
-                CommonLayer.User user = us.GetUser(UserEmail);
-                ShoppingCart.Models.UIHelpers.UserFullName = user.FirstName + " " + user.LastName;
+                System.Web.Security.FormsAuthentication.SetAuthCookie(Email, true);
+                CommonLayer.User user = us.GetUser(Email);
+                Models.UIHelpers.UserFullName = user.FirstName + " " + user.LastName;
                 return RedirectToAction("Index", "Home");
 
             }
             TempData["LoginInvalid"] = true;
             return RedirectToAction("Login", "Account");
+        }
+
+        public ActionResult Logout()
+        {
+            System.Web.Security.FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

@@ -6,49 +6,6 @@
 }
 
 <div class="col-md-9">
-    <div class="row carousel-holder">
-        <div class="col-md-12">
-            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                </ol>
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner" role="listbox">
-                    <div class="item active">
-                        <img class="slide-image" src="../images/iphone.jpg" alt="">
-                        <div class="carousel-caption">
-                            <p>Apple iPhone 6s and 6s+ available!</p>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img class="slide-image" src="../images/nexus-6.jpg" alt="">
-                        <div class="carousel-caption">
-                            <p>Apple iPhone 6s and 6s+ available!</p>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img class="slide-image" src="../images/lumia.jpg" alt=""> <!--800x300-->
-                        <div class="carousel-caption">
-                            <p>Apple iPhone 6s and 6s+ available!</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Controls -->
-                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
     <div class="row">
         @foreach (var item in Model)
         {
@@ -58,7 +15,7 @@
                     <div class="caption">
                         <h4 class="pull-right">@Html.DisplayFor(modelItem => item.Price)</h4>
                         <h4>
-                            <a href="#">@Html.DisplayFor(modelItem => item.Name)</a>
+                            @Html.ActionLink("@Html.DisplayFor(modelItem => item.Name)", "Index", "Product", new { ID = item.ID })
                         </h4>
                         <p>@Html.DisplayFor(modelItem => item.Description)</p>
                     </div>

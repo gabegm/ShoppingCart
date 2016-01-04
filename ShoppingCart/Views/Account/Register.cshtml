@@ -1,4 +1,4 @@
-﻿@model CommonLayer.User
+﻿@model CommonLayer.Models.UsersModel
 
 @{
     ViewBag.Title = "Register";
@@ -7,35 +7,38 @@
 
 <h2>Register</h2>
 
-<form action="/account/register" class="form-horizontal" method="post">
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
     <div class="form-group">
-        <label for="Email" class="col-sm-2 control-label">Email</label>
+        @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
         <div class="col-sm-10">
-            <input type="email" class="form-control" id="Email" name="Email" placeholder="Email">
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", type="email" })
         </div>
     </div>
     <div class="form-group">
-        <label for="FirstName" class="col-sm-2 control-label">First Name</label>
+        @Html.LabelFor(model => model.FirstName, new { @class = "control-label col-md-2" })
         <div class="col-sm-10">
-            <input type="text" class="form-control" name="FirstName" placeholder="First name" id="FirstName" />
+            @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        <label for="LastName" class="col-sm-2 control-label">Last Name</label>
+        @Html.LabelFor(model => model.LastName, new { @class = "control-label col-md-2" })
         <div class="col-sm-10">
-            <input type="text" class="form-control" name="LastName" id="LastName" />
+            @Html.TextBoxFor(model => model.LastName, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        <label for="Password" class="col-sm-2 control-label">Password</label>
+        @Html.LabelFor(model => model.Password, new { @class = "control-label col-md-2" })
         <div class="col-sm-10">
-            <input type="password" class="form-control" name="Password" id="Password" />
+            @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        <label for="ConfirmPassword" class="col-sm-2 control-label">Confirm Password</label>
+        @Html.Label("Confirm Password", new { @class = "control-label col-md-2" })
         <div class="col-sm-10">
-            <input type="password" class="form-control" name="ConfirmPassword" id="ConfirmPassword" />
+            @Html.Password("ConfirmPassword", new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
@@ -43,4 +46,4 @@
             <button type="submit" class="btn btn-default">Register</button>
         </div>
     </div>
-</form>
+}

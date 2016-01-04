@@ -14,6 +14,14 @@
           <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
+        <EntityType Name="CarouselItems">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ImageURL" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="CartItems">
           <Key>
             <PropertyRef Name="ID" />
@@ -38,6 +46,30 @@
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="MenuCarouselItems">
+          <Key>
+            <PropertyRef Name="MenuID" />
+            <PropertyRef Name="CarouselItemID" />
+          </Key>
+          <Property Name="MenuID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CarouselItemID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MenuRoles">
+          <Key>
+            <PropertyRef Name="MenuID" />
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="MenuID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoleID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Menus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ParentID" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="OrderDetails">
           <Key>
             <PropertyRef Name="ID" />
@@ -60,6 +92,14 @@
           <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="OrderDetailsID" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
+        <EntityType Name="ProductPrices">
+          <Key>
+            <PropertyRef Name="ProductID" />
+            <PropertyRef Name="UserTypeID" />
+          </Key>
+          <Property Name="ProductID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserTypeID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
         <EntityType Name="Products">
           <Key>
             <PropertyRef Name="ID" />
@@ -73,6 +113,7 @@
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="CategoryID" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="SalesID" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="Reviews">
           <Key>
@@ -92,6 +133,15 @@
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Code" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sales">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Value" Type="float" Nullable="false" />
+          <Property Name="Start" Type="date" Nullable="false" />
+          <Property Name="Stop" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -142,6 +192,14 @@
           <Property Name="Street" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="TownID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="UserAccountID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserTypeID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK_Audits_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
@@ -175,6 +233,66 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Categories1">
+              <PropertyRef Name="ParentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MenuCarouselItems_CarouselItems">
+          <End Role="CarouselItems" Type="Self.CarouselItems" Multiplicity="1" />
+          <End Role="MenuCarouselItems" Type="Self.MenuCarouselItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarouselItems">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MenuCarouselItems">
+              <PropertyRef Name="CarouselItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MenuCarouselItems_Menus">
+          <End Role="Menus" Type="Self.Menus" Multiplicity="1" />
+          <End Role="MenuCarouselItems" Type="Self.MenuCarouselItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MenuCarouselItems">
+              <PropertyRef Name="MenuID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MenuRoles_Menus">
+          <End Role="Menus" Type="Self.Menus" Multiplicity="1" />
+          <End Role="MenuRoles" Type="Self.MenuRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MenuRoles">
+              <PropertyRef Name="MenuID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MenuRoles_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="MenuRoles" Type="Self.MenuRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MenuRoles">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Menus_Menus">
+          <End Role="Menus" Type="Self.Menus" Multiplicity="1" />
+          <End Role="Menus1" Type="Self.Menus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Menus1">
               <PropertyRef Name="ParentID" />
             </Dependent>
           </ReferentialConstraint>
@@ -215,6 +333,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProductPrices_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="ProductPrices" Type="Self.ProductPrices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductPrices">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductPrices_UserTypes">
+          <End Role="UserTypes" Type="Self.UserTypes" Multiplicity="1" />
+          <End Role="ProductPrices" Type="Self.ProductPrices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserTypes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductPrices">
+              <PropertyRef Name="UserTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Products_Categories">
           <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
@@ -224,6 +366,18 @@
             </Principal>
             <Dependent Role="Products">
               <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Sales">
+          <End Role="Sales" Type="Self.Sales" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sales">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="SalesID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -323,21 +477,40 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Users_UserTypes">
+          <End Role="UserTypes" Type="Self.UserTypes" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserTypes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="UserTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="DBModelStoreContainer">
           <EntitySet Name="Audits" EntityType="Self.Audits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarouselItems" EntityType="Self.CarouselItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CartItems" EntityType="Self.CartItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MenuCarouselItems" EntityType="Self.MenuCarouselItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MenuRoles" EntityType="Self.MenuRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Menus" EntityType="Self.Menus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductPrices" EntityType="Self.ProductPrices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Towns" EntityType="Self.Towns" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserAccountRoles" EntityType="Self.UserAccountRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserAccounts" EntityType="Self.UserAccounts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserTypes" EntityType="Self.UserTypes" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Audits_Users" Association="Self.FK_Audits_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Audits" EntitySet="Audits" />
@@ -349,6 +522,26 @@
           <AssociationSet Name="FK_Categories_Categories" Association="Self.FK_Categories_Categories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Categories1" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenuCarouselItems_CarouselItems" Association="Self.FK_MenuCarouselItems_CarouselItems">
+            <End Role="CarouselItems" EntitySet="CarouselItems" />
+            <End Role="MenuCarouselItems" EntitySet="MenuCarouselItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenuCarouselItems_Menus" Association="Self.FK_MenuCarouselItems_Menus">
+            <End Role="Menus" EntitySet="Menus" />
+            <End Role="MenuCarouselItems" EntitySet="MenuCarouselItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenuRoles_Menus" Association="Self.FK_MenuRoles_Menus">
+            <End Role="Menus" EntitySet="Menus" />
+            <End Role="MenuRoles" EntitySet="MenuRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenuRoles_Roles" Association="Self.FK_MenuRoles_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="MenuRoles" EntitySet="MenuRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Menus_Menus" Association="Self.FK_Menus_Menus">
+            <End Role="Menus" EntitySet="Menus" />
+            <End Role="Menus1" EntitySet="Menus" />
           </AssociationSet>
           <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
             <End Role="Orders" EntitySet="Orders" />
@@ -362,8 +555,20 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
+          <AssociationSet Name="FK_ProductPrices_Products" Association="Self.FK_ProductPrices_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductPrices" EntitySet="ProductPrices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductPrices_UserTypes" Association="Self.FK_ProductPrices_UserTypes">
+            <End Role="UserTypes" EntitySet="UserTypes" />
+            <End Role="ProductPrices" EntitySet="ProductPrices" />
+          </AssociationSet>
           <AssociationSet Name="FK_Products_Categories" Association="Self.FK_Products_Categories">
             <End Role="Categories" EntitySet="Categories" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Sales" Association="Self.FK_Products_Sales">
+            <End Role="Sales" EntitySet="Sales" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="FK_Reviews_Products" Association="Self.FK_Reviews_Products">
@@ -398,6 +603,10 @@
             <End Role="UserAccounts" EntitySet="UserAccounts" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="FK_Users_UserTypes" Association="Self.FK_Users_UserTypes">
+            <End Role="UserTypes" EntitySet="UserTypes" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -405,18 +614,22 @@
       <Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="DBModelEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Audits" EntityType="DBModel.Audit" />
+          <EntitySet Name="CarouselItems" EntityType="DBModel.CarouselItem" />
           <EntitySet Name="CartItems" EntityType="DBModel.CartItem" />
           <EntitySet Name="Categories" EntityType="DBModel.Category" />
           <EntitySet Name="Countries" EntityType="DBModel.Country" />
+          <EntitySet Name="Menus" EntityType="DBModel.Menu" />
           <EntitySet Name="OrderDetails" EntityType="DBModel.OrderDetail" />
           <EntitySet Name="Orders" EntityType="DBModel.Order" />
           <EntitySet Name="Products" EntityType="DBModel.Product" />
           <EntitySet Name="Reviews" EntityType="DBModel.Review" />
           <EntitySet Name="Roles" EntityType="DBModel.Role" />
+          <EntitySet Name="Sales" EntityType="DBModel.Sale" />
           <EntitySet Name="sysdiagrams" EntityType="DBModel.sysdiagram" />
           <EntitySet Name="Towns" EntityType="DBModel.Town" />
           <EntitySet Name="UserAccounts" EntityType="DBModel.UserAccount" />
           <EntitySet Name="Users" EntityType="DBModel.User" />
+          <EntitySet Name="UserTypes" EntityType="DBModel.UserType" />
           <AssociationSet Name="FK_Audits_Users" Association="DBModel.FK_Audits_Users">
             <End Role="User" EntitySet="Users" />
             <End Role="Audit" EntitySet="Audits" />
@@ -441,6 +654,10 @@
             <End Role="Country" EntitySet="Countries" />
             <End Role="Town" EntitySet="Towns" />
           </AssociationSet>
+          <AssociationSet Name="FK_Menus_Menus" Association="DBModel.FK_Menus_Menus">
+            <End Role="Menu" EntitySet="Menus" />
+            <End Role="Menu1" EntitySet="Menus" />
+          </AssociationSet>
           <AssociationSet Name="FK_OrderDetails_Orders" Association="DBModel.FK_OrderDetails_Orders">
             <End Role="Order" EntitySet="Orders" />
             <End Role="OrderDetail" EntitySet="OrderDetails" />
@@ -452,6 +669,10 @@
           <AssociationSet Name="FK_Orders_Users" Association="DBModel.FK_Orders_Users">
             <End Role="User" EntitySet="Users" />
             <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Sales" Association="DBModel.FK_Products_Sales">
+            <End Role="Sale" EntitySet="Sales" />
+            <End Role="Product" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="FK_Reviews_Products" Association="DBModel.FK_Reviews_Products">
             <End Role="Product" EntitySet="Products" />
@@ -469,6 +690,22 @@
             <End Role="UserAccount" EntitySet="UserAccounts" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="FK_Users_UserTypes" Association="DBModel.FK_Users_UserTypes">
+            <End Role="UserType" EntitySet="UserTypes" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="MenuCarouselItems" Association="DBModel.MenuCarouselItems">
+            <End Role="CarouselItem" EntitySet="CarouselItems" />
+            <End Role="Menu" EntitySet="Menus" />
+          </AssociationSet>
+          <AssociationSet Name="MenuRoles" Association="DBModel.MenuRoles">
+            <End Role="Menu" EntitySet="Menus" />
+            <End Role="Role" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="ProductPrices" Association="DBModel.ProductPrices">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="UserType" EntitySet="UserTypes" />
+          </AssociationSet>
           <AssociationSet Name="UserAccountRoles" Association="DBModel.UserAccountRoles">
             <End Role="UserAccount" EntitySet="UserAccounts" />
             <End Role="Role" EntitySet="Roles" />
@@ -483,6 +720,15 @@
           <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UserID" Type="Guid" Nullable="false" />
           <NavigationProperty Name="User" Relationship="DBModel.FK_Audits_Users" FromRole="Audit" ToRole="User" />
+        </EntityType>
+        <EntityType Name="CarouselItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="ImageURL" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Menus" Relationship="DBModel.MenuCarouselItems" FromRole="CarouselItem" ToRole="Menu" />
         </EntityType>
         <EntityType Name="CartItem">
           <Key>
@@ -513,6 +759,18 @@
           <Property Name="ID" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Towns" Relationship="DBModel.FK_Towns_Countries1" FromRole="Country" ToRole="Town" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ParentID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Menus1" Relationship="DBModel.FK_Menus_Menus" FromRole="Menu" ToRole="Menu1" />
+          <NavigationProperty Name="Menu1" Relationship="DBModel.FK_Menus_Menus" FromRole="Menu1" ToRole="Menu" />
+          <NavigationProperty Name="CarouselItems" Relationship="DBModel.MenuCarouselItems" FromRole="Menu" ToRole="CarouselItem" />
+          <NavigationProperty Name="Roles" Relationship="DBModel.MenuRoles" FromRole="Menu" ToRole="Role" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -551,12 +809,15 @@
           <Property Name="Price" Type="Double" Nullable="false" />
           <Property Name="VATRate" Type="Double" Nullable="false" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
           <Property Name="CategoryID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SalesID" Type="Guid" Nullable="false" />
           <NavigationProperty Name="CartItems" Relationship="DBModel.FK_ShoppingCartItems_Products" FromRole="Product" ToRole="CartItem" />
           <NavigationProperty Name="Category" Relationship="DBModel.FK_Products_Categories" FromRole="Product" ToRole="Category" />
           <NavigationProperty Name="OrderDetails" Relationship="DBModel.FK_OrderDetails_Products" FromRole="Product" ToRole="OrderDetail" />
+          <NavigationProperty Name="Sale" Relationship="DBModel.FK_Products_Sales" FromRole="Product" ToRole="Sale" />
           <NavigationProperty Name="Reviews" Relationship="DBModel.FK_Reviews_Products" FromRole="Product" ToRole="Review" />
-          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="UserTypes" Relationship="DBModel.ProductPrices" FromRole="Product" ToRole="UserType" />
         </EntityType>
         <EntityType Name="Review">
           <Key>
@@ -578,7 +839,18 @@
           <Property Name="ID" Type="Guid" Nullable="false" />
           <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Menus" Relationship="DBModel.MenuRoles" FromRole="Role" ToRole="Menu" />
           <NavigationProperty Name="UserAccounts" Relationship="DBModel.UserAccountRoles" FromRole="Role" ToRole="UserAccount" />
+        </EntityType>
+        <EntityType Name="Sale">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Value" Type="Double" Nullable="false" />
+          <Property Name="Start" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Stop" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Products" Relationship="DBModel.FK_Products_Sales" FromRole="Sale" ToRole="Product" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -625,12 +897,23 @@
           <Property Name="Street" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TownID" Type="Guid" Nullable="false" />
           <Property Name="UserAccountID" Type="Guid" Nullable="false" />
+          <Property Name="UserTypeID" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Audits" Relationship="DBModel.FK_Audits_Users" FromRole="User" ToRole="Audit" />
           <NavigationProperty Name="CartItems" Relationship="DBModel.FK_CartItems_Users" FromRole="User" ToRole="CartItem" />
           <NavigationProperty Name="Orders" Relationship="DBModel.FK_Orders_Users" FromRole="User" ToRole="Order" />
           <NavigationProperty Name="Reviews" Relationship="DBModel.FK_Reviews_Users" FromRole="User" ToRole="Review" />
           <NavigationProperty Name="Town" Relationship="DBModel.FK_Users_Towns" FromRole="User" ToRole="Town" />
           <NavigationProperty Name="UserAccount" Relationship="DBModel.FK_Users_UserAccounts" FromRole="User" ToRole="UserAccount" />
+          <NavigationProperty Name="UserType" Relationship="DBModel.FK_Users_UserTypes" FromRole="User" ToRole="UserType" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Users" Relationship="DBModel.FK_Users_UserTypes" FromRole="UserType" ToRole="User" />
+          <NavigationProperty Name="Products" Relationship="DBModel.ProductPrices" FromRole="UserType" ToRole="Product" />
         </EntityType>
         <Association Name="FK_Audits_Users">
           <End Type="DBModel.User" Role="User" Multiplicity="1" />
@@ -704,6 +987,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Menus_Menus">
+          <End Type="DBModel.Menu" Role="Menu" Multiplicity="1" />
+          <End Type="DBModel.Menu" Role="Menu1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Menu1">
+              <PropertyRef Name="ParentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OrderDetails_Orders">
           <End Type="DBModel.Order" Role="Order" Multiplicity="1" />
           <End Type="DBModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
@@ -737,6 +1032,18 @@
             </Principal>
             <Dependent Role="Order">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Sales">
+          <End Type="DBModel.Sale" Role="Sale" Multiplicity="1" />
+          <End Type="DBModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sale">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="SalesID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -788,6 +1095,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Users_UserTypes">
+          <End Type="DBModel.UserType" Role="UserType" Multiplicity="1" />
+          <End Type="DBModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MenuCarouselItems">
+          <End Type="DBModel.CarouselItem" Role="CarouselItem" Multiplicity="*" />
+          <End Type="DBModel.Menu" Role="Menu" Multiplicity="*" />
+        </Association>
+        <Association Name="MenuRoles">
+          <End Type="DBModel.Menu" Role="Menu" Multiplicity="*" />
+          <End Type="DBModel.Role" Role="Role" Multiplicity="*" />
+        </Association>
+        <Association Name="ProductPrices">
+          <End Type="DBModel.Product" Role="Product" Multiplicity="*" />
+          <End Type="DBModel.UserType" Role="UserType" Multiplicity="*" />
+        </Association>
         <Association Name="UserAccountRoles">
           <End Type="DBModel.UserAccount" Role="UserAccount" Multiplicity="*" />
           <End Type="DBModel.Role" Role="Role" Multiplicity="*" />
@@ -804,6 +1135,15 @@
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarouselItems">
+            <EntityTypeMapping TypeName="DBModel.CarouselItem">
+              <MappingFragment StoreEntitySet="CarouselItems">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -830,6 +1170,15 @@
           <EntitySetMapping Name="Countries">
             <EntityTypeMapping TypeName="DBModel.Country">
               <MappingFragment StoreEntitySet="Countries">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Menus">
+            <EntityTypeMapping TypeName="DBModel.Menu">
+              <MappingFragment StoreEntitySet="Menus">
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
@@ -862,8 +1211,9 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="DBModel.Product">
               <MappingFragment StoreEntitySet="Products">
-                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="SalesID" ColumnName="SalesID" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="VATRate" ColumnName="VATRate" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
@@ -891,6 +1241,16 @@
               <MappingFragment StoreEntitySet="Roles">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sales">
+            <EntityTypeMapping TypeName="DBModel.Sale">
+              <MappingFragment StoreEntitySet="Sales">
+                <ScalarProperty Name="Stop" ColumnName="Stop" />
+                <ScalarProperty Name="Start" ColumnName="Start" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -927,6 +1287,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="DBModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
                 <ScalarProperty Name="UserAccountID" ColumnName="UserAccountID" />
                 <ScalarProperty Name="TownID" ColumnName="TownID" />
                 <ScalarProperty Name="Street" ColumnName="Street" />
@@ -941,6 +1302,38 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="UserTypes">
+            <EntityTypeMapping TypeName="DBModel.UserType">
+              <MappingFragment StoreEntitySet="UserTypes">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="MenuCarouselItems" TypeName="DBModel.MenuCarouselItems" StoreEntitySet="MenuCarouselItems">
+            <EndProperty Name="Menu">
+              <ScalarProperty Name="ID" ColumnName="MenuID" />
+            </EndProperty>
+            <EndProperty Name="CarouselItem">
+              <ScalarProperty Name="ID" ColumnName="CarouselItemID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="MenuRoles" TypeName="DBModel.MenuRoles" StoreEntitySet="MenuRoles">
+            <EndProperty Name="Role">
+              <ScalarProperty Name="ID" ColumnName="RoleID" />
+            </EndProperty>
+            <EndProperty Name="Menu">
+              <ScalarProperty Name="ID" ColumnName="MenuID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ProductPrices" TypeName="DBModel.ProductPrices" StoreEntitySet="ProductPrices">
+            <EndProperty Name="UserType">
+              <ScalarProperty Name="ID" ColumnName="UserTypeID" />
+            </EndProperty>
+            <EndProperty Name="Product">
+              <ScalarProperty Name="ID" ColumnName="ProductID" />
+            </EndProperty>
+          </AssociationSetMapping>
           <AssociationSetMapping Name="UserAccountRoles" TypeName="DBModel.UserAccountRoles" StoreEntitySet="UserAccountRoles">
             <EndProperty Name="Role">
               <ScalarProperty Name="ID" ColumnName="RoleID" />

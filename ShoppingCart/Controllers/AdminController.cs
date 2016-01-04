@@ -52,7 +52,7 @@ namespace ShoppingCart.Controllers
                                                          Text = roles.Name,
                                                          Value = roles.ID.ToString()
                                                      }).ToList();
-            ViewBag.RoleName = new MultiSelectList(RoleItems, "Value", "Text"); ;
+            ViewBag.RoleName = new MultiSelectList(RoleItems, "Value", "Text");
             List<SelectListItem> TownItems = (from towns in u.GetUserTowns().ToList()
                                               select new SelectListItem()
                                               {
@@ -79,12 +79,7 @@ namespace ShoppingCart.Controllers
         [HttpPost]
         public ActionResult CreateNewUser(CommonLayer.User User, CommonLayer.UserAccount UserAccount, string ConfirmPassword, Guid[] RoleID)
         {
-            foreach(Guid ID in RoleID)
-            {
-                CommonLayer.Role Role = new BusinessLayer.Roles().GetRole(ID);
-                UserAccount.Roles.Add(Role);
-            }
-            new BusinessLayer.Users().RegisterUser(User, UserAccount, ConfirmPassword);
+            new BusinessLayer.Users().RegisterUser(User, UserAccount, ConfirmPassword, RoleID);
             return RedirectToAction("Users");
         }
 
@@ -464,8 +459,7 @@ namespace ShoppingCart.Controllers
         [HttpGet]
         public ActionResult Countries()
         {
-            BusinessLayer.Countries countries = new BusinessLayer.Countries();
-            return View(countries.GetCountries());
+            return View(new BusinessLayer.Countries().GetCountries());
         }
 
         /// <summary>
@@ -520,6 +514,326 @@ namespace ShoppingCart.Controllers
         {
             new BusinessLayer.Countries().DeleteCountry(ID);
             return RedirectToAction("Countries");
+        }
+
+        /// <summary>
+        /// Displays all the countries from the database
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult UserTypes()
+        {
+            return View(new BusinessLayer.UserTypes().GetUserTypes());
+        }
+
+        /// <summary>
+        /// Displays a form to create a new country
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult CreateUserType()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Saves new country to database
+        /// </summary>
+        /// <param name="country"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult CreateUserType(CommonLayer.UserType UserType)
+        {
+            new BusinessLayer.UserTypes().AddUserTypeToDatabase(UserType);
+            return RedirectToAction("UserTypes");
+        }
+
+        /// <summary>
+        /// Returns form to edit specific country
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult EditUserType()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Saves edited country to database
+        /// </summary>
+        /// <param name="country"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult EditUserType(CommonLayer.UserType UserType)
+        {
+            new BusinessLayer.UserTypes().UpdateUserType(UserType);
+            return RedirectToAction("UserTypes");
+        }
+
+        /// <summary>
+        /// Deletes specific country from the database
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DeleteUserType(Guid ID)
+        {
+            new BusinessLayer.UserTypes().DeleteUserType(ID);
+            return RedirectToAction("UserTypes");
+        }
+
+        /// <summary>
+        /// Displays all the countries from the database
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Menus()
+        {
+            return View(new BusinessLayer.Menus().GetMenus());
+        }
+
+        /// <summary>
+        /// Displays a form to create a new country
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult CreateMenu()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Saves new country to database
+        /// </summary>
+        /// <param name="country"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult CreateMenu(CommonLayer.Menu Menu)
+        {
+            new BusinessLayer.Menus().AddMenuToDatabase(Menu);
+            return RedirectToAction("Menus");
+        }
+
+        /// <summary>
+        /// Returns form to edit specific country
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult EditMenu()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Saves edited country to database
+        /// </summary>
+        /// <param name="country"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult EditMenu(CommonLayer.Menu Menu)
+        {
+            new BusinessLayer.Menus().UpdateMenu(Menu);
+            return RedirectToAction("Menus");
+        }
+
+        /// <summary>
+        /// Deletes specific country from the database
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DeleteMenu(string ID)
+        {
+            new BusinessLayer.Menus().DeleteMenu(ID);
+            return RedirectToAction("Menus");
+        }
+
+        /// <summary>
+        /// Displays all the countries from the database
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Reviews()
+        {
+            return View(new BusinessLayer.Reviews().GetReviews());
+        }
+
+        /// <summary>
+        /// Displays a form to create a new country
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult CreateReview()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Saves new country to database
+        /// </summary>
+        /// <param name="country"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult CreateReview(CommonLayer.Review Review)
+        {
+            new BusinessLayer.Reviews().AddReviewToDatabase(Review);
+            return RedirectToAction("Reviews");
+        }
+
+        /// <summary>
+        /// Returns form to edit specific country
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult EditReview()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Saves edited country to database
+        /// </summary>
+        /// <param name="country"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult EditReview(CommonLayer.Review Review)
+        {
+            new BusinessLayer.Reviews().UpdateReview(Review);
+            return RedirectToAction("Reviews");
+        }
+
+        /// <summary>
+        /// Deletes specific country from the database
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DeleteReview(Guid ID)
+        {
+            new BusinessLayer.Reviews().DeleteReview(ID);
+            return RedirectToAction("Reviews");
+        }
+
+        /// <summary>
+        /// Displays all the countries from the database
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult CarouselItems()
+        {
+            return View(new BusinessLayer.CarouselItems().GetCarouselItems());
+        }
+
+        /// <summary>
+        /// Displays a form to create a new country
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult CreateCarouselItem()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Saves new country to database
+        /// </summary>
+        /// <param name="country"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult CreateCarouselItem(CommonLayer.CarouselItem CarouselItem)
+        {
+            new BusinessLayer.CarouselItems().AddCarouselItemToDatabase(CarouselItem);
+            return RedirectToAction("CarouselItems");
+        }
+
+        /// <summary>
+        /// Returns form to edit specific country
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult EditCarouselItem()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Saves edited country to database
+        /// </summary>
+        /// <param name="country"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult EditCarouselItem(CommonLayer.CarouselItem CarouselItem)
+        {
+            new BusinessLayer.CarouselItems().UpdateCarouselItem(CarouselItem);
+            return RedirectToAction("CarouselItems");
+        }
+
+        /// <summary>
+        /// Deletes specific country from the database
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DeleteCarouselItem(Guid ID)
+        {
+            new BusinessLayer.CarouselItems().DeleteCarouselItem(ID);
+            return RedirectToAction("CarouselItems");
+        }
+
+        /// <summary>
+        /// Displays all the countries from the database
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Sales()
+        {
+            return View(new BusinessLayer.Sales().GetSales());
+        }
+
+        /// <summary>
+        /// Displays a form to create a new country
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult CreateSale()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Saves new country to database
+        /// </summary>
+        /// <param name="country"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult CreateSale(CommonLayer.Sale Sale)
+        {
+            new BusinessLayer.Sales().AddSaleToDatabase(Sale);
+            return RedirectToAction("Sales");
+        }
+
+        /// <summary>
+        /// Returns form to edit specific country
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult EditSale()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Saves edited country to database
+        /// </summary>
+        /// <param name="country"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult EditSale(CommonLayer.Sale Sale)
+        {
+            new BusinessLayer.Sales().UpdateSale(Sale);
+            return RedirectToAction("Sales");
+        }
+
+        /// <summary>
+        /// Deletes specific country from the database
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DeleteSale(Guid ID)
+        {
+            new BusinessLayer.Sales().DeleteSale(ID);
+            return RedirectToAction("Sales");
         }
 
         [HttpGet]

@@ -34,6 +34,7 @@ namespace CommonLayer
         public string Street { get; set; }
         public System.Guid TownID { get; set; }
         public System.Guid UserAccountID { get; set; }
+        public System.Guid UserTypeID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Audit> Audits { get; set; }
@@ -45,5 +46,6 @@ namespace CommonLayer
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual Town Town { get; set; }
         public virtual UserAccount UserAccount { get; set; }
+        public virtual UserType UserType { get; set; }
     }
 }

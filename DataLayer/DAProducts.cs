@@ -11,20 +11,25 @@ namespace DataLayer
 
         public IQueryable<CommonLayer.Models.ProductsModel> GetProductsAsModel()
         {
-            return (from p in this.Entities.Products
-                    join category in this.Entities.Categories on p.CategoryID equals category.ID
+            return (from product in this.Entities.Products
+                    join category in this.Entities.Categories on product.CategoryID equals category.ID
+                    join review in this.Entities.Reviews on product.ID equals review.ID
                     select new CommonLayer.Models.ProductsModel()
                     {
-                        ID = p.ID,
-                        Name = p.Name,
-                        Description = p.Description,
-                        ImageURL = p.ImageURL,
-                        Price = (float)p.Price,
-                        VATRate = (float)p.VATRate,
-                        Quantity = p.Quantity,
-                        Active = p.Active,
+                        ID = product.ID,
+                        Name = product.Name,
+                        Description = product.Description,
+                        ImageURL = product.ImageURL,
+                        Price = (float)product.Price,
+                        VATRate = (float)product.VATRate,
+                        Quantity = product.Quantity,
+                        Active = product.Active,
                         CategoryID = category.ID,
-                        CategoryName = category.Name
+                        CategoryName = category.Name,
+                        ReviewID = review.ID,
+                        ReviewDescription = review.Description,
+                        ReviewRating = review.Rating,
+                        ReviewDate = review.Date
                     });
         }
 

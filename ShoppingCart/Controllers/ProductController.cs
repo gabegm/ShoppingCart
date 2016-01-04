@@ -10,14 +10,12 @@ namespace ShoppingCart.Controllers
         // GET: /Products/
         public ActionResult Index()
         {
-            //BusinessLayer.Products pr = new BusinessLayer.Products();
             return View(new BusinessLayer.Products().GetProductsAsModel());
         }
 
         [HttpGet]
         public ActionResult Detail(Guid ID)
         {
-            //BusinessLayer.Products p = new BusinessLayer.Products();
             return View(new BusinessLayer.Products().GetProduct(ID));
         }
 

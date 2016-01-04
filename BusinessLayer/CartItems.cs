@@ -25,7 +25,6 @@ namespace BusinessLayer
             {
                 new DataLayer.DACartItems(this.Entities).UpdateCartItem(CartItem);
             }
-
         }
 
         public void DeleteCartItem(Guid ID)

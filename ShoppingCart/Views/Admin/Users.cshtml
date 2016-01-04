@@ -8,90 +8,92 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h2>Users</h2>
     <p>@Html.ActionLink("Create New", "CreateNewUser")</p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Contact)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().DOB)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Gender)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().House)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Street)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().TownName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().CountryName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Username)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().RoleName)
-            </th>
-        </tr>
-
-        @foreach (var user in Model)
-        {
+    <div class="table-responsive">
+        <table class="table">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => user.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => user.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => user.LastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => user.Contact)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => user.DOB)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => user.Gender)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => user.House)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => user.Street)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => user.TownName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => user.CountryName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => user.Username)
-                </td>
-                <td>
-                    @Html.DisplayNameFor(modelItem => user.RoleName)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "EditUser", new { UserID = user.ID }) |
-                    @Html.ActionLink("Delete", "DeleteUser", new { UserID = user.ID })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Email)
+                </th>
+                <th>
+                    @Html.DisplayName("Name")
+                </th>
+                <th>
+                    @Html.DisplayName("Surname")
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Contact)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().DOB)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Gender)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().House)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Street)
+                </th>
+                <th>
+                    @Html.DisplayName("Town")
+                </th>
+                <th>
+                    @Html.DisplayName("Country")
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Username)
+                </th>
+                <th>
+                    @Html.DisplayName("Role")
+                </th>
             </tr>
-        }
-    </table>
+
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.Contact)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.DOB)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.Gender)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.House)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.Street)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.TownName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.CountryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.Username)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(modelItem => user.RoleName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "EditUser", new { UserID = user.ID }) |
+                        @Html.ActionLink("Delete", "DeleteUser", new { UserID = user.ID })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
 </div>

@@ -141,6 +141,32 @@ namespace BusinessLayer
         }
 
         /// <summary>
+        /// Registers a new user.
+        /// </summary>
+        /// <param name="User">User to be added.</param>
+        public void RegisterUser(CommonLayer.User User, CommonLayer.UserAccount UserAccount, string ConfirmPassword, Guid[] RoleID)
+        {
+            CommonLayer.User ExistingUser = this.GetUser(User.ID);
+            CommonLayer.UserAccount ExistingUserAccount = this.GetUserAccount(UserAccount.ID);
+
+            if (ExistingUser == null && ExistingUserAccount == null)
+            {
+                if (UserAccount.Password.Equals(ConfirmPassword))
+                {
+                    User.ID = Guid.NewGuid();
+                    UserAccount.ID = Guid.NewGuid();
+                    User.UserAccountID = UserAccount.ID;
+                    UserAccount.Password = HashSHA512String(UserAccount.Password, UserAccount.ID.ToString());
+                    this.AddUserToDatabase(User, UserAccount);
+                    foreach (Guid ID in RoleID)
+                    {
+                        new Roles().AddUserRole(ID, UserAccount.ID);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Logins a user and returns true if account is valid.
         /// </summary>
         /// <param name="Email">User email.</param>
@@ -178,8 +204,8 @@ namespace BusinessLayer
             string AllString = Password + Salt;
             if (string.IsNullOrEmpty(AllString)) throw new ArgumentNullException();
             byte[] buffer = System.Text.Encoding.UTF8.GetBytes(AllString);
-            buffer = System.Security.Cryptography.SHA512Managed.Create().ComputeHash(buffer);
-            return System.Convert.ToBase64String(buffer).Substring(0, 86); // strip padding
+            buffer = System.Security.Cryptography.SHA512.Create().ComputeHash(buffer);
+            return Convert.ToBase64String(buffer).Substring(0, 86); // strip padding
         }
     }
 }

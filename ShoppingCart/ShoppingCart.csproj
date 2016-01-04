@@ -103,6 +103,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\frontend.css" />
+    <Content Include="Content\login.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -187,6 +188,8 @@
     <Content Include="Views\Admin\CreateNewTown.cshtml" />
     <Content Include="Views\Checkout\Index.cshtml" />
     <Content Include="Views\Admin\Orders.cshtml" />
+    <Content Include="Views\_Shared\_Carousel.cshtml" />
+    <Content Include="Views\_Shared\_Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

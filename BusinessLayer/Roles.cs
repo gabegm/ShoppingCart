@@ -16,7 +16,6 @@ namespace BusinessLayer
         {
             Role.ID = Guid.NewGuid();
             new DataLayer.DARoles(this.Entities).AddRole(Role);
-
         }
 
         public void UpdateRole(CommonLayer.Role role)
@@ -30,13 +29,18 @@ namespace BusinessLayer
 
         public void AddUserRole(Guid RoleID, Guid UserID)
         {
-            DataLayer.DARoles dar = new DataLayer.DARoles(this.Entities);
-            DataLayer.DAUsers dau = new DataLayer.DAUsers(this.Entities);
+            CommonLayer.UserAccount UserAccount = new Users().GetUserAccount(UserID);
+            CommonLayer.Role Role = new Roles().GetRole(RoleID);
 
-            CommonLayer.UserAccount UserAccount = dau.GetUserAccount(UserID);
-            CommonLayer.Role Role = dar.GetRole(RoleID);
+            new DataLayer.DARoles(this.Entities).AllocateUserRole(UserAccount, Role);
+        }
 
-            dar.AllocateUserRole(UserAccount, Role);
+        public void RemoveUserRole(Guid RoleID, Guid UserID)
+        {
+            CommonLayer.UserAccount UserAccount = new Users().GetUserAccount(UserID);
+            CommonLayer.Role Role = new Roles().GetRole(RoleID);
+
+            new DataLayer.DARoles(this.Entities).DeallocateUserRole(UserAccount, Role);
         }
 
         /// <summary>
@@ -63,6 +67,11 @@ namespace BusinessLayer
         public CommonLayer.Role GetRole(Guid ID)
         {
             return new DataLayer.DARoles(this.Entities).GetRole(ID);
+        }
+
+        public CommonLayer.Role GetRole(string Code)
+        {
+            return new DataLayer.DARoles(this.Entities).GetRole(Code);
         }
 
         public void DeleteRole(Guid ID)
