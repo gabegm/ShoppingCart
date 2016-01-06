@@ -140,6 +140,7 @@
     </Compile>
     <Compile Include="Models\CartItemsModel.cs" />
     <Compile Include="Models\CategoriesModel.cs" />
+    <Compile Include="Models\MenusModel.cs" />
     <Compile Include="Models\OrdersModel.cs" />
     <Compile Include="Models\ProductsModel.cs" />
     <Compile Include="Models\TownsModel.cs" />

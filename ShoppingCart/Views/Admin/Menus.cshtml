@@ -7,11 +7,17 @@
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h2>Menus</h2>
-    <p>@Html.ActionLink("Create New", "CreateNewUserType")</p>
+    <p>@Html.ActionLink("Create New", "CreateNewMenu")</p>
     <table class="table">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ActionName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ControllerName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().Active)
@@ -23,6 +29,12 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActionName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ControllerName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Active)

@@ -6,6 +6,7 @@
 }
 
 <div class="col-md-9">
+    @Html.Partial("~/Views/_Shared/_Carousel.cshtml")
     <div class="row">
         @foreach (var item in Model)
         {
@@ -15,19 +16,9 @@
                     <div class="caption">
                         <h4 class="pull-right">@Html.DisplayFor(modelItem => item.Price)</h4>
                         <h4>
-                            @Html.ActionLink("@Html.DisplayFor(modelItem => item.Name)", "Index", "Product", new { ID = item.ID })
+                            @Html.ActionLink(Html.DisplayFor(modelItem => item.Name).ToString(), "Index", "Product", new { ID = item.ID })
                         </h4>
                         <p>@Html.DisplayFor(modelItem => item.Description)</p>
-                    </div>
-                    <div class="ratings">
-                        <p class="pull-right">15 reviews</p>
-                        <p>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                        </p>
                     </div>
                 </div>
             </div>

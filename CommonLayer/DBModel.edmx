@@ -72,6 +72,8 @@
           <Property Name="ID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="ActionName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ControllerName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ParentID" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="OrderDetails">
@@ -117,7 +119,7 @@
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="CategoryID" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="SalesID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SaleID" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="Reviews">
           <Key>
@@ -381,14 +383,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Products_Sales">
-          <End Role="Sales" Type="Self.Sales" Multiplicity="1" />
+          <End Role="Sales" Type="Self.Sales" Multiplicity="0..1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Sales">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Products">
-              <PropertyRef Name="SalesID" />
+              <PropertyRef Name="SaleID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -786,6 +788,8 @@
           <NavigationProperty Name="Menu1" Relationship="DBModel.FK_Menus_Menus" FromRole="Menu1" ToRole="Menu" />
           <NavigationProperty Name="CarouselItems" Relationship="DBModel.MenuCarouselItems" FromRole="Menu" ToRole="CarouselItem" />
           <NavigationProperty Name="Roles" Relationship="DBModel.MenuRoles" FromRole="Menu" ToRole="Role" />
+          <Property Name="ActionName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ControllerName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -826,7 +830,7 @@
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
           <Property Name="CategoryID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="SalesID" Type="Guid" Nullable="false" />
+          <Property Name="SaleID" Type="Guid" />
           <NavigationProperty Name="CartItems" Relationship="DBModel.FK_ShoppingCartItems_Products" FromRole="Product" ToRole="CartItem" />
           <NavigationProperty Name="Category" Relationship="DBModel.FK_Products_Categories" FromRole="Product" ToRole="Category" />
           <NavigationProperty Name="OrderDetails" Relationship="DBModel.FK_OrderDetails_Products" FromRole="Product" ToRole="OrderDetail" />
@@ -1058,14 +1062,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Products_Sales">
-          <End Type="DBModel.Sale" Role="Sale" Multiplicity="1" />
+          <End Type="DBModel.Sale" Role="Sale" Multiplicity="0..1" />
           <End Type="DBModel.Product" Role="Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Sale">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Product">
-              <PropertyRef Name="SalesID" />
+              <PropertyRef Name="SaleID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1203,6 +1207,8 @@
           <EntitySetMapping Name="Menus">
             <EntityTypeMapping TypeName="DBModel.Menu">
               <MappingFragment StoreEntitySet="Menus">
+                <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+                <ScalarProperty Name="ActionName" ColumnName="ActionName" />
                 <ScalarProperty Name="ParentID" ColumnName="ParentID" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1237,7 +1243,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="DBModel.Product">
               <MappingFragment StoreEntitySet="Products">
-                <ScalarProperty Name="SalesID" ColumnName="SalesID" />
+                <ScalarProperty Name="SaleID" ColumnName="SaleID" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />

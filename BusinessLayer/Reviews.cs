@@ -35,7 +35,7 @@ namespace BusinessLayer
         /// <param name="User">user instance to be added.</param>
         public void AddReviewToDatabase(CommonLayer.Review Review)
         {
-            Review.ID = new Guid();
+            Review.ID = Guid.NewGuid();
             new DataLayer.DAReviews(this.Entities).AddReview(Review);
         }
 

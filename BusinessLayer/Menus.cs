@@ -19,6 +19,21 @@ namespace BusinessLayer
             return new DataLayer.DAMenus(this.Entities).GetMenus();
         }
 
+        public IQueryable<CommonLayer.Models.MenusModel> GetMenusAsModel()
+        {
+            return new DataLayer.DAMenus(this.Entities).GetMenusAsModel();
+        }
+
+        public IQueryable<CommonLayer.Models.MenusModel> GetSubMenusAsModel()
+        {
+            return new DataLayer.DAMenus(this.Entities).GetSubMenusAsModel();
+        }
+
+        public IQueryable<CommonLayer.Models.MenusModel> GetParentMenusAsModel()
+        {
+            return new DataLayer.DAMenus(this.Entities).GetParentMenusAsModel();
+        }
+
         /// <summary>
         /// Get user with a specific email.
         /// </summary>
@@ -35,7 +50,7 @@ namespace BusinessLayer
         /// <param name="User">user instance to be added.</param>
         public void AddMenuToDatabase(CommonLayer.Menu Menu)
         {
-            Menu.ID = new Guid().ToString();
+            Menu.ID = Guid.NewGuid().ToString();
             new DataLayer.DAMenus(this.Entities).AddMenu(Menu);
         }
 

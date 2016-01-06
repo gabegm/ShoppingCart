@@ -35,7 +35,7 @@ namespace BusinessLayer
         /// <param name="User">user instance to be added.</param>
         public void AddAuditToDatabase(CommonLayer.Audit Audit)
         {
-            Audit.ID = new Guid();
+            Audit.ID = Guid.NewGuid();
             new DataLayer.DAAudits(this.Entities).AddAudit(Audit);
         }
 

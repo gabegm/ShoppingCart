@@ -20,8 +20,8 @@ namespace BusinessLayer
             CommonLayer.OrderDetail OrderDetail = new CommonLayer.OrderDetail();
             CommonLayer.Product Product = new Products().GetProduct(Cart.ProductID);
 
-            Order.ID = new Guid();
-            OrderDetail.ID = new Guid();
+            Order.ID = Guid.NewGuid();
+            OrderDetail.ID = Guid.NewGuid();
 
             Order.UserID = Cart.UserID;
             OrderDetail.ProductID = Cart.ProductID;

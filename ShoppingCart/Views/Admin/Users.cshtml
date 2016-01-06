@@ -50,6 +50,9 @@
                 <th>
                     @Html.DisplayName("Role")
                 </th>
+                <th>
+                    @Html.DisplayName("Type")
+                </th>
             </tr>
 
             @foreach (var user in Model)
@@ -93,6 +96,9 @@
                     </td>
                     <td>
                         @Html.DisplayNameFor(modelItem => user.RoleName)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(modelItem => user.UserTypeName)
                     </td>
                     <td>
                         @Html.ActionLink("Edit", "EditUser", new { UserID = user.ID }) |

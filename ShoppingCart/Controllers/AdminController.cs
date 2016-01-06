@@ -99,6 +99,73 @@ namespace ShoppingCart.Controllers
             return RedirectToAction("Users");
         }
 
+        [HttpGet]
+        public ActionResult EditUser(Guid ID)
+        {
+            List<string> IsUserActive = new List<string>() { "True", "False" };
+            ViewBag.Active = IsUserActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
+
+            List<string> GenderItems = new List<string>() { "Male", "Female" };
+            ViewBag.Gender = GenderItems.Select(gender => new SelectListItem { Text = gender, Value = gender });
+
+            BusinessLayer.Users u = new BusinessLayer.Users();
+            CommonLayer.User User = u.GetUser(ID);
+            CommonLayer.UserAccount UserAccount = u.GetUserAccount(User.UserAccountID);
+            ViewBag.UserAccount = UserAccount;
+            CommonLayer.Town Town = new BusinessLayer.Towns().GetTown(User.TownID);
+
+            List<SelectListItem> RoleItems = (from roles in u.GetUserRoles().ToList()
+                                              select new SelectListItem()
+                                              {
+                                                  Text = roles.Name,
+                                                  Value = roles.ID.ToString()
+                                              }).ToList();
+            ViewBag.RoleName = new MultiSelectList(RoleItems, "Value", "Text");
+            //RoleItems.SingleOrDefault(c => c.Value.Equals(User.TownID.ToString())).Selected = true;
+
+            List<SelectListItem> UserTypeItems = (from usertypes in u.GetUserTypes().ToList()
+                                                  select new SelectListItem()
+                                                  {
+                                                      Text = usertypes.Name,
+                                                      Value = usertypes.ID.ToString()
+                                                  }).ToList();
+            ViewBag.UserTypes = new MultiSelectList(UserTypeItems, "Value", "Text");
+            UserTypeItems.SingleOrDefault(ut => ut.Value.Equals(User.UserTypeID.ToString())).Selected = true;
+
+            List<SelectListItem> TownItems = (from towns in u.GetUserTowns().ToList()
+                                              select new SelectListItem()
+                                              {
+                                                  Text = towns.Name,
+                                                  Value = towns.ID.ToString()
+                                              }).ToList();
+            ViewBag.TownName = TownItems;
+            TownItems.SingleOrDefault(t => t.Value.Equals(User.TownID.ToString())).Selected = true;
+
+
+            List<SelectListItem> CountryItems = (from countries in u.GetUserCountries().ToList()
+                                                 select new SelectListItem()
+                                                 {
+                                                     Text = countries.Name,
+                                                     Value = countries.ID.ToString()
+                                                 }).ToList();
+            ViewBag.CountryName = CountryItems;
+            CountryItems.SingleOrDefault(c => c.Value.Equals(Town.CountryID.ToString())).Selected = true;
+
+            return View(User);//TODO pass UserAccount as well
+        }
+
+        /// <summary>
+        /// Saves edited product to database
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult EditUser(CommonLayer.User User, CommonLayer.UserAccount UserAccount)
+        {
+            new BusinessLayer.Users().UpdateUser(User, UserAccount);   
+            return RedirectToAction("Users");
+        }
+
         /// <summary>
         /// Returns the details to a specific user
         /// </summary>
@@ -153,13 +220,22 @@ namespace ShoppingCart.Controllers
             List<string> IsProductActive = new List<string>() { "True", "False" };
             ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
 
-            List<SelectListItem> ProductTypeItems = (from category in new BusinessLayer.Products().GetProductTypes().ToList()
+            List<SelectListItem> CategoryItems = (from category in new BusinessLayer.Products().GetProductTypes().ToList()
                                                      select new SelectListItem()
                                                      {
                                                          Text = category.Name,
                                                          Value = category.ID.ToString()
                                                      }).ToList();
-            ViewBag.ProductType = ProductTypeItems;
+            ViewBag.ProductType = CategoryItems;
+
+            List<SelectListItem> SaleItems = (from sale in new BusinessLayer.Products().GetProductSales().ToList()
+                                                  select new SelectListItem()
+                                                  {
+                                                      Text = sale.Value.ToString(),
+                                                      Value = sale.ID.ToString()
+                                                  }).ToList();
+            ViewBag.Sales = SaleItems;
+
             return View();
         }
 
@@ -658,6 +734,15 @@ namespace ShoppingCart.Controllers
         {
             List<string> IsProductActive = new List<string>() { "True", "False" };
             ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
+
+            BusinessLayer.Menus m = new BusinessLayer.Menus();
+            List<SelectListItem> ParentMenuItems = (from menu in m.GetParentMenusAsModel().ToList()
+                                                        select new SelectListItem()
+                                                        {
+                                                            Text = menu.Name,
+                                                            Value = menu.ID.ToString()
+                                                        }).ToList();
+            ViewBag.SubMenus = ParentMenuItems;
 
             return View();
         }

@@ -15,6 +15,50 @@ namespace DataLayer
             return this.Entities.Menus;
         }
 
+        public IQueryable<CommonLayer.Models.MenusModel> GetMenusAsModel()
+        {
+            return (from Menu in this.Entities.Menus
+                    join ParentMenu in this.Entities.Menus on Menu.ParentID equals ParentMenu.ID into mp
+                    from SubMenu in mp.DefaultIfEmpty()
+                    select new CommonLayer.Models.MenusModel()
+                    {
+                        ID = Menu.ID,
+                        Name = Menu.Name,
+                        ParentID = Menu.ParentID,
+                        ParentName = (SubMenu == null ? String.Empty : SubMenu.Name)
+                    });
+        }
+
+        public IQueryable<CommonLayer.Models.MenusModel> GetParentMenusAsModel()
+        {
+            return (from Menu in this.Entities.Menus
+                    join ParentMenu in this.Entities.Menus on Menu.ParentID equals ParentMenu.ID into mp
+                    where Menu.ParentID == null
+                    from SubMenu in mp.DefaultIfEmpty()
+                    select new CommonLayer.Models.MenusModel()
+                    {
+                        ID = Menu.ID,
+                        Name = Menu.Name,
+                        ParentID = Menu.ParentID,
+                        ParentName = (SubMenu == null ? String.Empty : SubMenu.Name)
+                    });
+        }
+
+        public IQueryable<CommonLayer.Models.MenusModel> GetSubMenusAsModel()
+        {
+            return (from Menu in this.Entities.Menus
+                    join ParentMenu in this.Entities.Menus on Menu.ParentID equals ParentMenu.ID into mp
+                    where Menu.ParentID != null
+                    from SubMenu in mp.DefaultIfEmpty()
+                    select new CommonLayer.Models.MenusModel()
+                    {
+                        ID = Menu.ID,
+                        Name = Menu.Name,
+                        ParentID = Menu.ParentID,
+                        ParentName = (SubMenu == null ? String.Empty : SubMenu.Name)
+                    });
+        }
+
         public CommonLayer.Menu GetMenu(string ID)
         {
             return this.Entities.Menus.SingleOrDefault(ut => ut.ID.Equals(ID));

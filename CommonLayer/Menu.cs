@@ -26,6 +26,8 @@ namespace CommonLayer
         public string Name { get; set; }
         public bool Active { get; set; }
         public string ParentID { get; set; }
+        public string ActionName { get; set; }
+        public string ControllerName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Menu> Menus1 { get; set; }

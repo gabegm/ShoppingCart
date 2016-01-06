@@ -9,6 +9,15 @@ namespace BusinessLayer
         public Products(CommonLayer.DBModelEntities Entities) : base(Entities) { }
 
         /// <summary>
+        /// Returns a list of products
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<CommonLayer.Product> GetProducts()
+        {
+            return new DataLayer.DAProducts(this.Entities).GetProducts();
+        }
+
+        /// <summary>
         /// Returns ProductsModel as a model
         /// </summary>
         /// <returns></returns>
@@ -24,6 +33,11 @@ namespace BusinessLayer
         public IQueryable<CommonLayer.Category> GetProductTypes()
         {
             return new DataLayer.DAProducts(this.Entities).GetProductTypes();
+        }
+
+        public IQueryable<CommonLayer.Sale> GetProductSales()
+        {
+            return new DataLayer.DAProducts(this.Entities).GetProductSales();
         }
 
         /// <summary>
@@ -70,7 +84,7 @@ namespace BusinessLayer
         public void AddProductToCart(Guid ProductID, Guid UserID)
         {
             CommonLayer.CartItem CartItem = new CommonLayer.CartItem();
-            CartItem.ID = new Guid();
+            CartItem.ID = Guid.NewGuid();
             CartItem.Quantity = 1;
             CartItem.ProductID = ProductID;
             CartItem.UserID = UserID;

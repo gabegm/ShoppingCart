@@ -129,28 +129,6 @@ namespace BusinessLayer
         }
 
         /// <summary>
-        /// Registers a new user.
-        /// </summary>
-        /// <param name="User">User to be added.</param>
-        public void RegisterUser(CommonLayer.User User, CommonLayer.UserAccount UserAccount, string ConfirmPassword)
-        {
-            CommonLayer.User ExistingUser = this.GetUser(User.ID);
-            CommonLayer.UserAccount ExistingUserAccount = this.GetUserAccount(UserAccount.ID);
-
-            if (ExistingUser == null && ExistingUserAccount == null)
-            {
-                if (UserAccount.Password.Equals(ConfirmPassword))
-                {
-                    User.ID = Guid.NewGuid();
-                    UserAccount.ID = Guid.NewGuid();
-                    User.UserAccountID = UserAccount.ID;
-                    UserAccount.Password = HashSHA512String(UserAccount.Password, UserAccount.ID.ToString());
-                    this.AddUserToDatabase(User, UserAccount);
-                }
-            }
-        }
-
-        /// <summary>
         /// Registers a new user
         /// </summary>
         /// <param name="User"></param>
@@ -161,6 +139,7 @@ namespace BusinessLayer
         {
             CommonLayer.User ExistingUser = this.GetUser(User.ID);
             CommonLayer.UserAccount ExistingUserAccount = this.GetUserAccount(UserAccount.ID);
+            Roles Role = new Roles(this.Entities);
 
             if (ExistingUser == null && ExistingUserAccount == null)
             {
@@ -171,9 +150,12 @@ namespace BusinessLayer
                     User.UserAccountID = UserAccount.ID;
                     UserAccount.Password = HashSHA512String(UserAccount.Password, UserAccount.ID.ToString());
                     this.AddUserToDatabase(User, UserAccount);
-                    foreach (Guid ID in RoleID)
+                    if (RoleID != null)
                     {
-                        new Roles().AddUserRole(ID, UserAccount.ID);
+                        foreach (Guid ID in RoleID)
+                        {
+                            Role.AddUserRole(ID, UserAccount.ID);
+                        }
                     }
                 }
             }

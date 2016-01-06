@@ -11,8 +11,13 @@ namespace ShoppingCart.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            BusinessLayer.Products pr = new BusinessLayer.Products();
-            return View(pr.GetProductsAsModel());
+            ViewBag.Menus = new BusinessLayer.Menus().GetMenus();
+            ViewBag.ParentMenus = new BusinessLayer.Menus().GetParentMenusAsModel();
+
+            ViewBag.Categories = new BusinessLayer.Categories().GetCategories();
+            ViewBag.ParentCategories = new BusinessLayer.Categories().GetParentCategoriesAsModel();
+
+            return View(new BusinessLayer.Products().GetProductsAsModel());
         }
     }
 }

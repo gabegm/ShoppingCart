@@ -163,6 +163,8 @@
     <NavigationProperty Name="Menu1" Relationship="DBModel.FK_Menus_Menus" FromRole="Menu1" ToRole="Menu" />
     <NavigationProperty Name="CarouselItems" Relationship="DBModel.MenuCarouselItems" FromRole="Menu" ToRole="CarouselItem" />
     <NavigationProperty Name="Roles" Relationship="DBModel.MenuRoles" FromRole="Menu" ToRole="Role" />
+    <Property Name="ActionName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ControllerName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="OrderDetail">
     <Key>
@@ -203,7 +205,7 @@
     <Property Name="Quantity" Type="Int32" Nullable="false" />
     <Property Name="Active" Type="Boolean" Nullable="false" />
     <Property Name="CategoryID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="SalesID" Type="Guid" Nullable="false" />
+    <Property Name="SaleID" Type="Guid" />
     <NavigationProperty Name="CartItems" Relationship="DBModel.FK_ShoppingCartItems_Products" FromRole="Product" ToRole="CartItem" />
     <NavigationProperty Name="Category" Relationship="DBModel.FK_Products_Categories" FromRole="Product" ToRole="Category" />
     <NavigationProperty Name="OrderDetails" Relationship="DBModel.FK_OrderDetails_Products" FromRole="Product" ToRole="OrderDetail" />
@@ -435,14 +437,14 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Products_Sales">
-    <End Type="DBModel.Sale" Role="Sale" Multiplicity="1" />
+    <End Type="DBModel.Sale" Role="Sale" Multiplicity="0..1" />
     <End Type="DBModel.Product" Role="Product" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Sale">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Product">
-        <PropertyRef Name="SalesID" />
+        <PropertyRef Name="SaleID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

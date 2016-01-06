@@ -35,7 +35,7 @@ namespace BusinessLayer
         /// <param name="User">user instance to be added.</param>
         public void AddUserTypeToDatabase(CommonLayer.UserType UserType)
         {
-            UserType.ID = new Guid();
+            UserType.ID = Guid.NewGuid();
             new DataLayer.DAUserTypes(this.Entities).AddUserType(UserType);
         }
 

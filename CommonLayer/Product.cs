@@ -32,7 +32,7 @@ namespace CommonLayer
         public int Quantity { get; set; }
         public bool Active { get; set; }
         public string CategoryID { get; set; }
-        public System.Guid SalesID { get; set; }
+        public Nullable<System.Guid> SaleID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CartItem> CartItems { get; set; }

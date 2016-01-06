@@ -35,7 +35,7 @@ namespace BusinessLayer
         /// <param name="User">user instance to be added.</param>
         public void AddCarouselItemToDatabase(CommonLayer.CarouselItem CarouselItem)
         {
-            CarouselItem.ID = new Guid();
+            CarouselItem.ID = Guid.NewGuid();
             new DataLayer.DACarouselItems(this.Entities).AddCarouselItem(CarouselItem);
         }
 

@@ -30,8 +30,8 @@ namespace BusinessLayer
 
         public void AddUserRole(Guid RoleID, Guid UserID)
         {
-            CommonLayer.UserAccount UserAccount = new Users().GetUserAccount(UserID);
-            CommonLayer.Role Role = new Roles().GetRole(RoleID);
+            CommonLayer.UserAccount UserAccount = new Users(this.Entities).GetUserAccount(UserID);
+            CommonLayer.Role Role = this.GetRole(RoleID);
 
             new DataLayer.DARoles(this.Entities).AllocateUserRole(UserAccount, Role);
         }
@@ -39,7 +39,7 @@ namespace BusinessLayer
         public void RemoveUserRole(Guid RoleID, Guid UserID)
         {
             CommonLayer.UserAccount UserAccount = new Users().GetUserAccount(UserID);
-            CommonLayer.Role Role = new Roles().GetRole(RoleID);
+            CommonLayer.Role Role = this.GetRole(RoleID);
 
             new DataLayer.DARoles(this.Entities).DeallocateUserRole(UserAccount, Role);
         }

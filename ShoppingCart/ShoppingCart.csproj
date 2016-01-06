@@ -206,6 +206,7 @@
     <Content Include="Views\Admin\EditReview.cshtml" />
     <Content Include="Views\Admin\EditCarouselItem.cshtml" />
     <Content Include="Views\Admin\EditSale.cshtml" />
+    <Content Include="Views\Admin\EditUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

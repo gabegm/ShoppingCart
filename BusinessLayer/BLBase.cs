@@ -16,7 +16,7 @@ namespace BusinessLayer
 
         public BLBase(CommonLayer.DBModelEntities Entities)
         {
-            this.Entities = new CommonLayer.DBModelEntities();
+            this.Entities = Entities;
         }
     }
 }

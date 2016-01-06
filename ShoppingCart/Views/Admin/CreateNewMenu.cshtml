@@ -1,4 +1,4 @@
-﻿@model CommonLayer.Menu
+﻿@model CommonLayer.Models.MenusModel
 
 @{
     ViewBag.Title = "CreateNewMenu";
@@ -22,6 +22,22 @@
             </div>
 
             <div class="form-group">
+                @Html.LabelFor(model => model.ActionName, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.ActionName, new { @class = "form-control", placeholder = "Enter the name here..." })
+                    @Html.ValidationMessageFor(model => model.ActionName)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ControllerName, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.ControllerName, new { @class = "form-control", placeholder = "Enter the name here..." })
+                    @Html.ValidationMessageFor(model => model.ControllerName)
+                </div>
+            </div>
+
+            <div class="form-group">
                 @Html.LabelFor(model => model.Active, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("Active", null, new { @class = "form-control" })
@@ -31,7 +47,7 @@
             <div class="form-group">
                 @Html.Label("Parent Menu", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.ParentID, (IEnumerable<SelectListItem>)ViewBag.Subcategories, string.Empty, new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.ParentID, (IEnumerable<SelectListItem>)ViewBag.Submenus, string.Empty, new { @class = "form-control" })
                 </div>
             </div>
 

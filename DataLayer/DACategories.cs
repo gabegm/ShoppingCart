@@ -44,6 +44,21 @@ namespace DataLayer
                     });
         }
 
+        public IQueryable<CommonLayer.Models.CategoriesModel> GetSubCategoriesAsModel()
+        {
+            return (from Category in this.Entities.Categories
+                    join ParentCategory in this.Entities.Categories on Category.ParentID equals ParentCategory.ID into cs
+                    where Category.ParentID != null
+                    from Subcategory in cs.DefaultIfEmpty()
+                    select new CommonLayer.Models.CategoriesModel()
+                    {
+                        ID = Category.ID,
+                        Name = Category.Name,
+                        ParentID = Category.ParentID,
+                        ParentName = (Subcategory == null ? String.Empty : Subcategory.Name)
+                    });
+        }
+
         public CommonLayer.Category GetCategory(string ID)
         {
             return this.Entities.Categories.SingleOrDefault(c => c.ID == ID);

@@ -29,7 +29,7 @@ namespace ShoppingCart.Controllers
         {
             CommonLayer.Role Role = new BusinessLayer.Roles().GetRole("USR"); 
             UserAccount.Roles.Add(Role);
-            new BusinessLayer.Users().RegisterUser(User, UserAccount, ConfirmPassword);
+            new BusinessLayer.Users().RegisterUser(User, UserAccount, ConfirmPassword, null);
             return RedirectToAction("Index", "Users");
         }
 

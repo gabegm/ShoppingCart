@@ -35,7 +35,7 @@ namespace BusinessLayer
         /// <param name="User">user instance to be added.</param>
         public void AddSaleToDatabase(CommonLayer.Sale Sale)
         {
-            Sale.ID = new Guid();
+            Sale.ID = Guid.NewGuid();
             new DataLayer.DASales(this.Entities).AddSale(Sale);
         }
 

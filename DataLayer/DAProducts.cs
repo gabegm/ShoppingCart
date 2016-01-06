@@ -9,11 +9,18 @@ namespace DataLayer
         public DAProducts() : base() { }
         public DAProducts(CommonLayer.DBModelEntities Entities) : base(Entities) { }
 
+        public IQueryable<CommonLayer.Product> GetProducts()
+        {
+            return this.Entities.Products;
+        }
+
         public IQueryable<CommonLayer.Models.ProductsModel> GetProductsAsModel()
         {
             return (from product in this.Entities.Products
                     join category in this.Entities.Categories on product.CategoryID equals category.ID
-                    join review in this.Entities.Reviews on product.ID equals review.ID
+                    join sale in this.Entities.Sales on product.SaleID equals sale.ID
+                    join review in this.Entities.Reviews on product.ID equals review.ProductID into pr
+                    from subreview in pr.DefaultIfEmpty()
                     select new CommonLayer.Models.ProductsModel()
                     {
                         ID = product.ID,
@@ -26,10 +33,14 @@ namespace DataLayer
                         Active = product.Active,
                         CategoryID = category.ID,
                         CategoryName = category.Name,
-                        ReviewID = review.ID,
-                        ReviewDescription = review.Description,
-                        ReviewRating = review.Rating,
-                        ReviewDate = review.Date
+                        SaleID = sale.ID,
+                        SaleValue = (float)sale.Value,
+                        SaleStart = sale.Start,
+                        SaleStop = sale.Stop,
+                        ReviewID = (subreview == null ? Guid.Empty : subreview.ID),
+                        ReviewDescription = (subreview == null ? String.Empty : subreview.Description),
+                        ReviewRating = (subreview == null ? 0 : subreview.Rating),
+                        ReviewDate = (subreview == null ? default(DateTime) : subreview.Date)
                     });
         }
 
@@ -63,6 +74,11 @@ namespace DataLayer
             return this.Entities.Categories;
         }
 
+        public IQueryable<CommonLayer.Sale> GetProductSales()
+        {
+            return this.Entities.Sales;
+        }
+
         public CommonLayer.Product GetProduct(Guid id)
         {
             return this.Entities.Products.SingleOrDefault(p => p.ID.Equals(id));
@@ -80,12 +96,5 @@ namespace DataLayer
             this.Entities.Products.Remove(Product);
             this.Entities.SaveChanges();
         }
-
-        /*public void AddProductToCart(CommonLayer.Cart Cart, CommonLayer.User User, CommonLayer.Product Product)
-        {
-            this.Entities.Carts.Add(Cart);
-
-            this.Entities.SaveChanges();
-        }*/
     }
 }
