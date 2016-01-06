@@ -24,6 +24,8 @@ namespace DataLayer
                     {
                         ID = Menu.ID,
                         Name = Menu.Name,
+                        ActionName = Menu.ActionName,
+                        ControllerName = Menu.ControllerName,
                         ParentID = Menu.ParentID,
                         ParentName = (SubMenu == null ? String.Empty : SubMenu.Name)
                     });
@@ -39,6 +41,8 @@ namespace DataLayer
                     {
                         ID = Menu.ID,
                         Name = Menu.Name,
+                        ActionName = Menu.ActionName,
+                        ControllerName = Menu.ControllerName,
                         ParentID = Menu.ParentID,
                         ParentName = (SubMenu == null ? String.Empty : SubMenu.Name)
                     });
@@ -54,6 +58,8 @@ namespace DataLayer
                     {
                         ID = Menu.ID,
                         Name = Menu.Name,
+                        ActionName = Menu.ActionName,
+                        ControllerName = Menu.ControllerName,
                         ParentID = Menu.ParentID,
                         ParentName = (SubMenu == null ? String.Empty : SubMenu.Name)
                     });

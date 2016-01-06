@@ -40,7 +40,7 @@
                 <ul class="nav navbar-nav">
                     @foreach (CommonLayer.Models.MenusModel Menu in ViewBag.ParentMenus)
                     {
-                        <li>@Html.ActionLink(Html.DisplayFor(modelItem => Menu.Name).ToHtmlString(), Html.DisplayFor(modelItem => Menu.ActionName).ToHtmlString(), Html.DisplayFor(modelItem => Menu.ControllerName).ToHtmlString())</li>
+                        <li>@Html.ActionLink(Menu.Name.ToString(), Menu.ActionName.ToString(), Menu.ControllerName.ToString())</li>
                     }
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

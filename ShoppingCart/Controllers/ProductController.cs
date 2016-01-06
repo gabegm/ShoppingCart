@@ -8,13 +8,7 @@ namespace ShoppingCart.Controllers
     {
         //
         // GET: /Products/
-        public ActionResult Index()
-        {
-            return View(new BusinessLayer.Products().GetProductsAsModel());
-        }
-
-        [HttpGet]
-        public ActionResult Detail(Guid ID)
+        public ActionResult Index(Guid ID)
         {
             return View(new BusinessLayer.Products().GetProduct(ID));
         }
