@@ -35,6 +35,11 @@ namespace BusinessLayer
             return new DataLayer.DAProducts(this.Entities).GetProductTypes();
         }
 
+        public IQueryable<CommonLayer.Review> GetProductReviews(Guid ID)
+        {
+            return new DataLayer.DAProducts(this.Entities).GetProductReviews(ID);
+        }
+
         public IQueryable<CommonLayer.Sale> GetProductSales()
         {
             return new DataLayer.DAProducts(this.Entities).GetProductSales();

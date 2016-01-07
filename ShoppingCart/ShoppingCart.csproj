@@ -153,6 +153,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Categories.cs" />
+    <Compile Include="Models\Menus.cs" />
+    <Compile Include="Models\ProductReviews.cs" />
     <Compile Include="Models\ProductsBL.cs" />
     <Compile Include="Models\TempBusiness.cs" />
     <Compile Include="Models\UIHelpers.cs" />
@@ -207,6 +210,9 @@
     <Content Include="Views\Admin\EditCarouselItem.cshtml" />
     <Content Include="Views\Admin\EditSale.cshtml" />
     <Content Include="Views\Admin\EditUser.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\_Shared\_CategoryNav.cshtml" />
+    <Content Include="Views\_Shared\_MenuNav.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -216,7 +222,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Category\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj">

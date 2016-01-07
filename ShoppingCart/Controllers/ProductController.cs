@@ -3,14 +3,20 @@ using System.Web.Mvc;
 
 namespace ShoppingCart.Controllers
 {
-    [Authorize(Roles = "ADM")]
-    public class ProductsController : Controller
+    public class ProductController : Controller
     {
         //
         // GET: /Products/
+        [HttpGet]
         public ActionResult Index(Guid ID)
         {
-            return View(new BusinessLayer.Products().GetProduct(ID));
+            Models.ProductReviews ProductReviews = new Models.ProductReviews();
+            BusinessLayer.Products pr = new BusinessLayer.Products();
+
+            ProductReviews.Product = pr.GetProduct(ID);
+            ProductReviews.Reviews = pr.GetProductReviews(ID);
+
+            return View(ProductReviews);
         }
 
         public ActionResult AddProductToCart(Guid ID)

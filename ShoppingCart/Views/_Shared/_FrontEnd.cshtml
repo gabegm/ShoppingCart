@@ -1,6 +1,4 @@
-﻿@model IQueryable<CommonLayer.Models.ProductsModel>
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -36,18 +34,7 @@
                 @Html.ActionLink("Telecell", "Index", "Home", new { @class = "navbar-brand" })
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    @foreach (CommonLayer.Models.MenusModel Menu in ViewBag.ParentMenus)
-                    {
-                        <li>@Html.ActionLink(Menu.Name.ToString(), Menu.ActionName.ToString(), Menu.ControllerName.ToString())</li>
-                    }
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("Register", "Register", "Account")</li>
-                    <li>@Html.ActionLink("Login", "Login", "Account")</li>
-                </ul>
-            </div>
+            @{Html.RenderAction("RenderMenus", "Home");}
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
@@ -57,41 +44,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <p class="lead">Telecell</p>
-                <div id="MainMenu" class="list-group">
-                    <div class="list-group panel">
-                        <a href="#demo3" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Accessories</a>
-                        <div class="collapse" id="demo3">
-                            <a href="#" class="list-group-item">Cases</a>
-                            <a href="#" class="list-group-item">Powerbanks</a>
-                            <a href="#" class="list-group-item">Cables</a>
-                            <a href="#" class="list-group-item">Wearables</a>
-                            <a href="#" class="list-group-item">Speakers</a>
-                            <a href="#" class="list-group-item">Screen Protectors</a>
-                            <a href="#" class="list-group-item">Chargers</a>
-                            <a href="#" class="list-group-item">Expandable Storage</a>
-                            <a href="#" class="list-group-item">Batteries</a>
-                            <a href="#" class="list-group-item">Sim Cards</a>
-                        </div>
-                        <a href="#demo4" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Phones</a>
-                        <div class="collapse" id="demo4">
-                            <a href="#" class="list-group-item">Apple</a>
-                            <a href="#" class="list-group-item">Microsoft</a>
-                            <a href="#" class="list-group-item">Motorola</a>
-                            <a href="#" class="list-group-item">Nokia</a>
-                            <a href="#" class="list-group-item">HTC</a>
-                            <a href="#" class="list-group-item">Samsung</a>
-                            <a href="#" class="list-group-item">Huawei</a>
-                            <a href="#" class="list-group-item">LG</a>
-                            <a href="#" class="list-group-item">Sony</a>
-                            <a href="#" class="list-group-item">Blackberry</a>
-                        </div>
-                    </div>
-                </div>
+                @{Html.RenderAction("RenderCategories", "Home");}          
             </div>
-
             @RenderBody()
-
         </div>
     </div>
     <!-- /.container -->

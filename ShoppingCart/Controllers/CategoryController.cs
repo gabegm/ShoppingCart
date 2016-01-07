@@ -9,9 +9,9 @@ namespace ShoppingCart.Controllers
     public class CategoryController : Controller
     {
         // GET: Category
-        public ActionResult Index()
+        public ActionResult Index(string ID)
         {
-            return View();
+            return View(new BusinessLayer.Categories().GetProductsInCategory(ID));
         }
     }
 }

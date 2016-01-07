@@ -11,13 +11,29 @@ namespace ShoppingCart.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            ViewBag.Menus = new BusinessLayer.Menus().GetMenus();
-            ViewBag.ParentMenus = new BusinessLayer.Menus().GetParentMenusAsModel();
-
-            ViewBag.Categories = new BusinessLayer.Categories().GetCategories();
-            ViewBag.ParentCategories = new BusinessLayer.Categories().GetParentCategoriesAsModel();
-
             return View(new BusinessLayer.Products().GetProductsAsModel());
+        }
+
+        [ChildActionOnly]
+        public ActionResult RenderMenus()
+        {
+            Models.Menus Menus = new Models.Menus();
+
+            Menus.SubMenus = new BusinessLayer.Menus().GetSubMenusAsModel();
+            Menus.ParentMenus = new BusinessLayer.Menus().GetParentMenusAsModel();
+
+            return PartialView("~/Views/_Shared/_MenuNav.cshtml", Menus);
+        }
+
+        [ChildActionOnly]
+        public ActionResult RenderCategories()
+        {
+            Models.Categories Categories = new Models.Categories();
+
+            Categories.SubCategories = new BusinessLayer.Categories().GetSubCategoriesAsModel();
+            Categories.ParentCategories = new BusinessLayer.Categories().GetParentCategoriesAsModel();
+
+            return PartialView("~/Views/_Shared/_CategoryNav.cshtml", Categories);
         }
     }
 }

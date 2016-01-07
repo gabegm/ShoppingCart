@@ -25,6 +25,17 @@ namespace BusinessLayer
             return new DataLayer.DACategories(this.Entities).GetCategoriesAsModel();
         }
 
+        public IQueryable<CommonLayer.Models.CategoriesModel> GetSubCategoriesAsModel()
+        {
+            return new DataLayer.DACategories(this.Entities).GetSubCategoriesAsModel();
+        }
+
+        public IQueryable<CommonLayer.Product> GetProductsInCategory(string ID)
+        {
+            CommonLayer.Category Category = this.GetCategory(ID);
+            return new DataLayer.DACategories(this.Entities).GetProductsInCategory(Category);
+        }
+
         public void AddCategoryToDatabase(CommonLayer.Category Category)
         {
             Category.ID = Guid.NewGuid().ToString();

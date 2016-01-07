@@ -1,4 +1,4 @@
-﻿@model IQueryable<CommonLayer.Models.ProductsModel>
+﻿@model ShoppingCart.Models.ProductReviews
 
 @{
     ViewBag.Title = "Index";
@@ -10,43 +10,40 @@
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.Product.ID)
         <div class="thumbnail">
-            <img class="img-responsive" src="@Model.ImageURL" alt=""> <!--800x300-->
+            <img class="img-responsive" src="@Model.Product.ImageURL" alt=""> <!--800x300-->
             <div class="caption-full">
-                <h4 class="pull-right">@Model.Price</h4>
+                <h4 class="pull-right">€@Model.Product.Price</h4>
                 <h4>
-                    <a href="#">@Model.Name</a>
+                    <a href="#">@Model.Product.Name</a>
                 </h4>
-                <p>@Model.Description</p>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
+                <p>@Model.Product.Description</p>
+                <div class="">
                     <input type="submit" value="Add To Cart" class="btn btn-default" />
                 </div>
             </div>
-
-            <div class="well">
-                @foreach (var review in Model)
-                {
-                    <div class="row">
-                        <div class="col-md-12">
-                            <span>review.Username</span>
-                            <span class="pull-right">Review.Date</span>
-                            <p>Review.ReviewDescription</p>
-                        </div>
-                    </div>
-                }
-
-                <div class="">
-                    @Html.TextBoxFor(model => model.ReviewDescription)
-                    <div class="">
-                        <a class="btn btn-success">Leave a Review</a>
-                    </div>
-                </div>
-            </div>
-
         </div>
     }
+    <div class="well">
+        @foreach (var review in Model.Reviews)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <span>review.Username</span>
+                    <span class="pull-right">review.Date</span>
+                    <p>review.ReviewDescription</p>
+                </div>
+            </div>
+        }
+        @using (Html.BeginForm("AddReview", "Product", FormMethod.Post))
+        {
+            <div class="">
+                @Html.TextArea("ReviewDescription")
+                <div class="">
+                    <a class="btn btn-success">Leave a Review</a>
+                </div>
+            </div>
+        }
+    </div>
 </div>

@@ -1,0 +1,14 @@
+﻿@model ShoppingCart.Models.Menus
+
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+        @foreach (var Menu in Model.ParentMenus)
+        {
+            <li>@Html.ActionLink(Menu.Name.ToString(), Menu.ActionName.ToString(), Menu.ControllerName.ToString())</li>
+        }
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Register", "Account")</li>
+        <li>@Html.ActionLink("Login", "Login", "Account")</li>
+    </ul>
+</div>

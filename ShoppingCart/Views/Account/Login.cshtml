@@ -9,7 +9,7 @@
 
 @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
 {
-    @if (ViewBag.LoginInvalid != null)
+    if (ViewBag.LoginInvalid != null)
     {
         <h2>Login invalid!</h2>
     }

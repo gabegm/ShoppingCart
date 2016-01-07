@@ -74,6 +74,14 @@ namespace DataLayer
             return this.Entities.Categories;
         }
 
+        public IQueryable<CommonLayer.Review> GetProductReviews(Guid ID)
+        {
+            return (from review in this.Entities.Reviews
+                    where review.ProductID == ID
+                    select review
+                    );
+        }
+
         public IQueryable<CommonLayer.Sale> GetProductSales()
         {
             return this.Entities.Sales;
