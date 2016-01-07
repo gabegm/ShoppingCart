@@ -119,12 +119,18 @@ namespace BusinessLayer
         /// <param name="User">User to delete.</param>
         public void DeleteUser(Guid UserID)
         {
-            CommonLayer.User user = this.GetUser(UserID);
-            CommonLayer.UserAccount userAccount = this.GetUserAccount(user.UserAccountID);
+            CommonLayer.User User = this.GetUser(UserID);
+            CommonLayer.UserAccount UserAccount = this.GetUserAccount(User.UserAccountID);
 
-            if (user != null && userAccount != null)
+            if (User != null && UserAccount != null)
             {
-                new DataLayer.DAUsers(this.Entities).DeleteUser(user, userAccount);
+                foreach (CommonLayer.Role Roles in UserAccount.Roles)
+                {
+                    CommonLayer.Role Role = new Roles(this.Entities).GetRole(Roles.ID);
+                    new DataLayer.DARoles(this.Entities).DeallocateUserRole(UserAccount, Role);
+                }
+
+                new DataLayer.DAUsers(this.Entities).DeleteUser(User, UserAccount);
             }
         }
 
@@ -137,8 +143,8 @@ namespace BusinessLayer
         /// <param name="RoleID"></param>
         public void RegisterUser(CommonLayer.User User, CommonLayer.UserAccount UserAccount, string ConfirmPassword, Guid[] RoleID)
         {
-            CommonLayer.User ExistingUser = this.GetUser(User.ID);
-            CommonLayer.UserAccount ExistingUserAccount = this.GetUserAccount(UserAccount.ID);
+            CommonLayer.User ExistingUser = this.GetUser(User.Email);
+            CommonLayer.UserAccount ExistingUserAccount = this.GetUserAccount(UserAccount.Username);
             Roles Role = new Roles(this.Entities);
 
             if (ExistingUser == null && ExistingUserAccount == null)

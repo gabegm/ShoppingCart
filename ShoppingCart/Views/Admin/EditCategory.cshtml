@@ -5,13 +5,12 @@
 }
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <h2>EditCategory</h2>
+    <h2>Edit Category</h2>
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            <h4>Product</h4>
             @Html.ValidationSummary(true)
             @Html.HiddenFor(model => model.ID)
 
@@ -27,6 +26,13 @@
                 @Html.LabelFor(model => model.Active, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("Active", null, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Parent Category", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.ParentID, (IEnumerable<SelectListItem>)ViewBag.Subcategories, string.Empty, new { @class = "form-control" })
                 </div>
             </div>
 

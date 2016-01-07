@@ -23,10 +23,9 @@ namespace ShoppingCart.Controllers
         [AllowAnonymous]
         public ActionResult Register(CommonLayer.User User, CommonLayer.UserAccount UserAccount, string ConfirmPassword)
         {
-            CommonLayer.Role Role = new BusinessLayer.Roles().GetRole("USR"); 
-            UserAccount.Roles.Add(Role);
+            UserAccount.Roles.Add(new BusinessLayer.Roles().GetRole("USR")); //Default user role
             new BusinessLayer.Users().RegisterUser(User, UserAccount, ConfirmPassword, null);
-            return RedirectToAction("Index", "Users");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]

@@ -194,9 +194,9 @@ namespace ShoppingCart.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult DeleteUser(Guid UserID)
+        public ActionResult DeleteUser(Guid ID)
         {
-            new BusinessLayer.Users().DeleteUser(UserID);
+            new BusinessLayer.Users().DeleteUser(ID);
             return RedirectToAction("Users");
         }
 
@@ -465,15 +465,15 @@ namespace ShoppingCart.Controllers
             ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
 
             BusinessLayer.Categories c = new BusinessLayer.Categories();
-            List<SelectListItem> SubcategoryItems = (from category in c.GetCategories().ToList()
-                                                     select new SelectListItem()
-                                                     {
-                                                         Text = category.Name,
-                                                         Value = category.ParentID.ToString()
-                                                     }).ToList();
+            List<SelectListItem> ParentCategoryItems = (from category in c.GetParentCategoriesAsModel().ToList()
+                                                        select new SelectListItem()
+                                                        {
+                                                            Text = category.Name,
+                                                            Value = category.ID.ToString()
+                                                        }).ToList();
             CommonLayer.Category Category = c.GetCategory(ID);
-            SubcategoryItems.SingleOrDefault(p => p.Value.Equals(Category.ParentID.ToString())).Selected = true;
-            ViewBag.Subcategories = SubcategoryItems;
+            ParentCategoryItems.SingleOrDefault(p => p.Value.Equals(Category.ParentID.ToString())).Selected = true;
+            ViewBag.Subcategories = ParentCategoryItems;
             return View(Category);
         }
 

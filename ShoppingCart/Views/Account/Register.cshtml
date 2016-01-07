@@ -5,45 +5,47 @@
     Layout = "~/Views/_Shared/_FrontEnd.cshtml";
 }
 
-<h2>Register</h2>
+<div class="col-md-9">
+    <h2>Register</h2>
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-    <div class="form-group">
-        @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
-        <div class="col-sm-10">
-            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", type="email" })
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+            <div class="col-sm-10">
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", type = "email" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.FirstName, new { @class = "control-label col-md-2" })
-        <div class="col-sm-10">
-            @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control" })
+        <div class="form-group">
+            @Html.Label("Name", new { @class = "control-label col-md-2" })
+            <div class="col-sm-10">
+                @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.LastName, new { @class = "control-label col-md-2" })
-        <div class="col-sm-10">
-            @Html.TextBoxFor(model => model.LastName, new { @class = "form-control" })
+        <div class="form-group">
+            @Html.Label("Surname", new { @class = "control-label col-md-2" })
+            <div class="col-sm-10">
+                @Html.TextBoxFor(model => model.LastName, new { @class = "form-control" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Password, new { @class = "control-label col-md-2" })
-        <div class="col-sm-10">
-            @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, new { @class = "control-label col-md-2" })
+            <div class="col-sm-10">
+                @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.Label("Confirm Password", new { @class = "control-label col-md-2" })
-        <div class="col-sm-10">
-            @Html.Password("ConfirmPassword", new { @class = "form-control" })
+        <div class="form-group">
+            @Html.Label("Confirm Password", new { @class = "control-label col-md-2" })
+            <div class="col-sm-10">
+                @Html.Password("ConfirmPassword", null, new { @class = "form-control" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-default">Register</button>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">Register</button>
+            </div>
         </div>
-    </div>
-}
+    }
+</div>
