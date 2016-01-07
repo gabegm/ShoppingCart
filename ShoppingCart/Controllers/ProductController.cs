@@ -23,7 +23,7 @@ namespace ShoppingCart.Controllers
         {
             CommonLayer.User User = new BusinessLayer.Users().GetUser(HttpContext.User.Identity.Name);
             new BusinessLayer.Products().AddProductToCart(ID, User.ID);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Cart");
         }
         
     }

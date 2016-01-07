@@ -20,6 +20,11 @@ namespace DataLayer
             return this.Entities.UserTypes.SingleOrDefault(ut => ut.ID.Equals(ID));
         }
 
+        public CommonLayer.UserType GetUserType(string Name)
+        {
+            return this.Entities.UserTypes.SingleOrDefault(ut => ut.Name.Equals(Name));
+        }
+
         public void AddUserType(CommonLayer.UserType UserType)
         {
             this.Entities.UserTypes.Add(UserType);

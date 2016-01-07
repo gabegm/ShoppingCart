@@ -88,13 +88,24 @@ namespace BusinessLayer
 
         public void AddProductToCart(Guid ProductID, Guid UserID)
         {
-            CommonLayer.CartItem CartItem = new CommonLayer.CartItem();
-            CartItem.ID = Guid.NewGuid();
-            CartItem.Quantity = 1;
-            CartItem.ProductID = ProductID;
-            CartItem.UserID = UserID;
-            
-            new DataLayer.DACartItems(this.Entities).AddCartItem(CartItem);
+            CommonLayer.CartItem ExistingCartItem = new CartItems(this.Entities).GetCartItem(UserID, ProductID);
+
+            if(ExistingCartItem == null)
+            {
+                CommonLayer.CartItem CartItem = new CommonLayer.CartItem();
+
+                CartItem.ID = Guid.NewGuid();
+                CartItem.Quantity = 1;
+                CartItem.ProductID = ProductID;
+                CartItem.UserID = UserID;
+
+                new DataLayer.DACartItems(this.Entities).AddCartItem(CartItem);
+            }
+            else
+            {
+                ExistingCartItem.Quantity++;
+                new DataLayer.DACartItems(this.Entities).UpdateCartItem(ExistingCartItem);
+            }
         }
     }
 }

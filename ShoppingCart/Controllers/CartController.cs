@@ -30,10 +30,11 @@ namespace ShoppingCart.Controllers
         /// </summary>
         /// <param name="category"></param>
         /// <returns></returns>
-        public ActionResult UpdateCartItemQuantity(CommonLayer.CartItem CartItem)
+        [HttpPost]
+        public ActionResult UpdateCartItem(Guid ID, int Quantity)
         {
-            new BusinessLayer.CartItems().UpdateCartItem(CartItem);
-            return RedirectToAction("Index");
+            new BusinessLayer.CartItems().UpdateCartItem(ID, Quantity);
+            return RedirectToAction("Index", "Cart");
         }
 
         /// <summary>

@@ -20,16 +20,21 @@ namespace BusinessLayer
             return new DataLayer.DACartItems(this.Entities).GetCartItem(ID);
         }
 
+        public CommonLayer.CartItem GetCartItem(Guid UserID, Guid ProductID)
+        {
+            return new DataLayer.DACartItems(this.Entities).GetCartItem(UserID, ProductID);
+        }
+
         private void AddCartItemToDatabase(CommonLayer.CartItem CartItem)
         {
             new DataLayer.DACartItems(this.Entities).AddCartItem(CartItem);
         }
 
-        public void UpdateCartItem(CommonLayer.CartItem CartItem)
+        public void UpdateCartItem(Guid ID, int Quantity)
         {
-            if (!string.IsNullOrEmpty(CartItem.ID.ToString()))
+            if (!string.IsNullOrEmpty(ID.ToString()))
             {
-                new DataLayer.DACartItems(this.Entities).UpdateCartItem(CartItem);
+                new DataLayer.DACartItems(this.Entities).UpdateCartItem(ID, Quantity);
             }
         }
 

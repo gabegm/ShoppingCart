@@ -141,7 +141,7 @@ namespace BusinessLayer
         /// <param name="UserAccount"></param>
         /// <param name="ConfirmPassword"></param>
         /// <param name="RoleID"></param>
-        public void RegisterUser(CommonLayer.User User, CommonLayer.UserAccount UserAccount, string ConfirmPassword, Guid[] RoleID)
+        public void RegisterUser(CommonLayer.User User, CommonLayer.UserAccount UserAccount, string ConfirmPassword, Guid[] RoleIDs, Guid RoleID)
         {
             CommonLayer.User ExistingUser = this.GetUser(User.Email);
             CommonLayer.UserAccount ExistingUserAccount = this.GetUserAccount(UserAccount.Username);
@@ -153,19 +153,27 @@ namespace BusinessLayer
                 {
                     User.ID = Guid.NewGuid();
                     UserAccount.ID = Guid.NewGuid();
+
                     User.UserAccountID = UserAccount.ID;
+
                     UserAccount.Password = HashSHA512String(UserAccount.Password, UserAccount.ID.ToString());
+
                     this.AddUserToDatabase(User, UserAccount);
-                    if (RoleID != null)
+
+                    if (RoleID != Guid.Empty)
                     {
-                        foreach (Guid ID in RoleID)
+                        Role.AddUserRole(RoleID, UserAccount.ID);
+                    }
+                    else if (RoleIDs != null)
                         {
-                            Role.AddUserRole(ID, UserAccount.ID);
+                            foreach (Guid ID in RoleIDs)
+                            {
+                                Role.AddUserRole(ID, UserAccount.ID);
+                            }
                         }
                     }
                 }
             }
-        }
 
         /// <summary>
         /// Logins a user and returns true if account is valid.
@@ -173,12 +181,14 @@ namespace BusinessLayer
         /// <param name="Email">User email.</param>
         /// <param name="Password"></param>
         /// <returns>True if valid, false if not.</returns>
-        public bool Login(string Username, string Password)
+        public bool Login(string Email, string Password)
         {
             try
             {
-                CommonLayer.UserAccount UserAccount = this.GetUserAccount(Username);
-                if (UserAccount != null)
+                CommonLayer.User User = this.GetUser(Email);
+                CommonLayer.UserAccount UserAccount = this.GetUserAccount(User.UserAccountID);
+
+                if (UserAccount != null && User != null)
                 {
                     string EncPassword = HashSHA512String(Password, UserAccount.ID.ToString());
                     if (EncPassword.Equals(UserAccount.Password))

@@ -12,36 +12,103 @@
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
+        
         <div class="form-group">
             @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
             <div class="col-sm-10">
                 @Html.TextBoxFor(model => model.Email, new { @class = "form-control", type = "email" })
             </div>
         </div>
+
         <div class="form-group">
             @Html.Label("Name", new { @class = "control-label col-md-2" })
             <div class="col-sm-10">
                 @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control" })
             </div>
         </div>
+
         <div class="form-group">
             @Html.Label("Surname", new { @class = "control-label col-md-2" })
             <div class="col-sm-10">
                 @Html.TextBoxFor(model => model.LastName, new { @class = "form-control" })
             </div>
         </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Gender, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Gender", null, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Contact, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Contact, new { @class = "form-control", placeholder = "Enter contact number here..." })
+                @Html.ValidationMessageFor(model => model.Contact)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Date of Birth", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.DOB, new { @class = "form-control datepicker", placeholder = "Enter date of birth here..." })
+                @Html.ValidationMessageFor(model => model.DOB)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.House, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.House, new { @class = "form-control", placeholder = "Enter house name and number here..." })
+                @Html.ValidationMessageFor(model => model.House)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Street, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Street, new { @class = "form-control", placeholder = "Enter street name here..." })
+                @Html.ValidationMessageFor(model => model.Street)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Town", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.TownID, (IEnumerable<SelectListItem>)ViewBag.TownName, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Country", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.CountryID, (IEnumerable<SelectListItem>)ViewBag.CountryName, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Username", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Username, new { @class = "form-control", placeholder = "Enter username here..." })
+                @Html.ValidationMessageFor(model => model.Username)
+            </div>
+        </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.Password, new { @class = "control-label col-md-2" })
             <div class="col-sm-10">
                 @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
             </div>
         </div>
+
         <div class="form-group">
             @Html.Label("Confirm Password", new { @class = "control-label col-md-2" })
             <div class="col-sm-10">
                 @Html.Password("ConfirmPassword", null, new { @class = "form-control" })
             </div>
         </div>
+
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-default">Register</button>

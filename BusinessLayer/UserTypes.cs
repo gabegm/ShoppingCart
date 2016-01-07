@@ -29,6 +29,11 @@ namespace BusinessLayer
             return new DataLayer.DAUserTypes(this.Entities).GetUserType(ID);
         }
 
+        public CommonLayer.UserType GetUserType(string Name)
+        {
+            return new DataLayer.DAUserTypes(this.Entities).GetUserType(Name);
+        }
+
         /// <summary>
         /// Adds a new to the database.
         /// </summary>

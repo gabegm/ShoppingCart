@@ -1,4 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 
 namespace ShoppingCart.Controllers
 {
@@ -16,6 +21,27 @@ namespace ShoppingCart.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            List<string> GenderItems = new List<string>() { "Male", "Female" };
+            ViewBag.Gender = GenderItems.Select(gender => new SelectListItem { Text = gender, Value = gender });
+
+            BusinessLayer.Users u = new BusinessLayer.Users();
+
+            List<SelectListItem> TownItems = (from towns in u.GetUserTowns().ToList()
+                                              select new SelectListItem()
+                                              {
+                                                  Text = towns.Name,
+                                                  Value = towns.ID.ToString()
+                                              }).ToList();
+            ViewBag.TownName = TownItems;
+
+            List<SelectListItem> CountryItems = (from countries in u.GetUserCountries().ToList()
+                                                 select new SelectListItem()
+                                                 {
+                                                     Text = countries.Name,
+                                                     Value = countries.ID.ToString()
+                                                 }).ToList();
+            ViewBag.CountryName = CountryItems;
+
             return View();
         }
 
@@ -23,9 +49,17 @@ namespace ShoppingCart.Controllers
         [AllowAnonymous]
         public ActionResult Register(CommonLayer.User User, CommonLayer.UserAccount UserAccount, string ConfirmPassword)
         {
-            UserAccount.Roles.Add(new BusinessLayer.Roles().GetRole("USR")); //Default user role
-            new BusinessLayer.Users().RegisterUser(User, UserAccount, ConfirmPassword, null);
-            return RedirectToAction("Index", "Home");
+            Guid RoleID = new BusinessLayer.Roles().GetRole("USR").ID; //Default user role
+            UserAccount.Active = true; //Default useraccount is enabled
+
+            User.Active = true; //Default user is enabled
+
+            CommonLayer.UserType UserType = new BusinessLayer.UserTypes().GetUserType("Client");
+            User.UserTypeID = UserType.ID; //Default UserType Client
+
+            new BusinessLayer.Users().RegisterUser(User, UserAccount, ConfirmPassword, null, RoleID);
+
+            return RedirectToAction("Login", "Account");
         }
 
         [HttpGet]
@@ -36,6 +70,7 @@ namespace ShoppingCart.Controllers
             {
                 ViewBag.LoginInvalid = true;
             }
+
             return View();
         }
 
@@ -43,14 +78,15 @@ namespace ShoppingCart.Controllers
         [AllowAnonymous]
         public ActionResult Login(string Email, string Password)
         {
-            BusinessLayer.Users us = new BusinessLayer.Users();
-            if (us.Login(Email, Password) == true)
+            BusinessLayer.Users UsersBL = new BusinessLayer.Users();
+            if (UsersBL.Login(Email, Password) == true)
             {
                 System.Web.Security.FormsAuthentication.SetAuthCookie(Email, true);
-                CommonLayer.User user = us.GetUser(Email);
-                Models.UIHelpers.UserFullName = user.FirstName + " " + user.LastName;
-                return RedirectToAction("Index", "Home");
 
+                CommonLayer.User user = UsersBL.GetUser(Email);
+                Models.UIHelpers.UserFullName = user.FirstName + " " + user.LastName;
+
+                return RedirectToAction("Index", "Home");
             }
             TempData["LoginInvalid"] = true;
             return RedirectToAction("Login", "Account");

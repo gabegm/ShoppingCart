@@ -95,7 +95,8 @@ namespace ShoppingCart.Controllers
         [HttpPost]
         public ActionResult CreateNewUser(CommonLayer.User User, CommonLayer.UserAccount UserAccount, string ConfirmPassword, Guid[] RoleID)
         {
-            new BusinessLayer.Users().RegisterUser(User, UserAccount, ConfirmPassword, RoleID);
+            new BusinessLayer.Users().RegisterUser(User, UserAccount, ConfirmPassword, RoleID, Guid.Empty);
+
             return RedirectToAction("Users");
         }
 

@@ -6,7 +6,7 @@
 }
 
 <div class="col-md-9">
-    @using (Html.BeginForm("AddProductToCart", "Products", FormMethod.Post))
+    @using (Html.BeginForm("AddProductToCart", "Product", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
@@ -20,7 +20,7 @@
                 </h4>
                 <p>@Model.Product.Description</p>
                 <div class="">
-                    <input type="submit" value="Add To Cart" class="btn btn-default" />
+                    @Html.ActionLink("Add To Cart", "AddProductToCart", "Product", new { ID = Model.Product.ID }, new { @class = "btn btn-default" })
                 </div>
             </div>
         </div>

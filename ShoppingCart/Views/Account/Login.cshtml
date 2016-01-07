@@ -6,14 +6,17 @@
 }
 
 <div class="col-md-9">
-    <h2>Login</h2>
-
     @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
     {
         if (ViewBag.LoginInvalid != null)
         {
             <h2>Login invalid!</h2>
         }
+        else
+        {
+            <h2>Login</h2>
+        }
+
         <div class="form-group">
             @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
             <div class="col-sm-10">
