@@ -221,7 +221,7 @@ namespace ShoppingCart.Controllers
             List<string> IsProductActive = new List<string>() { "True", "False" };
             ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
 
-            List<SelectListItem> CategoryItems = (from category in new BusinessLayer.Products().GetProductTypes().ToList()
+            List<SelectListItem> CategoryItems = (from category in new BusinessLayer.Categories().GetSubCategoriesAsModel().ToList()
                                                      select new SelectListItem()
                                                      {
                                                          Text = category.Name,

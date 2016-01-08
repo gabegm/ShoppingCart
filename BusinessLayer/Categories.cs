@@ -32,8 +32,7 @@ namespace BusinessLayer
 
         public IQueryable<CommonLayer.Product> GetProductsInCategory(string ID)
         {
-            CommonLayer.Category Category = this.GetCategory(ID);
-            return new DataLayer.DACategories(this.Entities).GetProductsInCategory(Category);
+            return new DataLayer.DACategories(this.Entities).GetProductsInCategory(ID);
         }
 
         public void AddCategoryToDatabase(CommonLayer.Category Category)

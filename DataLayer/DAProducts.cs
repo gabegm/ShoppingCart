@@ -18,7 +18,8 @@ namespace DataLayer
         {
             return (from product in this.Entities.Products
                     join category in this.Entities.Categories on product.CategoryID equals category.ID
-                    join sale in this.Entities.Sales on product.SaleID equals sale.ID
+                    join sale in this.Entities.Sales on product.SaleID equals sale.ID into ps
+                    from subsale in ps.DefaultIfEmpty()
                     join review in this.Entities.Reviews on product.ID equals review.ProductID into pr
                     from subreview in pr.DefaultIfEmpty()
                     select new CommonLayer.Models.ProductsModel()
@@ -33,10 +34,10 @@ namespace DataLayer
                         Active = product.Active,
                         CategoryID = category.ID,
                         CategoryName = category.Name,
-                        SaleID = sale.ID,
-                        SaleValue = (float)sale.Value,
-                        SaleStart = sale.Start,
-                        SaleStop = sale.Stop,
+                        SaleID = (subsale == null ? Guid.Empty : subsale.ID),
+                        SaleValue = (float)(subsale == null ? 0 : subsale.Value),
+                        SaleStart = (subsale == null ? default(DateTime) : subsale.Start),
+                        SaleStop = (subsale == null ? default(DateTime) : subsale.Stop),
                         ReviewID = (subreview == null ? Guid.Empty : subreview.ID),
                         ReviewDescription = (subreview == null ? String.Empty : subreview.Description),
                         ReviewRating = (subreview == null ? 0 : subreview.Rating),

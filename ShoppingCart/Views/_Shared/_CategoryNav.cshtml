@@ -7,12 +7,12 @@
         {
             <a href="#@Category.ID" class="list-group-item" data-toggle="collapse" data-parent="#MainMenu">@Category.Name</a>
             
-                <div class="collapse" id="@Category.ID">
-                    @foreach (var SubCategory in Model.SubCategories.Where(p=>p.ParentID == Category.ID))
-                    {
-                        @Html.ActionLink(SubCategory.Name, "Index", "Category", new { ID = SubCategory.ID }, new { @class = "list-group-item" })
-                    }
-                </div>
+            <div class="collapse" id="@Category.ID">
+                @foreach (var SubCategory in Model.SubCategories.Where(p=>p.ParentID == Category.ID))
+                {
+                    @Html.ActionLink(SubCategory.Name, "Index", "Category", new { ID = SubCategory.ID }, new { @class = "list-group-item" })
+                }
+            </div>
         }
     </div>
 </div>
