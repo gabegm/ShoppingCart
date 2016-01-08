@@ -37,6 +37,16 @@ namespace DataLayer
                     });
         }
 
+        public IQueryable<CommonLayer.User> GetUserRoles(string Code)
+        {
+            return (from UserAccount in this.Entities.UserAccounts
+                    join User in this.Entities.Users on UserAccount.ID equals User.UserAccountID
+                    join Role in this.Entities.Roles on UserAccount.Roles.SingleOrDefault().ID equals Role.UserAccounts.SingleOrDefault().ID
+                    where Role.Code == Code
+                    select User
+                    );
+        }
+
         /// <summary>
         /// Returns roles from database
         /// </summary>

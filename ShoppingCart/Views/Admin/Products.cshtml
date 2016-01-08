@@ -8,73 +8,78 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h2>Products</h2>
     <p>@Html.ActionLink("Create New", "CreateNewProduct")</p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Description)
-            </th>
-            <th>
-                @Html.DisplayName("Image")
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Price)
-            </th>
-            <th>
-                @Html.DisplayName("VAT")
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Quantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Active)
-            </th>
-            <th>
-                @Html.DisplayName("Sale")
-            </th>
-            <th>
-                @Html.DisplayName("Category")
-            </th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ImageURL)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VATRate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Active)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SaleValue)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CategoryName)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "EditProduct", new { ID = item.ID }) |
-                    @Html.ActionLink("View", "ViewProduct", new { ID = item.ID }) |
-                    @Html.ActionLink("Delete", "DeleteProduct", new { ID = item.ID })
-                </td>
-            </tr>
-        }
-    </table>
+    <div class="table-responsive table-striped">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Description)
+                    </th>
+                    <th>
+                        @Html.DisplayName("Image")
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Price)
+                    </th>
+                    <th>
+                        @Html.DisplayName("VAT")
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Quantity)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Active)
+                    </th>
+                    <th>
+                        @Html.DisplayName("Sale")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Category")
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ImageURL)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.VATRate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Active)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SaleValue)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CategoryName)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditProduct", new { ID = item.ID }) |
+                            @Html.ActionLink("View", "ViewProduct", new { ID = item.ID }) |
+                            @Html.ActionLink("Delete", "DeleteProduct", new { ID = item.ID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

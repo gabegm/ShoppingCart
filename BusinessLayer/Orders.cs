@@ -39,6 +39,7 @@ namespace BusinessLayer
 
             Product.Quantity--;
             ProductsBL.UpdateProduct(Product);
+            new Email(this.Entities).SendEmailToAdmin("Product Stock Changed", "Product stock now: " + Product.Quantity);
         }
 
         public CommonLayer.Order GetOrder(Guid ID)

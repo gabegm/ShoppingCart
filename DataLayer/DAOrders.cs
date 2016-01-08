@@ -15,6 +15,7 @@ namespace DataLayer
         {
             return (from Order in this.Entities.Orders
                     join OrderDetail in this.Entities.OrderDetails on Order.ID equals OrderDetail.OrderID
+                    join User in this.Entities.Users on Order.UserID equals User.ID
                     select new CommonLayer.Models.OrdersModel()
                     {
                         ID = Order.ID,
@@ -22,6 +23,7 @@ namespace DataLayer
                         Status = Order.Status,
                         Number = Order.Number,
                         UserID = Order.UserID,
+                        UserEmail = User.Email,
                         OrderDetailsID = OrderDetail.ID,
                         ProductPrice = (float)OrderDetail.ProductPrice,
                         ProductQuantity = OrderDetail.ProductQuantity,

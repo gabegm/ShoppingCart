@@ -14,7 +14,7 @@
                 <div class="thumbnail">
                     <img src="@Html.DisplayFor(modelItem => item.ImageURL)" alt=""> <!--320x150-->
                     <div class="caption">
-                        <h4 class="pull-right">@Html.DisplayFor(modelItem => item.Price)</h4>
+                        <h4 class="pull-right">€@Html.DisplayFor(modelItem => item.Price)</h4>
                         <h4>
                             @Html.ActionLink(Html.DisplayFor(modelItem => item.Name).ToString(), "Index", "Product", new { ID = item.ID }, null)
                         </h4>

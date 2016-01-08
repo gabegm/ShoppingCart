@@ -129,7 +129,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\About\Index.cshtml" />
     <Content Include="Views\Contact\Index.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\_Shared\_BackEnd.cshtml" />
     <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\Admin\Login.cshtml" />
@@ -174,8 +173,6 @@
     <Content Include="Views\Users\UserDetails.cshtml" />
     <Content Include="Views\Admin\Roles.cshtml" />
     <Content Include="Views\Admin\Users.cshtml" />
-    <Content Include="Views\Admin\ViewUserDetails.cshtml" />
-    <Content Include="Views\Admin\ViewProductDetail.cshtml" />
     <Content Include="Views\Admin\CreateNewRole.cshtml" />
     <Content Include="Views\Admin\EditRole.cshtml" />
     <Content Include="Views\Admin\Categories.cshtml" />

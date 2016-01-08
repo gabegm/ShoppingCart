@@ -12,6 +12,7 @@ namespace CommonLayer.Models
         public int Number { get; set; }
         public string Status { get; set; }
         public Guid UserID { get; set; }
+        public string UserEmail { get; set; }
         public Guid OrderDetailsID { get; set; }
         public int ProductQuantity { get; set; }
         public float ProductPrice { get; set; }

@@ -14,6 +14,14 @@ namespace DataLayer
             return this.Entities.Products;
         }
 
+        public IQueryable<CommonLayer.Product> GetEnabledProducts()
+        {
+            return (from Product in this.Entities.Products
+                    where Product.Active == true
+                    select Product
+                    );
+        }
+
         public IQueryable<CommonLayer.Models.ProductsModel> GetProductsAsModel()
         {
             return (from product in this.Entities.Products
@@ -34,6 +42,38 @@ namespace DataLayer
                         Active = product.Active,
                         CategoryID = category.ID,
                         CategoryName = category.Name,
+                        SaleID = (subsale == null ? Guid.Empty : subsale.ID),
+                        SaleValue = (float)(subsale == null ? 0 : subsale.Value),
+                        SaleStart = (subsale == null ? default(DateTime) : subsale.Start),
+                        SaleStop = (subsale == null ? default(DateTime) : subsale.Stop),
+                        ReviewID = (subreview == null ? Guid.Empty : subreview.ID),
+                        ReviewDescription = (subreview == null ? String.Empty : subreview.Description),
+                        ReviewRating = (subreview == null ? 0 : subreview.Rating),
+                        ReviewDate = (subreview == null ? default(DateTime) : subreview.Date)
+                    });
+        }
+
+        public IQueryable<CommonLayer.Models.ProductsModel> GetEnabledProductsAsModel()
+        {
+            return (from Product in this.Entities.Products
+                    join Category in this.Entities.Categories on Product.CategoryID equals Category.ID
+                    join Sale in this.Entities.Sales on Product.SaleID equals Sale.ID into ps
+                    from subsale in ps.DefaultIfEmpty()
+                    join Review in this.Entities.Reviews on Product.ID equals Review.ProductID into pr
+                    from subreview in pr.DefaultIfEmpty()
+                    where Product.Active == true
+                    select new CommonLayer.Models.ProductsModel()
+                    {
+                        ID = Product.ID,
+                        Name = Product.Name,
+                        Description = Product.Description,
+                        ImageURL = Product.ImageURL,
+                        Price = (float)Product.Price,
+                        VATRate = (float)Product.VATRate,
+                        Quantity = Product.Quantity,
+                        Active = Product.Active,
+                        CategoryID = Category.ID,
+                        CategoryName = Category.Name,
                         SaleID = (subsale == null ? Guid.Empty : subsale.ID),
                         SaleValue = (float)(subsale == null ? 0 : subsale.Value),
                         SaleStart = (subsale == null ? default(DateTime) : subsale.Start),

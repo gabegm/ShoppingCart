@@ -19,6 +19,11 @@ namespace BusinessLayer
             return new DataLayer.DAAudits(this.Entities).GetAudits();
         }
 
+        public IQueryable<CommonLayer.Models.AuditsModel> GetAuditsAsModel()
+        {
+            return new DataLayer.DAAudits(this.Entities).GetAuditsAsModel();
+        }
+
         /// <summary>
         /// Get user with a specific email.
         /// </summary>
@@ -33,9 +38,23 @@ namespace BusinessLayer
         /// Adds a new to the database.
         /// </summary>
         /// <param name="User">user instance to be added.</param>
-        public void AddAuditToDatabase(CommonLayer.Audit Audit)
+        public void AddAudit(Guid UserID, string Description, string Type)
         {
+            CommonLayer.Audit Audit = new CommonLayer.Audit();
+
             Audit.ID = Guid.NewGuid();
+            Audit.Description = Description;
+            Audit.Type = Type;
+
+            if (UserID.Equals(Guid.Empty))
+            {
+                Audit.UserID = null;
+            }
+            else
+            {
+                Audit.UserID = UserID;
+            }
+
             new DataLayer.DAAudits(this.Entities).AddAudit(Audit);
         }
 

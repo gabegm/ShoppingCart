@@ -84,6 +84,7 @@
     <Compile Include="CartItems.cs" />
     <Compile Include="Categories.cs" />
     <Compile Include="Countries.cs" />
+    <Compile Include="Email.cs" />
     <Compile Include="Menus.cs" />
     <Compile Include="Orders.cs" />
     <Compile Include="Products.cs" />

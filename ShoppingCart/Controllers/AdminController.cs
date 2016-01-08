@@ -12,7 +12,7 @@ namespace ShoppingCart.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Audits");
         }
 
         /// <summary>
@@ -168,29 +168,6 @@ namespace ShoppingCart.Controllers
         }
 
         /// <summary>
-        /// Returns the details to a specific user
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public ActionResult ViewUserDetails(Guid id)
-        {
-            return View(new BusinessLayer.Users().GetUser(id));
-        }
-
-        /// <summary>
-        /// Saves the changes of the user to the database
-        /// </summary>
-        /// <param name="User"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public ActionResult ViewUserDetails(CommonLayer.User User, CommonLayer.UserAccount UserAccount)
-        {
-            new BusinessLayer.Users().UpdateUser(User, UserAccount);
-            return RedirectToAction("Index");
-        }
-
-        /// <summary>
         /// Deletes a specific user from the database
         /// </summary>
         /// <param name="id"></param>
@@ -292,6 +269,17 @@ namespace ShoppingCart.Controllers
             CommonLayer.Product Product = pr.GetProduct(ID);
             ProductTypeItems.SingleOrDefault(p => p.Value.Equals(Product.CategoryID.ToString())).Selected = true;
             ViewBag.ProductType = ProductTypeItems;
+
+            List<SelectListItem> SaleItems = (from sale in new BusinessLayer.Products().GetProductSales().ToList()
+                                              select new SelectListItem()
+                                              {
+                                                  Text = sale.Value.ToString(),
+                                                  Value = sale.ID.ToString()
+                                              }).ToList();
+            CommonLayer.Sale Sale = new BusinessLayer.Sales().GetSale(Product.SaleID.GetValueOrDefault());
+            SaleItems.SingleOrDefault(s => s.Value.Equals(Product.SaleID.ToString())).Selected = true;
+            ViewBag.Sales = SaleItems;
+
             return View(Product);
         }
 
@@ -1014,7 +1002,43 @@ namespace ShoppingCart.Controllers
         /// <returns></returns>
         public ActionResult Audits()
         {
-            return View(new BusinessLayer.Audits().GetAudits());
+            return View(new BusinessLayer.Audits().GetAuditsAsModel());
         }
+
+        /*
+        public ActionResult ProductPrices()
+        {
+            return View(new BusinessLayer.Audits().GetAuditsAsModel());
+        }
+
+        [HttpGet]
+        public ActionResult CreateProductPrice()
+        {
+            return View(new BusinessLayer.Audits().GetAuditsAsModel());
+        }
+
+        [HttpPost]
+        public ActionResult CreateProductPrice()
+        {
+            return View(new BusinessLayer.Audits().GetAuditsAsModel());
+        }
+
+        [HttpGet]
+        public ActionResult EditProductPrice()
+        {
+            return View(new BusinessLayer.Audits().GetAuditsAsModel());
+        }
+
+        [HttpPost]
+        public ActionResult EditProductPrice()
+        {
+            return View(new BusinessLayer.Audits().GetAuditsAsModel());
+        }
+
+        public ActionResult DeleteProductPrice()
+        {
+            return View(new BusinessLayer.Audits().GetAuditsAsModel());
+        }
+        */
     }
 }

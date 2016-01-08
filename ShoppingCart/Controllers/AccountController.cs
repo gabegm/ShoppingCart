@@ -58,6 +58,7 @@ namespace ShoppingCart.Controllers
             User.UserTypeID = UserType.ID; //Default UserType Client
 
             new BusinessLayer.Users().RegisterUser(User, UserAccount, ConfirmPassword, null, RoleID);
+            new BusinessLayer.Audits().AddAudit(User.ID, "Successful Registration", "Register");
 
             return RedirectToAction("Login", "Account");
         }
@@ -68,6 +69,7 @@ namespace ShoppingCart.Controllers
         {
             if (TempData["LoginInvalid"] != null)
             {
+                new BusinessLayer.Audits().AddAudit(Guid.Empty, "Login Failed", "Login");
                 ViewBag.LoginInvalid = true;
             }
 
@@ -79,22 +81,32 @@ namespace ShoppingCart.Controllers
         public ActionResult Login(string Email, string Password)
         {
             BusinessLayer.Users UsersBL = new BusinessLayer.Users();
+
             if (UsersBL.Login(Email, Password) == true)
             {
                 System.Web.Security.FormsAuthentication.SetAuthCookie(Email, true);
 
-                CommonLayer.User user = UsersBL.GetUser(Email);
-                Models.UIHelpers.UserFullName = user.FirstName + " " + user.LastName;
+                CommonLayer.User User = UsersBL.GetUser(Email);
+
+                Models.UIHelpers.UserFullName = User.FirstName + " " + User.LastName;
+
+                new BusinessLayer.Audits().AddAudit(User.ID, "Successful Login", "Login");
 
                 return RedirectToAction("Index", "Home");
             }
             TempData["LoginInvalid"] = true;
+
             return RedirectToAction("Login", "Account");
         }
 
         public ActionResult Logout()
         {
+            CommonLayer.User User = new BusinessLayer.Users().GetUser(HttpContext.User.Identity.Name);
+
+            new BusinessLayer.Audits().AddAudit(User.ID, "Successful logout", "Logout");
+
             System.Web.Security.FormsAuthentication.SignOut();
+
             return RedirectToAction("Index", "Home");
         }
     }

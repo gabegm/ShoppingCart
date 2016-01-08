@@ -8,7 +8,7 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h2>Orders</h2>
     <div class="table-responsive">
-        <table class="table">
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th>
@@ -21,25 +21,25 @@
                         @Html.DisplayNameFor(model => model.FirstOrDefault().Number)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().UserID)
+                        @Html.DisplayName("Email")
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().ProductPrice)
+                        @Html.DisplayName("Price")
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().ProductQuantity)
+                        @Html.DisplayName("Quantity")
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().ProductVATRate)
+                        @Html.DisplayName("VAT")
                     </th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
-            {
+                {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Date.ToString("dd-MMM-yyyy"))
+                            @Html.DisplayFor(modelItem => item.Date)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Status)
@@ -48,7 +48,7 @@
                             @Html.DisplayFor(modelItem => item.Number)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.UserID)
+                            @Html.DisplayFor(modelItem => item.UserEmail)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.ProductPrice)

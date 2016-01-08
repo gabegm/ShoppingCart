@@ -10,6 +10,21 @@ namespace DataLayer
         public DAAudits() : base() { }
         public DAAudits(CommonLayer.DBModelEntities Entities) : base(Entities) { }
 
+        public IQueryable<CommonLayer.Models.AuditsModel> GetAuditsAsModel()
+        {
+            return (from Audit in this.Entities.Audits
+                    join User in this.Entities.Users on Audit.UserID equals User.ID into au
+                    from SubUser in au.DefaultIfEmpty()
+                    select new CommonLayer.Models.AuditsModel()
+                    {
+                        ID = Audit.ID,
+                        Description = Audit.Description,
+                        Type = Audit.Description,
+                        UserID = (SubUser == null ? Guid.Empty : SubUser.ID),
+                        UserEmail = (SubUser == null ? String.Empty : SubUser.Email)
+                    });
+        }
+
         public IQueryable<CommonLayer.Audit> GetAudits()
         {
             return this.Entities.Audits;

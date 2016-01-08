@@ -138,6 +138,7 @@
     <Compile Include="Menu.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AuditsModel.cs" />
     <Compile Include="Models\CartItemsModel.cs" />
     <Compile Include="Models\CategoriesModel.cs" />
     <Compile Include="Models\MenusModel.cs" />

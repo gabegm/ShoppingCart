@@ -28,6 +28,11 @@ namespace BusinessLayer
             return new DataLayer.DAUsers(this.Entities).GetUserRoles();
         }
 
+        public IQueryable<CommonLayer.User> GetUserRoles(string Code)
+        {
+            return new DataLayer.DAUsers(this.Entities).GetUserRoles(Code);
+        }
+
         /// <summary>
         /// Returns list of user types
         /// </summary>

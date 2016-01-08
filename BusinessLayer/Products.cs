@@ -17,6 +17,11 @@ namespace BusinessLayer
             return new DataLayer.DAProducts(this.Entities).GetProducts();
         }
 
+        public IQueryable<CommonLayer.Product> GetEnabledProducts()
+        {
+            return new DataLayer.DAProducts(this.Entities).GetEnabledProducts();
+        }
+
         /// <summary>
         /// Returns ProductsModel as a model
         /// </summary>
@@ -24,6 +29,11 @@ namespace BusinessLayer
         public IQueryable<CommonLayer.Models.ProductsModel> GetProductsAsModel()
         {
             return new DataLayer.DAProducts(this.Entities).GetProductsAsModel();
+        }
+
+        public IQueryable<CommonLayer.Models.ProductsModel> GetEnabledProductsAsModel()
+        {
+            return new DataLayer.DAProducts(this.Entities).GetEnabledProductsAsModel();
         }
 
         /// <summary>

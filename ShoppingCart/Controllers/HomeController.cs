@@ -11,7 +11,9 @@ namespace ShoppingCart.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            return View(new BusinessLayer.Products().GetProductsAsModel());
+            new BusinessLayer.Audits().AddAudit(Guid.Empty, "Successful Guest Visit", "Visit");
+
+            return View(new BusinessLayer.Products().GetEnabledProductsAsModel());
         }
 
         [ChildActionOnly]
