@@ -14,13 +14,14 @@ namespace DataLayer
         {
             return (from carts in this.Entities.CartItems
                     join products in this.Entities.Products on carts.ProductID equals products.ID
+                    join ProductPrice in this.Entities.ProductPrices on products.ID equals ProductPrice.ProductID
                     join users in this.Entities.Users on carts.UserID equals users.ID
                     select new CommonLayer.Models.CartItemsModel()
                     {
                         ID = carts.ID,
                         ProductID = products.ID,
                         ProductName = products.Name,
-                        ProductPrice = (float)products.Price,
+                        ProductPrice = (float)ProductPrice.Price,
                         ProductVATRate = (float)products.VATRate,
                         Quantity = carts.Quantity,
                         UserID = users.ID
@@ -39,6 +40,7 @@ namespace DataLayer
         {
             return (from CartItem in this.Entities.CartItems
                     join Product in this.Entities.Products on CartItem.ProductID equals Product.ID
+                    join ProductPrice in this.Entities.ProductPrices on Product.ID equals ProductPrice.ProductID
                     join User in this.Entities.Users on CartItem.UserID equals User.ID
                     where CartItem.UserID == UserID
                     select new CommonLayer.Models.CartItemsModel()
@@ -47,7 +49,7 @@ namespace DataLayer
                         ID = CartItem.ID,
                         ProductID = Product.ID,
                         ProductName = Product.Name,
-                        ProductPrice = (float)Product.Price,
+                        ProductPrice = (float)ProductPrice.Price,
                         ProductVATRate = (float)Product.VATRate,
                         Quantity = CartItem.Quantity,
                         UserID = User.ID

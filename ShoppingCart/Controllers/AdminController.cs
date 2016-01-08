@@ -223,7 +223,7 @@ namespace ShoppingCart.Controllers
         /// <param name="product"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult CreateNewProduct(CommonLayer.Product product)
+        public ActionResult CreateNewProduct(CommonLayer.Product Product, Guid[] UserTypeID, int[] Price)
         {
             try
             {
@@ -232,11 +232,14 @@ namespace ShoppingCart.Controllers
                     if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
                     {
                         HttpPostedFileBase imageFile = Request.Files[0];
+
                         string fileName = Guid.NewGuid() + System.IO.Path.GetExtension(imageFile.FileName);
                         string serverPath = Server.MapPath(@"~\Images\");
+
                         imageFile.SaveAs(serverPath + fileName);
-                        product.ImageURL = @"\images\" + fileName;
-                        new BusinessLayer.Products().AddProductToDatabase(product);
+                        Product.ImageURL = @"\images\" + fileName;
+
+                        new BusinessLayer.Products().AddProduct(Product, UserTypeID, Price);
                     }
                 }
             }

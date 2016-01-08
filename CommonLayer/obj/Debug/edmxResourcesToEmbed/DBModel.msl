@@ -85,6 +85,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ProductPrices">
+      <EntityTypeMapping TypeName="DBModel.ProductPrice">
+        <MappingFragment StoreEntitySet="ProductPrices">
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Products">
       <EntityTypeMapping TypeName="DBModel.Product">
         <MappingFragment StoreEntitySet="Products">
@@ -93,7 +102,6 @@
           <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
           <ScalarProperty Name="VATRate" ColumnName="VATRate" />
-          <ScalarProperty Name="Price" ColumnName="Price" />
           <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -208,14 +216,6 @@
       </EndProperty>
       <EndProperty Name="Menu">
         <ScalarProperty Name="ID" ColumnName="MenuID" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="ProductPrices" TypeName="DBModel.ProductPrices" StoreEntitySet="ProductPrices">
-      <EndProperty Name="UserType">
-        <ScalarProperty Name="ID" ColumnName="UserTypeID" />
-      </EndProperty>
-      <EndProperty Name="Product">
-        <ScalarProperty Name="ID" ColumnName="ProductID" />
       </EndProperty>
     </AssociationSetMapping>
     <AssociationSetMapping Name="UserAccountRoles" TypeName="DBModel.UserAccountRoles" StoreEntitySet="UserAccountRoles">

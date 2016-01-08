@@ -9,6 +9,7 @@
     <EntitySet Name="Menus" EntityType="DBModel.Menu" />
     <EntitySet Name="OrderDetails" EntityType="DBModel.OrderDetail" />
     <EntitySet Name="Orders" EntityType="DBModel.Order" />
+    <EntitySet Name="ProductPrices" EntityType="DBModel.ProductPrice" />
     <EntitySet Name="Products" EntityType="DBModel.Product" />
     <EntitySet Name="Reviews" EntityType="DBModel.Review" />
     <EntitySet Name="Roles" EntityType="DBModel.Role" />
@@ -58,6 +59,14 @@
       <End Role="User" EntitySet="Users" />
       <End Role="Order" EntitySet="Orders" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProductPrices_Products" Association="DBModel.FK_ProductPrices_Products">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="ProductPrice" EntitySet="ProductPrices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductPrices_UserTypes" Association="DBModel.FK_ProductPrices_UserTypes">
+      <End Role="UserType" EntitySet="UserTypes" />
+      <End Role="ProductPrice" EntitySet="ProductPrices" />
+    </AssociationSet>
     <AssociationSet Name="FK_Products_Sales" Association="DBModel.FK_Products_Sales">
       <End Role="Sale" EntitySet="Sales" />
       <End Role="Product" EntitySet="Products" />
@@ -89,10 +98,6 @@
     <AssociationSet Name="MenuRoles" Association="DBModel.MenuRoles">
       <End Role="Menu" EntitySet="Menus" />
       <End Role="Role" EntitySet="Roles" />
-    </AssociationSet>
-    <AssociationSet Name="ProductPrices" Association="DBModel.ProductPrices">
-      <End Role="Product" EntitySet="Products" />
-      <End Role="UserType" EntitySet="UserTypes" />
     </AssociationSet>
     <AssociationSet Name="UserAccountRoles" Association="DBModel.UserAccountRoles">
       <End Role="UserAccount" EntitySet="UserAccounts" />
@@ -191,6 +196,17 @@
     <NavigationProperty Name="OrderDetails" Relationship="DBModel.FK_OrderDetails_Orders1" FromRole="Order" ToRole="OrderDetail" />
     <NavigationProperty Name="User" Relationship="DBModel.FK_Orders_Users" FromRole="Order" ToRole="User" />
   </EntityType>
+  <EntityType Name="ProductPrice">
+    <Key>
+      <PropertyRef Name="ProductID" />
+      <PropertyRef Name="UserTypeID" />
+    </Key>
+    <Property Name="ProductID" Type="Guid" Nullable="false" />
+    <Property Name="UserTypeID" Type="Guid" Nullable="false" />
+    <Property Name="Price" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Product" Relationship="DBModel.FK_ProductPrices_Products" FromRole="ProductPrice" ToRole="Product" />
+    <NavigationProperty Name="UserType" Relationship="DBModel.FK_ProductPrices_UserTypes" FromRole="ProductPrice" ToRole="UserType" />
+  </EntityType>
   <EntityType Name="Product">
     <Key>
       <PropertyRef Name="ID" />
@@ -199,7 +215,6 @@
     <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Description" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
     <Property Name="ImageURL" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-    <Property Name="Price" Type="Double" Nullable="false" />
     <Property Name="VATRate" Type="Double" Nullable="false" />
     <Property Name="Quantity" Type="Int32" Nullable="false" />
     <Property Name="Active" Type="Boolean" Nullable="false" />
@@ -208,9 +223,9 @@
     <NavigationProperty Name="CartItems" Relationship="DBModel.FK_ShoppingCartItems_Products" FromRole="Product" ToRole="CartItem" />
     <NavigationProperty Name="Category" Relationship="DBModel.FK_Products_Categories" FromRole="Product" ToRole="Category" />
     <NavigationProperty Name="OrderDetails" Relationship="DBModel.FK_OrderDetails_Products" FromRole="Product" ToRole="OrderDetail" />
+    <NavigationProperty Name="ProductPrices" Relationship="DBModel.FK_ProductPrices_Products" FromRole="Product" ToRole="ProductPrice" />
     <NavigationProperty Name="Sale" Relationship="DBModel.FK_Products_Sales" FromRole="Product" ToRole="Sale" />
     <NavigationProperty Name="Reviews" Relationship="DBModel.FK_Reviews_Products" FromRole="Product" ToRole="Review" />
-    <NavigationProperty Name="UserTypes" Relationship="DBModel.ProductPrices" FromRole="Product" ToRole="UserType" />
   </EntityType>
   <EntityType Name="Review">
     <Key>
@@ -312,8 +327,8 @@
     <Property Name="ID" Type="Guid" Nullable="false" />
     <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="ProductPrices" Relationship="DBModel.FK_ProductPrices_UserTypes" FromRole="UserType" ToRole="ProductPrice" />
     <NavigationProperty Name="Users" Relationship="DBModel.FK_Users_UserTypes" FromRole="UserType" ToRole="User" />
-    <NavigationProperty Name="Products" Relationship="DBModel.ProductPrices" FromRole="UserType" ToRole="Product" />
   </EntityType>
   <Association Name="FK_Audits_Users">
     <End Type="DBModel.User" Role="User" Multiplicity="0..1" />
@@ -435,6 +450,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProductPrices_Products">
+    <End Type="DBModel.Product" Role="Product" Multiplicity="1" />
+    <End Type="DBModel.ProductPrice" Role="ProductPrice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProductPrice">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductPrices_UserTypes">
+    <End Type="DBModel.UserType" Role="UserType" Multiplicity="1" />
+    <End Type="DBModel.ProductPrice" Role="ProductPrice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProductPrice">
+        <PropertyRef Name="UserTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Products_Sales">
     <End Type="DBModel.Sale" Role="Sale" Multiplicity="0..1" />
     <End Type="DBModel.Product" Role="Product" Multiplicity="*" />
@@ -514,10 +553,6 @@
   <Association Name="MenuRoles">
     <End Type="DBModel.Menu" Role="Menu" Multiplicity="*" />
     <End Type="DBModel.Role" Role="Role" Multiplicity="*" />
-  </Association>
-  <Association Name="ProductPrices">
-    <End Type="DBModel.Product" Role="Product" Multiplicity="*" />
-    <End Type="DBModel.UserType" Role="UserType" Multiplicity="*" />
   </Association>
   <Association Name="UserAccountRoles">
     <End Type="DBModel.UserAccount" Role="UserAccount" Multiplicity="*" />

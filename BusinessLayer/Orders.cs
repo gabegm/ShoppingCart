@@ -26,6 +26,9 @@ namespace BusinessLayer
 
             Products ProductsBL = new Products(this.Entities);
             CommonLayer.Product Product = ProductsBL.GetProduct(Cart.ProductID);
+            CommonLayer.User User = new Users(this.Entities).GetUser(Cart.UserID);
+            CommonLayer.UserType UserType = new UserTypes(this.Entities).GetUserType(User.UserTypeID);
+            CommonLayer.ProductPrice ProductPrice = ProductsBL.GetProductPrice(Product.ID, UserType.ID);
 
             Order.ID = Guid.NewGuid();
             Order.Date = DateTime.Today;
@@ -35,7 +38,7 @@ namespace BusinessLayer
 
             OrderDetail.ID = Guid.NewGuid();
             OrderDetail.ProductQuantity = Cart.Quantity;
-            OrderDetail.ProductPrice = Product.Price;
+            OrderDetail.ProductPrice = ProductPrice.Price;
             OrderDetail.ProductVATRate = Product.VATRate;
             OrderDetail.OrderID = Order.ID;
             OrderDetail.ProductID = Cart.ProductID;

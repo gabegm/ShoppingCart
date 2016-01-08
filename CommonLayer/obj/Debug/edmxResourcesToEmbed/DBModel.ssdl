@@ -99,6 +99,7 @@
     </Key>
     <Property Name="ProductID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="UserTypeID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Price" Type="float" Nullable="false" />
   </EntityType>
   <EntityType Name="Products">
     <Key>
@@ -108,7 +109,6 @@
     <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Description" Type="varchar" MaxLength="500" Nullable="false" />
     <Property Name="ImageURL" Type="varchar" MaxLength="200" Nullable="false" />
-    <Property Name="Price" Type="float" Nullable="false" />
     <Property Name="VATRate" Type="float" Nullable="false" />
     <Property Name="Quantity" Type="int" Nullable="false" />
     <Property Name="Active" Type="bit" Nullable="false" />

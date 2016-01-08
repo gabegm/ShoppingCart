@@ -10,7 +10,7 @@ namespace ShoppingCart.Controllers
             return View();
         }
 
-        public ActionResult Checkout()
+        public ActionResult ProcessOrder()
         {
             CommonLayer.User User = new BusinessLayer.Users().GetUser(HttpContext.User.Identity.Name);
 

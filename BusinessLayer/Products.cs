@@ -59,10 +59,40 @@ namespace BusinessLayer
         /// Adds the product to the database
         /// </summary>
         /// <param name="Product"></param>
-        public void AddProductToDatabase(CommonLayer.Product Product)
+        public void AddProduct(CommonLayer.Product Product, Guid[] UserTypeID, int[] ProductPrice)
         {
             Product.ID = Guid.NewGuid();
             new DataLayer.DAProducts(this.Entities).AddNewProduct(Product);
+
+            int num = 0;
+
+            foreach (Guid ID in UserTypeID)
+            {
+                this.AllocateProductPrice(Product.ID, ID, ProductPrice[num++]);
+            }
+        }
+
+        public void AllocateProductPrice(Guid ProductID, Guid UserTypeID, int Price)
+        {
+            CommonLayer.Product Product = this.GetProduct(ProductID);
+            CommonLayer.UserType UserType = new UserTypes(this.Entities).GetUserType(UserTypeID);
+            CommonLayer.ProductPrice ProductPrice = new CommonLayer.ProductPrice();
+
+            ProductPrice.UserTypeID = UserTypeID;
+            ProductPrice.ProductID = ProductID;
+            ProductPrice.Price = Price;
+
+            new DataLayer.DAProducts(this.Entities).AllocateProductPrice(ProductPrice);
+        }
+
+        public void DeallocateProductPrice(CommonLayer.ProductPrice ProductPrice)
+        {
+            new DataLayer.DAProducts(this.Entities).DeallocateProductPrice(ProductPrice);
+        }
+
+        public CommonLayer.ProductPrice GetProductPrice(Guid ProductID, Guid UserID)
+        {
+            return new DataLayer.DAProducts(this.Entities).GetProductPrice(ProductID, UserID);
         }
 
         /// <summary>
@@ -101,10 +131,14 @@ namespace BusinessLayer
 
         public void DeleteProduct(Guid ID)
         {
-            CommonLayer.Product product = this.GetProduct(ID);
-            if (product != null)
+            CommonLayer.Product Product = this.GetProduct(ID);
+            if (Product != null)
             {
-                new DataLayer.DAProducts(this.Entities).DeleteProduct(product);
+                foreach(CommonLayer.ProductPrice ProductPrice in Product.ProductPrices.ToList())
+                {
+                    this.DeallocateProductPrice(ProductPrice);
+                }
+                new DataLayer.DAProducts(this.Entities).DeleteProduct(Product);
             }
         }
 

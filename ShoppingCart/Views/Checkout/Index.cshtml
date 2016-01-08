@@ -5,7 +5,7 @@
 
 <div class="col-md-9">
     <h2>Checkout</h2>
-    @using (Html.BeginForm("Checkout", "Checkout", FormMethod.Post))
+    @using (Html.BeginForm("ProcessOrder", "Checkout", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)

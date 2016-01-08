@@ -41,7 +41,7 @@ namespace DataLayer
         {
             return (from UserAccount in this.Entities.UserAccounts
                     join User in this.Entities.Users on UserAccount.ID equals User.UserAccountID
-                    join Role in this.Entities.Roles on UserAccount.Roles.SingleOrDefault().ID equals Role.UserAccounts.SingleOrDefault().ID
+                    join Role in this.Entities.Roles on UserAccount.Roles.FirstOrDefault().ID equals Role.UserAccounts.FirstOrDefault().ID
                     where Role.Code == Code
                     select User
                     );

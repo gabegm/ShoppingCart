@@ -19,15 +19,14 @@ namespace CommonLayer
         {
             this.CartItems = new HashSet<CartItem>();
             this.OrderDetails = new HashSet<OrderDetail>();
+            this.ProductPrices = new HashSet<ProductPrice>();
             this.Reviews = new HashSet<Review>();
-            this.UserTypes = new HashSet<UserType>();
         }
     
         public System.Guid ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string ImageURL { get; set; }
-        public double Price { get; set; }
         public double VATRate { get; set; }
         public int Quantity { get; set; }
         public bool Active { get; set; }
@@ -39,10 +38,10 @@ namespace CommonLayer
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductPrice> ProductPrices { get; set; }
         public virtual Sale Sale { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Review> Reviews { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserType> UserTypes { get; set; }
     }
 }
