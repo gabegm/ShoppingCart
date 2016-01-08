@@ -119,5 +119,10 @@ namespace BusinessLayer
                 new DataLayer.DACartItems(this.Entities).UpdateCartItem(ExistingCartItem);
             }
         }
+
+        public IQueryable<CommonLayer.Product> Search(string Search)
+        {
+            return new DataLayer.DAProducts(this.Entities).Search(Search);
+        }
     }
 }

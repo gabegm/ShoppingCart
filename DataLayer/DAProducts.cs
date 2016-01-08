@@ -70,6 +70,14 @@ namespace DataLayer
             }
         }
 
+        public IQueryable<CommonLayer.Product> Search(string Search)
+        {
+            return (from Product in this.Entities.Products
+                    where Product.Name.Contains(Search) || Product.Description.Contains(Search)
+                    select Product
+                    );
+        }
+
         public IQueryable<CommonLayer.Category> GetProductTypes()
         {
             return this.Entities.Categories;
