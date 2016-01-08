@@ -22,7 +22,7 @@
                 </tr>
                 @foreach (var item in Model)
                 {
-                    using (Html.BeginForm("UpdateCartItem", "Cart", new { ID = Model.SingleOrDefault().ID }, FormMethod.Post))
+                    using (Html.BeginForm("UpdateCartItem", "Cart", new { ID = Model.FirstOrDefault().ID }, FormMethod.Post))
                     {
                         <tr>
                             <td>

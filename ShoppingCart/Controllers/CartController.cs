@@ -11,7 +11,9 @@ namespace ShoppingCart.Controllers
         // GET: Cart
         public ActionResult Index()
         {
-            return View(new BusinessLayer.CartItems().GetCartProductsAsModel());
+            CommonLayer.User User = new BusinessLayer.Users().GetUser(HttpContext.User.Identity.Name);
+
+            return View(new BusinessLayer.CartItems().GetUserCartItemsAsModel(User.ID));
         }
 
         /// <summary>
@@ -19,9 +21,8 @@ namespace ShoppingCart.Controllers
         /// </summary>
         /// <param name="Cart"></param>
         /// <returns></returns>
-        public ActionResult Checkout(CommonLayer.CartItem Cart)
+        public ActionResult Checkout()
         {
-            new BusinessLayer.Orders().AddOrder(Cart);
             return RedirectToAction("Index", "Checkout");
         }
 

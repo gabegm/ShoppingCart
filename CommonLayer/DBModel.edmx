@@ -12,7 +12,7 @@
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserID" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="CarouselItems">
           <Key>
@@ -96,7 +96,6 @@
           <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Number" Type="int" Nullable="false" />
           <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="OrderDetailsID" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductPrices">
           <Key>
@@ -215,7 +214,7 @@
           <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_Audits_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="Audits" Type="Self.Audits" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -310,7 +309,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OrderDetails_Orders">
+        <Association Name="FK_OrderDetails_Orders1">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
           <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -556,7 +555,7 @@
             <End Role="Menus" EntitySet="Menus" />
             <End Role="Menus1" EntitySet="Menus" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
+          <AssociationSet Name="FK_OrderDetails_Orders1" Association="Self.FK_OrderDetails_Orders1">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderDetails" EntitySet="OrderDetails" />
           </AssociationSet>
@@ -671,7 +670,7 @@
             <End Role="Menu" EntitySet="Menus" />
             <End Role="Menu1" EntitySet="Menus" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrderDetails_Orders" Association="DBModel.FK_OrderDetails_Orders">
+          <AssociationSet Name="FK_OrderDetails_Orders1" Association="DBModel.FK_OrderDetails_Orders1">
             <End Role="Order" EntitySet="Orders" />
             <End Role="OrderDetail" EntitySet="OrderDetails" />
           </AssociationSet>
@@ -731,7 +730,7 @@
           <Property Name="ID" Type="Guid" Nullable="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UserID" Type="Guid" Nullable="false" />
+          <Property Name="UserID" Type="Guid" />
           <NavigationProperty Name="User" Relationship="DBModel.FK_Audits_Users" FromRole="Audit" ToRole="User" />
         </EntityType>
         <EntityType Name="CarouselItem">
@@ -783,13 +782,13 @@
           <Property Name="ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="ActionName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ControllerName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ParentID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Menus1" Relationship="DBModel.FK_Menus_Menus" FromRole="Menu" ToRole="Menu1" />
           <NavigationProperty Name="Menu1" Relationship="DBModel.FK_Menus_Menus" FromRole="Menu1" ToRole="Menu" />
           <NavigationProperty Name="CarouselItems" Relationship="DBModel.MenuCarouselItems" FromRole="Menu" ToRole="CarouselItem" />
           <NavigationProperty Name="Roles" Relationship="DBModel.MenuRoles" FromRole="Menu" ToRole="Role" />
-          <Property Name="ActionName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ControllerName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -801,7 +800,7 @@
           <Property Name="ProductVATRate" Type="Double" Nullable="false" />
           <Property Name="OrderID" Type="Guid" Nullable="false" />
           <Property Name="ProductID" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="Order" Relationship="DBModel.FK_OrderDetails_Orders" FromRole="OrderDetail" ToRole="Order" />
+          <NavigationProperty Name="Order" Relationship="DBModel.FK_OrderDetails_Orders1" FromRole="OrderDetail" ToRole="Order" />
           <NavigationProperty Name="Product" Relationship="DBModel.FK_OrderDetails_Products" FromRole="OrderDetail" ToRole="Product" />
         </EntityType>
         <EntityType Name="Order">
@@ -813,8 +812,7 @@
           <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Number" Type="Int32" Nullable="false" />
           <Property Name="UserID" Type="Guid" Nullable="false" />
-          <Property Name="OrderDetailsID" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="OrderDetails" Relationship="DBModel.FK_OrderDetails_Orders" FromRole="Order" ToRole="OrderDetail" />
+          <NavigationProperty Name="OrderDetails" Relationship="DBModel.FK_OrderDetails_Orders1" FromRole="Order" ToRole="OrderDetail" />
           <NavigationProperty Name="User" Relationship="DBModel.FK_Orders_Users" FromRole="Order" ToRole="User" />
         </EntityType>
         <EntityType Name="Product">
@@ -942,7 +940,7 @@
           <NavigationProperty Name="Products" Relationship="DBModel.ProductPrices" FromRole="UserType" ToRole="Product" />
         </EntityType>
         <Association Name="FK_Audits_Users">
-          <End Type="DBModel.User" Role="User" Multiplicity="1" />
+          <End Type="DBModel.User" Role="User" Multiplicity="0..1" />
           <End Type="DBModel.Audit" Role="Audit" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -1025,7 +1023,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OrderDetails_Orders">
+        <Association Name="FK_OrderDetails_Orders1">
           <End Type="DBModel.Order" Role="Order" Multiplicity="1" />
           <End Type="DBModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1207,9 +1205,9 @@
           <EntitySetMapping Name="Menus">
             <EntityTypeMapping TypeName="DBModel.Menu">
               <MappingFragment StoreEntitySet="Menus">
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
                 <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
                 <ScalarProperty Name="ActionName" ColumnName="ActionName" />
-                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -1231,7 +1229,6 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="DBModel.Order">
               <MappingFragment StoreEntitySet="Orders">
-                <ScalarProperty Name="OrderDetailsID" ColumnName="OrderDetailsID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Number" ColumnName="Number" />
                 <ScalarProperty Name="Status" ColumnName="Status" />

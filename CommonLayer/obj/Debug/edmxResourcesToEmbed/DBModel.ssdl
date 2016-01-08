@@ -7,7 +7,7 @@
     <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="UserID" Type="uniqueidentifier" />
   </EntityType>
   <EntityType Name="CarouselItems">
     <Key>
@@ -91,7 +91,6 @@
     <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Number" Type="int" Nullable="false" />
     <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="OrderDetailsID" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
   <EntityType Name="ProductPrices">
     <Key>
@@ -210,7 +209,7 @@
     <Property Name="Active" Type="bit" Nullable="false" />
   </EntityType>
   <Association Name="FK_Audits_Users">
-    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
     <End Role="Audits" Type="Self.Audits" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
@@ -305,7 +304,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_OrderDetails_Orders">
+  <Association Name="FK_OrderDetails_Orders1">
     <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
     <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
     <ReferentialConstraint>
@@ -551,7 +550,7 @@
       <End Role="Menus" EntitySet="Menus" />
       <End Role="Menus1" EntitySet="Menus" />
     </AssociationSet>
-    <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
+    <AssociationSet Name="FK_OrderDetails_Orders1" Association="Self.FK_OrderDetails_Orders1">
       <End Role="Orders" EntitySet="Orders" />
       <End Role="OrderDetails" EntitySet="OrderDetails" />
     </AssociationSet>

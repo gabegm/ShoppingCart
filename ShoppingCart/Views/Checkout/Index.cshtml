@@ -5,67 +5,58 @@
 
 <div class="col-md-9">
     <h2>Checkout</h2>
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Checkout", "Checkout", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-        <div class="form-horizontal">
-            @Html.ValidationSummary(true)
-            <div class="form-group">
-                <label for="exampleInputPassword1">Credit Card Number</label>
-                <div class="col-md-10">
-                    <input type="text" class="form-control" id="Name" name="Name" data-val="true" data-val-required="Name is required" />
-                    <span class="field-validation-valid" data-valmsg-for="Name" data-valmsg-replace="true"></span>
-                </div>
+        @Html.ValidationSummary(true)
+            
+        <div class="form-group">
+            @Html.Label("Name", new { @class = "control-label col-md-2" })
+            <div class="col-sm-10">
+                @Html.TextBox("Name", null, new { @class = "form-control", placeholder = "Enter full name here..." })
+                @Html.ValidationMessage("Name")
             </div>
+        </div>
 
-            <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <div class="col-md-10">
-                    <textarea class="form-control" id="Description" name="Description" data-val="true" data-val-required="Description is required"></textarea>
-                    <span class="field-validation-valid" data-valmsg-for="Description" data-valmsg-replace="true"></span>
-                </div>
+        <div class="form-group">
+            @Html.Label("Address", new { @class = "control-label col-md-2" })
+            <div class="col-sm-10">
+                @Html.TextBox("Address", null, new { @class = "form-control", placeholder = "Enter address here..." })
+                @Html.ValidationMessage("Address")
             </div>
+        </div>
 
-            <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <div class="col-md-10">
-                    <input type="text" class="form-control" id="Quantity" name="Quantity" data-val="true" data-val-required="Quantity is required" />
-                    <span class="field-validation-valid" data-valmsg-for="Quantity" data-valmsg-replace="true"></span>
-                </div>
+        <div class="form-group">
+            @Html.Label("Card Number", new { @class = "control-label col-md-2" })
+            <div class="col-sm-10">
+                @Html.TextBox("Card Number", null, new { @class = "form-control", placeholder = "Enter card number here..." })
+                @Html.ValidationMessage("CardNumber")
             </div>
+        </div>
 
-            <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <div class="col-md-10">
-                    <input type="file" class="form-control" id="ImageURL" name="ImageURL" data-val="true" data-val-required="URL is required" />
-                    <span class="field-validation-valid" data-valmsg-for="ImageURL" data-valmsg-replace="true"></span>
-                </div>
+        <div class="form-group">
+            @Html.Label("ExpiryDate", new { @class = "control-label col-md-2" })
+            <div class="col-sm-10">
+                @Html.TextBox("ExpiryDate", null, new { @class = "form-control", placeholder = "Enter expiry date here..." })
+                @Html.ValidationMessage("ExpiryDate")
             </div>
+        </div>
 
-            <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <div class="col-md-10">
-                    <input type="text" class="form-control" id="Price" name="Price" data-val="true" data-val-required="URL is required" />
-                    <span class="field-validation-valid" data-valmsg-for="Price" data-valmsg-replace="true"></span>
-                </div>
+        <div class="form-group">
+            @Html.Label("CVV", new { @class = "control-label col-md-2" })
+            <div class="col-sm-10">
+                @Html.TextBox("CVV", null, new { @class = "form-control", placeholder = "Enter cvv here..." })
+                @Html.ValidationMessage("CVV")
             </div>
+        </div>
 
-            <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <div class="col-md-10">
-                    <input type="text" class="form-control" id="VATRate" name="VATRate" data-val="true" data-val-required="URL is required" />
-                    <span class="field-validation-valid" data-valmsg-for="VATRate" data-valmsg-replace="true"></span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">Checkout</button>
             </div>
         </div>
     }
     <div>
-        @Html.ActionLink("Back to Cart", "Cart")
+        @Html.ActionLink("Back to Cart", "Index", "Cart")
     </div>
 </div>

@@ -15,6 +15,16 @@ namespace BusinessLayer
             return new DataLayer.DACartItems(this.Entities).GetCartItemsAsModel();
         }
 
+        public IQueryable<CommonLayer.CartItem> GetUserCartItems(Guid ID)
+        {
+            return new DataLayer.DACartItems(this.Entities).GetUserCartItems(ID);
+        }
+
+        public IQueryable<CommonLayer.Models.CartItemsModel> GetUserCartItemsAsModel(Guid ID)
+        {
+            return new DataLayer.DACartItems(this.Entities).GetUserCartItemsAsModel(ID);
+        }
+
         public CommonLayer.CartItem GetCartItem(Guid ID)
         {
             return new DataLayer.DACartItems(this.Entities).GetCartItem(ID);

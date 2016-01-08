@@ -989,6 +989,25 @@ namespace ShoppingCart.Controllers
             return View(new BusinessLayer.Orders().GetOrdersAsModel());
         }
 
+        [HttpGet]
+        public ActionResult EditOrder()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult EditOrder(CommonLayer.Order Order, CommonLayer.OrderDetail OrderDetail)
+        {
+            return View();
+        }
+
+        public ActionResult DeleteOrder(Guid ID)
+        {
+            new BusinessLayer.Orders().DeleteOrder(ID);
+
+            return RedirectToAction("Orders", "Admin");
+        }
+
         /// <summary>
         /// Returns a list of audits
         /// </summary>

@@ -53,9 +53,9 @@
     <EntitySetMapping Name="Menus">
       <EntityTypeMapping TypeName="DBModel.Menu">
         <MappingFragment StoreEntitySet="Menus">
+          <ScalarProperty Name="ParentID" ColumnName="ParentID" />
           <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
           <ScalarProperty Name="ActionName" ColumnName="ActionName" />
-          <ScalarProperty Name="ParentID" ColumnName="ParentID" />
           <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ID" ColumnName="ID" />
@@ -77,7 +77,6 @@
     <EntitySetMapping Name="Orders">
       <EntityTypeMapping TypeName="DBModel.Order">
         <MappingFragment StoreEntitySet="Orders">
-          <ScalarProperty Name="OrderDetailsID" ColumnName="OrderDetailsID" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="Number" ColumnName="Number" />
           <ScalarProperty Name="Status" ColumnName="Status" />

@@ -18,25 +18,56 @@ namespace BusinessLayer
         {
             CommonLayer.Order Order = new CommonLayer.Order();
             CommonLayer.OrderDetail OrderDetail = new CommonLayer.OrderDetail();
-            CommonLayer.Product Product = new Products().GetProduct(Cart.ProductID);
+
+            Products ProductsBL = new Products(this.Entities);
+            CommonLayer.Product Product = ProductsBL.GetProduct(Cart.ProductID);
 
             Order.ID = Guid.NewGuid();
-            OrderDetail.ID = Guid.NewGuid();
-
+            Order.Date = DateTime.Today;
+            Order.Status = "Pending";
+            Order.Number = new Random().Next(1, 100000001);
             Order.UserID = Cart.UserID;
-            OrderDetail.ProductID = Cart.ProductID;
+
+            OrderDetail.ID = Guid.NewGuid();
             OrderDetail.ProductQuantity = Cart.Quantity;
             OrderDetail.ProductPrice = Product.Price;
             OrderDetail.ProductVATRate = Product.VATRate;
+            OrderDetail.OrderID = Order.ID;
+            OrderDetail.ProductID = Cart.ProductID;
 
-            this.AddOrderToDatabase(Order, OrderDetail);
+            new DataLayer.DAOrders(this.Entities).AddNewOrder(Order, OrderDetail);
+
+            Product.Quantity--;
+            ProductsBL.UpdateProduct(Product);
         }
 
-        public void AddOrderToDatabase(CommonLayer.Order Order, CommonLayer.OrderDetail OrderDetail)
+        public CommonLayer.Order GetOrder(Guid ID)
         {
-            Order.ID = new Guid();
-            OrderDetail.ID = new Guid();
-            new DataLayer.DAOrders(this.Entities).AddNewOrder(Order, OrderDetail);
+            return new DataLayer.DAOrders(this.Entities).GetOrder(ID);
+        }
+
+        public CommonLayer.OrderDetail GetOrderDetail(Guid ID)
+        {
+            return new DataLayer.DAOrders(this.Entities).GetOrderDetail(ID);
+        }
+
+        public void UpdateOrder(CommonLayer.Order Order, CommonLayer.OrderDetail OrderDetail)
+        {
+            if (!string.IsNullOrEmpty(Order.ID.ToString()) && !string.IsNullOrEmpty(OrderDetail.ID.ToString()))
+            {
+                new DataLayer.DAOrders(this.Entities).UpdateOrder(Order, OrderDetail);
+            }
+        }
+
+        public void DeleteOrder(Guid ID)
+        {
+            CommonLayer.OrderDetail OrderDetail = this.GetOrderDetail(ID);
+            CommonLayer.Order Order = this.GetOrder(OrderDetail.OrderID);
+
+            if (Order != null && OrderDetail != null)
+            {
+                new DataLayer.DAOrders(this.Entities).DeleteOrder(CartItem);
+            }
         }
     }
 }

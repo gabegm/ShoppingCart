@@ -72,9 +72,21 @@ namespace BusinessLayer
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public CommonLayer.Product GetProduct(Guid id)
+        public CommonLayer.Product GetProduct(Guid ID)
         {
-            return new DataLayer.DAProducts(this.Entities).GetProduct(id);
+            return new DataLayer.DAProducts(this.Entities).GetProduct(ID);
+        }
+
+        public bool isProductAvailable(Guid ID)
+        {
+            CommonLayer.Product Product = this.GetProduct(ID);
+
+            if(Product.Quantity < 1)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public void DeleteProduct(Guid ID)
