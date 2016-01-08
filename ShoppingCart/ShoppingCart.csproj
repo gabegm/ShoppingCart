@@ -147,9 +147,9 @@
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
-    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -169,8 +169,6 @@
     <Content Include="Views\Admin\Products.cshtml" />
     <Content Include="Views\Admin\CreateNewProduct.cshtml" />
     <Content Include="Views\Admin\EditProduct.cshtml" />
-    <Content Include="Views\Users\Index.cshtml" />
-    <Content Include="Views\Users\UserDetails.cshtml" />
     <Content Include="Views\Admin\Roles.cshtml" />
     <Content Include="Views\Admin\Users.cshtml" />
     <Content Include="Views\Admin\CreateNewRole.cshtml" />
@@ -212,6 +210,7 @@
     <Content Include="Views\_Shared\_CategoryNav.cshtml" />
     <Content Include="Views\_Shared\_MenuNav.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

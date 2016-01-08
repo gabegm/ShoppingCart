@@ -24,7 +24,7 @@ namespace ShoppingCart.Controllers
                 EmailBL.SendEmailToAdmin("Order has been placed", "");
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Order");
         }
     }
 }

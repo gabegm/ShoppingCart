@@ -25,6 +25,29 @@ namespace DataLayer
                         UserID = Order.UserID,
                         UserEmail = User.Email,
                         OrderDetailsID = OrderDetail.ID,
+                        ProductID = OrderDetail.ProductID,
+                        ProductPrice = (float)OrderDetail.ProductPrice,
+                        ProductQuantity = OrderDetail.ProductQuantity,
+                        ProductVATRate = (float)OrderDetail.ProductVATRate
+                    });
+        }
+
+        public IQueryable<CommonLayer.Models.OrdersModel> GetOrdersAsModel(Guid UserID)
+        {
+            return (from Order in this.Entities.Orders
+                    join OrderDetail in this.Entities.OrderDetails on Order.ID equals OrderDetail.OrderID
+                    join User in this.Entities.Users on Order.UserID equals User.ID
+                    where User.ID == UserID
+                    select new CommonLayer.Models.OrdersModel()
+                    {
+                        ID = Order.ID,
+                        Date = Order.Date,
+                        Status = Order.Status,
+                        Number = Order.Number,
+                        UserID = Order.UserID,
+                        UserEmail = User.Email,
+                        OrderDetailsID = OrderDetail.ID,
+                        ProductID = OrderDetail.ProductID,
                         ProductPrice = (float)OrderDetail.ProductPrice,
                         ProductQuantity = OrderDetail.ProductQuantity,
                         ProductVATRate = (float)OrderDetail.ProductVATRate

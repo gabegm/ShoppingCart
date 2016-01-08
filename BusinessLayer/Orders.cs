@@ -14,6 +14,11 @@ namespace BusinessLayer
             return new DataLayer.DAOrders(this.Entities).GetOrdersAsModel();
         }
 
+        public IQueryable<CommonLayer.Models.OrdersModel> GetOrdersAsModel(Guid UserID)
+        {
+            return new DataLayer.DAOrders(this.Entities).GetOrdersAsModel(UserID);
+        }
+
         public void AddOrder(CommonLayer.CartItem Cart)
         {
             CommonLayer.Order Order = new CommonLayer.Order();
