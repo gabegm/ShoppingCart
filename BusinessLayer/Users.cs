@@ -124,7 +124,7 @@ namespace BusinessLayer
 
             if (User != null && UserAccount != null)
             {
-                foreach (CommonLayer.Role Roles in UserAccount.Roles)
+                foreach (CommonLayer.Role Roles in UserAccount.Roles.ToList())
                 {
                     CommonLayer.Role Role = new Roles(this.Entities).GetRole(Roles.ID);
                     new DataLayer.DARoles(this.Entities).DeallocateUserRole(UserAccount, Role);

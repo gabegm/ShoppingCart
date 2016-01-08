@@ -66,7 +66,7 @@ namespace BusinessLayer
 
             if (Order != null && OrderDetail != null)
             {
-                new DataLayer.DAOrders(this.Entities).DeleteOrder(CartItem);
+                new DataLayer.DAOrders(this.Entities).DeleteOrder(Order, OrderDetail);
             }
         }
     }
