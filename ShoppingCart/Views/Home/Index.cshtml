@@ -14,12 +14,10 @@
                 <div class="thumbnail">
                     <img src="@Html.DisplayFor(modelItem => item.ImageURL)" alt=""> <!--320x150-->
                     <div class="caption">
-                        <h4 class="pull-right">
-                            @foreach(var ProductPrice in Model.ProductPrices.Where(p => p.ProductID == item.ID && p.UserTypeID == Model.UserType.ID))
-                            {
-                                Html.Display("&#8364;"+ProductPrice.Price.ToString());
-                            }
-                        </h4>
+                        @foreach (var ProductPrice in Model.ProductPrices.Where(p => p.ProductID == item.ID && p.UserTypeID == Model.UserType.ID))
+                        {
+                            <h4 class="pull-right">&#8364;@ProductPrice.Price</h4>
+                        }
                         <h4>
                             @Html.ActionLink(Html.DisplayFor(modelItem => item.Name).ToString(), "Index", "Product", new { ID = item.ID }, null)
                         </h4>

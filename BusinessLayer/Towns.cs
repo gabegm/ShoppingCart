@@ -47,10 +47,5 @@ namespace BusinessLayer
                 new DataLayer.DATowns(this.Entities).DeleteTown(town);
             }
         }
-
-        public IQueryable<CommonLayer.Country> GetCountries()
-        {
-            return new DataLayer.DATowns(this.Entities).GetCountries();
-        }
     }
 }

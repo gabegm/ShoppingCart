@@ -26,7 +26,7 @@ namespace ShoppingCart.Controllers
 
             BusinessLayer.Users u = new BusinessLayer.Users();
 
-            List<SelectListItem> TownItems = (from towns in u.GetUserTowns().ToList()
+            List<SelectListItem> TownItems = (from towns in new BusinessLayer.Towns().GetTowns().ToList()
                                               select new SelectListItem()
                                               {
                                                   Text = towns.Name,
@@ -34,7 +34,7 @@ namespace ShoppingCart.Controllers
                                               }).ToList();
             ViewBag.TownName = TownItems;
 
-            List<SelectListItem> CountryItems = (from countries in u.GetUserCountries().ToList()
+            List<SelectListItem> CountryItems = (from countries in new BusinessLayer.Countries().GetCountries().ToList()
                                                  select new SelectListItem()
                                                  {
                                                      Text = countries.Name,

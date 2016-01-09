@@ -15,11 +15,9 @@ namespace ShoppingCart.Controllers
 
             Models.UserTypesProductPrices UserTypesProductPrices = new Models.UserTypesProductPrices();
 
-            CommonLayer.User User = new CommonLayer.User();
-
             if(HttpContext.User.Identity.IsAuthenticated == true)
             {
-                User = new BusinessLayer.Users().GetUser(HttpContext.User.Identity.Name);
+                CommonLayer.User User = new BusinessLayer.Users().GetUser(HttpContext.User.Identity.Name);
                 UserTypesProductPrices.UserType = new BusinessLayer.UserTypes().GetUserType(User.UserTypeID);
             }
             else

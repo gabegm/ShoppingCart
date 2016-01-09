@@ -5,11 +5,10 @@ using System.Web;
 
 namespace ShoppingCart.Models
 {
-    public class ProductReviews
+    public class ProductsList
     {
-        public CommonLayer.Product Product;
-        public IQueryable<CommonLayer.Review> Reviews;
-        public CommonLayer.UserType UserType;
+        public IQueryable<CommonLayer.Models.ProductsModel> Products;
+        public IQueryable<CommonLayer.UserType> UserTypes;
         public IQueryable<CommonLayer.ProductPrice> ProductPrices;
     }
 }

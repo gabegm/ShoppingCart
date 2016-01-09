@@ -19,15 +19,6 @@ namespace BusinessLayer
             return new DataLayer.DAUsers(this.Entities).GetUsers();
         }
 
-        /// <summary>
-        /// Returns all roles 
-        /// </summary>
-        /// <returns></returns>
-        public IQueryable<CommonLayer.Role> GetUserRoles()
-        {
-            return new DataLayer.DAUsers(this.Entities).GetUserRoles();
-        }
-
         public IQueryable<CommonLayer.User> GetUserRoles(string Code)
         {
             return new DataLayer.DAUsers(this.Entities).GetUserRoles(Code);
@@ -40,24 +31,6 @@ namespace BusinessLayer
         public IQueryable<CommonLayer.UserType> GetUserTypes()
         {
             return new DataLayer.DAUserTypes(this.Entities).GetUserTypes();
-        }
-
-        /// <summary>
-        /// Returns all countries 
-        /// </summary>
-        /// <returns></returns>
-        public IQueryable<CommonLayer.Town> GetUserTowns()
-        {
-            return new DataLayer.DAUsers(this.Entities).GetUserTowns();
-        }
-
-        /// <summary>
-        /// Returns all countries 
-        /// </summary>
-        /// <returns></returns>
-        public IQueryable<CommonLayer.Country> GetUserCountries()
-        {
-            return new DataLayer.DAUsers(this.Entities).GetUserCountries();
         }
 
         /// <summary>

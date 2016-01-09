@@ -19,6 +19,11 @@ namespace BusinessLayer
             return new DataLayer.DAReviews(this.Entities).GetReviews();
         }
 
+        public IQueryable<CommonLayer.Review> GetReviews(Guid ID)
+        {
+            return new DataLayer.DAReviews(this.Entities).GetReviews(ID);
+        }
+
         /// <summary>
         /// Get user with a specific email.
         /// </summary>

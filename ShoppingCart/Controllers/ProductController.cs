@@ -11,10 +11,22 @@ namespace ShoppingCart.Controllers
         public ActionResult Index(Guid ID)
         {
             Models.ProductReviews ProductReviews = new Models.ProductReviews();
-            BusinessLayer.Products pr = new BusinessLayer.Products();
+            BusinessLayer.Products ProductsBL = new BusinessLayer.Products();
 
-            ProductReviews.Product = pr.GetProduct(ID);
-            ProductReviews.Reviews = pr.GetProductReviews(ID);
+            ProductReviews.Product = ProductsBL.GetProduct(ID);
+            ProductReviews.Reviews = new BusinessLayer.Reviews().GetReviews(ID);
+
+            if (HttpContext.User.Identity.IsAuthenticated == true)
+            {
+                CommonLayer.User User = new BusinessLayer.Users().GetUser(HttpContext.User.Identity.Name);
+                ProductReviews.UserType = new BusinessLayer.UserTypes().GetUserType(User.UserTypeID);
+            }
+            else
+            {
+                ProductReviews.UserType = new BusinessLayer.UserTypes().GetUserType("Client");
+            }
+
+            ProductReviews.ProductPrices = new BusinessLayer.ProductPrices().GetProductPrices();
 
             return View(ProductReviews);
         }

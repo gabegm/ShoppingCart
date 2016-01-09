@@ -48,33 +48,6 @@ namespace DataLayer
         }
 
         /// <summary>
-        /// Returns roles from database
-        /// </summary>
-        /// <returns></returns>
-        public IQueryable<CommonLayer.Role> GetUserRoles()
-        {
-            return this.Entities.Roles;
-        }
-
-        /// <summary>
-        /// Returns countries from database
-        /// </summary>
-        /// <returns></returns>
-        public IQueryable<CommonLayer.Town> GetUserTowns()
-        {
-            return this.Entities.Towns;
-        }
-
-        /// <summary>
-        /// Returns countries from database
-        /// </summary>
-        /// <returns></returns>
-        public IQueryable<CommonLayer.Country> GetUserCountries()
-        {
-            return this.Entities.Countries;
-        }
-
-        /// <summary>
         /// Get user with a specific email.
         /// </summary>
         /// <param name="Email">Email for which user will be returned.</param>

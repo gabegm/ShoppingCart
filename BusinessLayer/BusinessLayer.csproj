@@ -93,6 +93,7 @@
     <Compile Include="Reviews.cs" />
     <Compile Include="Roles.cs" />
     <Compile Include="Sales.cs" />
+    <Compile Include="Search.cs" />
     <Compile Include="Towns.cs" />
     <Compile Include="Users.cs" />
     <Compile Include="UserTypes.cs" />

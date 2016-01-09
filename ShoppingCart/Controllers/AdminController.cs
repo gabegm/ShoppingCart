@@ -49,7 +49,7 @@ namespace ShoppingCart.Controllers
             ViewBag.Gender = GenderItems.Select(gender => new SelectListItem { Text = gender, Value = gender });
 
             BusinessLayer.Users u = new BusinessLayer.Users();
-            List<SelectListItem> RoleItems = (from roles in u.GetUserRoles().ToList()
+            List<SelectListItem> RoleItems = (from roles in new BusinessLayer.Roles().GetRoles().ToList()
                                                      select new SelectListItem()
                                                      {
                                                          Text = roles.Name,
@@ -65,7 +65,7 @@ namespace ShoppingCart.Controllers
                                               }).ToList();
             ViewBag.UserTypes = new MultiSelectList(UserTypeItems, "Value", "Text");
 
-            List<SelectListItem> TownItems = (from towns in u.GetUserTowns().ToList()
+            List<SelectListItem> TownItems = (from towns in new BusinessLayer.Towns().GetTowns().ToList()
                                               select new SelectListItem()
                                               {
                                                   Text = towns.Name,
@@ -73,7 +73,7 @@ namespace ShoppingCart.Controllers
                                               }).ToList();
             ViewBag.TownName = TownItems;
 
-            List<SelectListItem> CountryItems = (from countries in u.GetUserCountries().ToList()
+            List<SelectListItem> CountryItems = (from countries in new BusinessLayer.Countries().GetCountries().ToList()
                                               select new SelectListItem()
                                               {
                                                   Text = countries.Name,
@@ -115,7 +115,7 @@ namespace ShoppingCart.Controllers
             ViewBag.UserAccount = UserAccount;
             CommonLayer.Town Town = new BusinessLayer.Towns().GetTown(User.TownID);
 
-            List<SelectListItem> RoleItems = (from roles in u.GetUserRoles().ToList()
+            List<SelectListItem> RoleItems = (from roles in new BusinessLayer.Roles().GetRoles().ToList()
                                               select new SelectListItem()
                                               {
                                                   Text = roles.Name,
@@ -133,7 +133,7 @@ namespace ShoppingCart.Controllers
             ViewBag.UserTypes = new MultiSelectList(UserTypeItems, "Value", "Text");
             UserTypeItems.SingleOrDefault(ut => ut.Value.Equals(User.UserTypeID.ToString())).Selected = true;
 
-            List<SelectListItem> TownItems = (from towns in u.GetUserTowns().ToList()
+            List<SelectListItem> TownItems = (from towns in new BusinessLayer.Towns().GetTowns().ToList()
                                               select new SelectListItem()
                                               {
                                                   Text = towns.Name,
@@ -143,7 +143,7 @@ namespace ShoppingCart.Controllers
             TownItems.SingleOrDefault(t => t.Value.Equals(User.TownID.ToString())).Selected = true;
 
 
-            List<SelectListItem> CountryItems = (from countries in u.GetUserCountries().ToList()
+            List<SelectListItem> CountryItems = (from countries in new BusinessLayer.Countries().GetCountries().ToList()
                                                  select new SelectListItem()
                                                  {
                                                      Text = countries.Name,
@@ -185,7 +185,13 @@ namespace ShoppingCart.Controllers
         [HttpGet]
         public ActionResult Products()
         {
-            return View(new BusinessLayer.Products().GetProductsAsModel());
+            Models.ProductsList ProductsList = new Models.ProductsList();
+
+            ProductsList.Products = new BusinessLayer.Products().GetProductsAsModel();
+            ProductsList.UserTypes = new BusinessLayer.UserTypes().GetUserTypes();
+            ProductsList.ProductPrices = new BusinessLayer.ProductPrices().GetProductPrices();
+
+            return View(ProductsList);
         }
 
         /// <summary>
@@ -206,7 +212,7 @@ namespace ShoppingCart.Controllers
                                                      }).ToList();
             ViewBag.ProductType = CategoryItems;
 
-            List<SelectListItem> SaleItems = (from sale in new BusinessLayer.Products().GetProductSales().ToList()
+            List<SelectListItem> SaleItems = (from sale in new BusinessLayer.Sales().GetSales().ToList()
                                                   select new SelectListItem()
                                                   {
                                                       Text = sale.Value.ToString(),
@@ -263,7 +269,7 @@ namespace ShoppingCart.Controllers
             ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
 
             BusinessLayer.Products pr = new BusinessLayer.Products();
-            List<SelectListItem> ProductTypeItems = (from category in pr.GetProductTypes().ToList()
+            List<SelectListItem> ProductTypeItems = (from category in new BusinessLayer.Categories().GetCategories().ToList()
                                                      select new SelectListItem()
                                                      {
                                                          Text = category.Name,
@@ -273,7 +279,7 @@ namespace ShoppingCart.Controllers
             ProductTypeItems.SingleOrDefault(p => p.Value.Equals(Product.CategoryID.ToString())).Selected = true;
             ViewBag.ProductType = ProductTypeItems;
 
-            List<SelectListItem> SaleItems = (from sale in new BusinessLayer.Products().GetProductSales().ToList()
+            List<SelectListItem> SaleItems = (from sale in new BusinessLayer.Sales().GetSales().ToList()
                                               select new SelectListItem()
                                               {
                                                   Text = sale.Value.ToString(),
@@ -511,7 +517,7 @@ namespace ShoppingCart.Controllers
             ViewBag.Active = IsProductActive.Select(boolean => new SelectListItem { Text = boolean, Value = boolean });
 
             BusinessLayer.Towns t = new BusinessLayer.Towns();
-            List<SelectListItem> TownLocationItems = (from countries in t.GetCountries().ToList()
+            List<SelectListItem> TownLocationItems = (from countries in new BusinessLayer.Countries().GetCountries().ToList()
                                                      select new SelectListItem()
                                                      {
                                                          Text = countries.Name,

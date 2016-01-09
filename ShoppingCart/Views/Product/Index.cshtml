@@ -14,7 +14,10 @@
         <div class="thumbnail">
             <img class="img-responsive" src="@Model.Product.ImageURL" alt=""> <!--800x300-->
             <div class="caption-full">
-                <h4 class="pull-right">&#8364;@Model.Product.Price</h4>
+                @foreach (var ProductPrice in Model.ProductPrices.Where(p => p.ProductID == Model.Product.ID && p.UserTypeID == Model.UserType.ID))
+                {
+                    <h4 class="pull-right">&#8364;@ProductPrice.Price</h4>
+                }
                 <h4>
                     <a href="#">@Model.Product.Name</a>
                 </h4>

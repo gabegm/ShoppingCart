@@ -1,4 +1,4 @@
-﻿@model IQueryable<CommonLayer.Product>
+﻿@model ShoppingCart.Models.UserTypesProductPrices
 
 @{
     ViewBag.Title = "Index";
@@ -8,13 +8,16 @@
 <div class="col-md-9">
     @Html.Partial("~/Views/_Shared/_Carousel.cshtml")
     <div class="row">
-        @foreach (var item in Model)
+        @foreach (var item in Model.Products)
         {
             <div class="col-sm-4 col-lg-4 col-md-4">
                 <div class="thumbnail">
                     <img src="@Html.DisplayFor(modelItem => item.ImageURL)" alt=""> <!--320x150-->
                     <div class="caption">
-                        <h4 class="pull-right">@Html.DisplayFor(modelItem => item.Price)</h4>
+                        @foreach (var ProductPrice in Model.ProductPrices.Where(p => p.ProductID == item.ID && p.UserTypeID == Model.UserType.ID))
+                        {
+                            <h4 class="pull-right">&#8364;@ProductPrice.Price</h4>
+                        }
                         <h4>
                             @Html.ActionLink(Html.DisplayFor(modelItem => item.Name).ToString(), "Index", "Product", new { ID = item.ID }, null)
                         </h4>

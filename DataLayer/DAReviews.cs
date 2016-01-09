@@ -20,6 +20,14 @@ namespace DataLayer
             return this.Entities.Reviews.SingleOrDefault(ut => ut.ID.Equals(ID));
         }
 
+        public IQueryable<CommonLayer.Review> GetReviews(Guid ProductID)
+        {
+            return (from review in this.Entities.Reviews
+                    where review.ProductID == ProductID
+                    select review
+                    );
+        }
+
         public void AddReview(CommonLayer.Review Review)
         {
             this.Entities.Reviews.Add(Review);

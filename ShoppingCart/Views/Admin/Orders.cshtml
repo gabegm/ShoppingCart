@@ -60,9 +60,9 @@
                             @Html.DisplayFor(modelItem => item.ProductVATRate)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "EditProduct", new { ID = item.ID }) |
-                            @Html.ActionLink("Details", "ViewProductDetails", new { ID = item.ID }) |
-                            @Html.ActionLink("Delete", "DeleteProduct", new { ID = item.ID })
+                            @Html.ActionLink("Edit", "EditOrder", new { ID = item.ID }) |
+                            @Html.ActionLink("Details", "Index", "Product", new { ID = item.ID }, null) |
+                            @Html.ActionLink("Delete", "DeleteOrder", new { ID = item.OrderDetailsID })
                         </td>
                     </tr>
                 }

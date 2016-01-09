@@ -36,23 +36,9 @@ namespace BusinessLayer
             return new DataLayer.DAProducts(this.Entities).GetEnabledProductsAsModel();
         }
 
-        /// <summary>
-        /// Returns the product categories
-        /// </summary>
-        /// <returns></returns>
-        public IQueryable<CommonLayer.Category> GetProductTypes()
+        public IQueryable<CommonLayer.Models.ProductsModel> GetProductsInCategory(string ID)
         {
-            return new DataLayer.DAProducts(this.Entities).GetProductTypes();
-        }
-
-        public IQueryable<CommonLayer.Review> GetProductReviews(Guid ID)
-        {
-            return new DataLayer.DAProducts(this.Entities).GetProductReviews(ID);
-        }
-
-        public IQueryable<CommonLayer.Sale> GetProductSales()
-        {
-            return new DataLayer.DAProducts(this.Entities).GetProductSales();
+            return new DataLayer.DAProducts(this.Entities).GetProductsInCategory(ID);
         }
 
         /// <summary>
@@ -139,11 +125,6 @@ namespace BusinessLayer
                 ExistingCartItem.Quantity++;
                 new DataLayer.DACartItems(this.Entities).UpdateCartItem(ExistingCartItem);
             }
-        }
-
-        public IQueryable<CommonLayer.Product> Search(string Search)
-        {
-            return new DataLayer.DAProducts(this.Entities).Search(Search);
         }
     }
 }

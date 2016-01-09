@@ -102,8 +102,8 @@ namespace DataLayer
 
         public void DeleteOrder(CommonLayer.Order Order, CommonLayer.OrderDetail OrderDetail)
         {
-            this.Entities.Orders.Remove(Order);
             this.Entities.OrderDetails.Remove(OrderDetail);
+            this.Entities.Orders.Remove(Order);
             this.Entities.SaveChanges();
         }
     }

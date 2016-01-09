@@ -109,19 +109,6 @@ namespace DataLayer
         }
 
         /// <summary>
-        /// Gets users in a role.
-        /// </summary>
-        /// <param name="RoleId"></param>
-        /// <returns></returns>
-        public IQueryable<CommonLayer.UserAccount> GetUsersinRole(Guid RoleID)
-        {
-            return (from userAccounts in this.Entities.UserAccounts
-                    from roles in userAccounts.Roles
-                    where roles.ID == RoleID
-                    select userAccounts);
-        }
-
-        /// <summary>
         /// Deletes a role from the database
         /// </summary>
         /// <param name="Role"></param>

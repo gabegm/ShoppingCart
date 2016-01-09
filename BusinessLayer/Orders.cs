@@ -68,9 +68,9 @@ namespace BusinessLayer
             }
         }
 
-        public void DeleteOrder(Guid ID)
+        public void DeleteOrder(Guid OrderDetailsID)
         {
-            CommonLayer.OrderDetail OrderDetail = this.GetOrderDetail(ID);
+            CommonLayer.OrderDetail OrderDetail = this.GetOrderDetail(OrderDetailsID);
             CommonLayer.Order Order = this.GetOrder(OrderDetail.OrderID);
 
             if (Order != null && OrderDetail != null)

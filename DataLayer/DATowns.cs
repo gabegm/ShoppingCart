@@ -51,10 +51,5 @@ namespace DataLayer
             this.Entities.Towns.Remove(Town);
             this.Entities.SaveChanges();
         }
-
-        public IQueryable<CommonLayer.Country> GetCountries()
-        {
-            return this.Entities.Countries;
-        }
     }
 }

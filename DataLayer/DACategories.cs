@@ -59,16 +59,6 @@ namespace DataLayer
                     });
         }
 
-        public IQueryable<CommonLayer.Product> GetProductsInCategory(string ID)
-        {
-            return (from SubCategory in this.Entities.Categories
-                    join Product in this.Entities.Products on SubCategory.ID equals Product.CategoryID
-                    join Category in this.Entities.Categories on SubCategory.ParentID equals Category.ID
-                    where Product.CategoryID == ID
-                    select Product
-                    );
-        }
-
         public CommonLayer.Category GetCategory(string ID)
         {
             return this.Entities.Categories.SingleOrDefault(c => c.ID == ID);
