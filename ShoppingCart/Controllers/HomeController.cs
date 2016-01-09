@@ -13,7 +13,24 @@ namespace ShoppingCart.Controllers
         {
             new BusinessLayer.Audits().AddAudit(Guid.Empty, "Successful Guest Visit", "Visit");
 
-            return View(new BusinessLayer.Products().GetEnabledProductsAsModel());
+            Models.UserTypesProductPrices UserTypesProductPrices = new Models.UserTypesProductPrices();
+
+            CommonLayer.User User = new CommonLayer.User();
+
+            if(HttpContext.User.Identity.IsAuthenticated == true)
+            {
+                User = new BusinessLayer.Users().GetUser(HttpContext.User.Identity.Name);
+                UserTypesProductPrices.UserType = new BusinessLayer.UserTypes().GetUserType(User.UserTypeID);
+            }
+            else
+            {
+                UserTypesProductPrices.UserType = new BusinessLayer.UserTypes().GetUserType("Client");
+            }
+
+            UserTypesProductPrices.Products = new BusinessLayer.Products().GetEnabledProductsAsModel();
+            UserTypesProductPrices.ProductPrices = new BusinessLayer.ProductPrices().GetProductPrices();
+
+            return View(UserTypesProductPrices);
         }
 
         [ChildActionOnly]

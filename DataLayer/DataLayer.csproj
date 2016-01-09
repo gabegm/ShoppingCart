@@ -94,6 +94,7 @@
     <Compile Include="DACountries.cs" />
     <Compile Include="DAMenus.cs" />
     <Compile Include="DAOrders.cs" />
+    <Compile Include="DAProductPrices.cs" />
     <Compile Include="DAProducts.cs" />
     <Compile Include="DAReviews.cs" />
     <Compile Include="DARoles.cs" />

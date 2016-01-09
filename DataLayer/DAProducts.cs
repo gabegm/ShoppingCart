@@ -25,7 +25,6 @@ namespace DataLayer
         public IQueryable<CommonLayer.Models.ProductsModel> GetProductsAsModel()
         {
             return (from product in this.Entities.Products
-                    join ProductPrice in this.Entities.ProductPrices on product.ID equals ProductPrice.ProductID
                     join category in this.Entities.Categories on product.CategoryID equals category.ID
                     join sale in this.Entities.Sales on product.SaleID equals sale.ID into ps
                     from subsale in ps.DefaultIfEmpty()
@@ -37,7 +36,6 @@ namespace DataLayer
                         Name = product.Name,
                         Description = product.Description,
                         ImageURL = product.ImageURL,
-                        Price = (float)ProductPrice.Price,
                         VATRate = (float)product.VATRate,
                         Quantity = product.Quantity,
                         Active = product.Active,
@@ -57,7 +55,6 @@ namespace DataLayer
         public IQueryable<CommonLayer.Models.ProductsModel> GetEnabledProductsAsModel()
         {
             return (from Product in this.Entities.Products
-                    join ProductPrice in this.Entities.ProductPrices on Product.ID equals ProductPrice.ProductID
                     join Category in this.Entities.Categories on Product.CategoryID equals Category.ID
                     join Sale in this.Entities.Sales on Product.SaleID equals Sale.ID into ps
                     from subsale in ps.DefaultIfEmpty()
@@ -70,7 +67,6 @@ namespace DataLayer
                         Name = Product.Name,
                         Description = Product.Description,
                         ImageURL = Product.ImageURL,
-                        Price = (float)ProductPrice.Price,
                         VATRate = (float)Product.VATRate,
                         Quantity = Product.Quantity,
                         Active = Product.Active,
@@ -110,28 +106,6 @@ namespace DataLayer
                 // Throw a new DbEntityValidationException with the improved exception message.
                 throw new DbEntityValidationException(exceptionMessage, ex.EntityValidationErrors);
             }
-        }
-
-        public void AllocateProductPrice(CommonLayer.ProductPrice ProductPrice)
-        {
-            this.Entities.ProductPrices.Add(ProductPrice);           
-            this.Entities.SaveChanges();
-        }
-
-        /// <summary>
-        /// Deallocated a use role from the database
-        /// </summary>
-        /// <param name="UserAccount"></param>
-        /// <param name="Role"></param>
-        public void DeallocateProductPrice(CommonLayer.ProductPrice ProductPrice)
-        {
-            this.Entities.ProductPrices.Remove(ProductPrice);
-            this.Entities.SaveChanges();
-        }
-
-        public CommonLayer.ProductPrice GetProductPrice(Guid ProductID, Guid UserTypeID)
-        {
-            return this.Entities.ProductPrices.SingleOrDefault(pp => pp.ProductID.Equals(ProductID) && pp.UserTypeID.Equals(UserTypeID));
         }
 
         public IQueryable<CommonLayer.Product> Search(string Search)

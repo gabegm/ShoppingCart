@@ -155,6 +155,7 @@
     </Compile>
     <Compile Include="Models\Categories.cs" />
     <Compile Include="Models\Menus.cs" />
+    <Compile Include="Models\UserTypesProductPrices.cs" />
     <Compile Include="Models\ProductReviews.cs" />
     <Compile Include="Models\ProductsBL.cs" />
     <Compile Include="Models\TempBusiness.cs" />

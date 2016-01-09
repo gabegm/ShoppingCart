@@ -21,9 +21,12 @@
                     <th>
                         @Html.DisplayName("Image")
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Price)
-                    </th>
+                    @foreach(CommonLayer.UserType UserType in new BusinessLayer.UserTypes().GetUserTypes().ToList())
+                    {
+                        <th>
+                            @Html.DisplayName(UserType.Name + " Price")
+                        </th>
+                    }
                     <th>
                         @Html.DisplayName("VAT")
                     </th>
@@ -54,9 +57,12 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.ImageURL)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Price)
-                        </td>
+                        @foreach (CommonLayer.UserType UserType in new BusinessLayer.UserTypes().GetUserTypes().ToList())
+                        {
+                            <td>
+                                @Html.Display(new BusinessLayer.ProductPrices().GetProductPrice(item.ID, UserType.ID).Price.ToString())
+                            </td>
+                        }
                         <td>
                             @Html.DisplayFor(modelItem => item.VATRate)
                         </td>
