@@ -10,19 +10,21 @@ namespace BusinessLayer
         public CartItems() : base() { }
         public CartItems(CommonLayer.DBModelEntities Entities) : base(Entities) { }
 
-        public IQueryable<CommonLayer.Models.CartItemsModel> GetCartProductsAsModel()
+        public IQueryable<CommonLayer.Models.CartItemsModel> GetCartItemsAsModel()
         {
             return new DataLayer.DACartItems(this.Entities).GetCartItemsAsModel();
         }
 
-        public IQueryable<CommonLayer.CartItem> GetUserCartItems(Guid ID)
+        public IQueryable<CommonLayer.CartItem> GetUserCartItems(CommonLayer.User User)
         {
-            return new DataLayer.DACartItems(this.Entities).GetUserCartItems(ID);
+            return new DataLayer.DACartItems(this.Entities).GetUserCartItems(User.ID);
         }
 
-        public IQueryable<CommonLayer.Models.CartItemsModel> GetUserCartItemsAsModel(Guid ID)
+        public IQueryable<CommonLayer.Models.CartItemsModel> GetUserCartItemsAsModel(CommonLayer.User User)
         {
-            return new DataLayer.DACartItems(this.Entities).GetUserCartItemsAsModel(ID);
+            CommonLayer.UserType UserType = new UserTypes(this.Entities).GetUserType(User.UserTypeID);
+
+            return new DataLayer.DACartItems(this.Entities).GetUserCartItemsAsModel(User.ID, UserType.ID);
         }
 
         public CommonLayer.CartItem GetCartItem(Guid ID)
@@ -33,6 +35,67 @@ namespace BusinessLayer
         public CommonLayer.CartItem GetCartItem(Guid UserID, Guid ProductID)
         {
             return new DataLayer.DACartItems(this.Entities).GetCartItem(UserID, ProductID);
+        }
+
+        /// <summary>
+        /// Returns price including vat
+        /// </summary>
+        /// <param name="ProductPrice"></param>
+        /// <returns></returns>
+        public float GetPriceVAT(CommonLayer.ProductPrice ProductPrice)
+        {
+            return (float)ProductPrice.Price * 1.18f;
+        }
+
+        /// <summary>
+        /// Returns VAT value
+        /// </summary>
+        /// <param name="User"></param>
+        /// <returns></returns>
+        public float GetTotalVAT(CommonLayer.User User)
+        {
+            float Total = 0;
+
+            foreach (CommonLayer.Models.CartItemsModel CartItems in this.GetUserCartItemsAsModel(User))
+            {
+                Total += (CartItems.ProductPrice * 0.18f);
+            }
+
+            return Total;
+        }
+
+        /// <summary>
+        /// Returns total price
+        /// </summary>
+        /// <param name="User"></param>
+        /// <returns></returns>
+        public float GetTotalPrice(CommonLayer.User User)
+        {
+            float Total = 0;
+
+            foreach(CommonLayer.Models.CartItemsModel CartItems in this.GetUserCartItemsAsModel(User))
+            {
+                Total += (CartItems.ProductPrice * CartItems.Quantity); 
+            }
+
+            return Total;
+        }
+
+        /// <summary>
+        /// Returns total price including vat
+        /// </summary>
+        /// <param name="User"></param>
+        /// <returns></returns>
+        public float GetTotalVATPrice(CommonLayer.User User)
+        {
+            float Total = 0;
+
+            foreach (CommonLayer.Models.CartItemsModel CartItems in this.GetUserCartItemsAsModel(User))
+            {
+                Total += ((CartItems.ProductPrice * CartItems.Quantity) * 1.18f);
+            }
+
+            return Total;
         }
 
         private void AddCartItemToDatabase(CommonLayer.CartItem CartItem)

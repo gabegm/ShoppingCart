@@ -28,6 +28,8 @@ namespace ShoppingCart.Controllers
             UserTypesProductPrices.Products = new BusinessLayer.Products().GetEnabledProductsAsModel();
             UserTypesProductPrices.ProductPrices = new BusinessLayer.ProductPrices().GetProductPrices();
 
+            //ViewBag.VATPrice = new BusinessLayer.CartItems().GetPriceVAT();
+
             return View(UserTypesProductPrices);
         }
 
@@ -36,9 +38,15 @@ namespace ShoppingCart.Controllers
         {
             Models.Menus Menus = new Models.Menus();
 
+            if (HttpContext.User.Identity.IsAuthenticated == true)
+            {
+                CommonLayer.User User = new BusinessLayer.Users().GetUser(HttpContext.User.Identity.Name);
+                Menus.CartItems = new BusinessLayer.CartItems().GetUserCartItemsAsModel(User);
+            }
+
             Menus.SubMenus = new BusinessLayer.Menus().GetSubMenusAsModel();
             Menus.ParentMenus = new BusinessLayer.Menus().GetParentMenusAsModel();
-
+            
             return PartialView("~/Views/_Shared/_MenuNav.cshtml", Menus);
         }
 

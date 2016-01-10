@@ -19,7 +19,7 @@
         }
         else if (Context.User.Identity.IsAuthenticated == true)
         {
-            <li>@Html.ActionLink("Cart", "Index", "Cart")</li>
+            <li>@Html.ActionLink("Cart("+Model.CartItems.Count()+")", "Index", "Cart")</li>
             <li>@Html.ActionLink("Log Out(" + @Context.User.Identity.Name + ")", "Logout", "Account")</li>
         }
     </ul>

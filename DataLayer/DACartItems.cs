@@ -30,19 +30,20 @@ namespace DataLayer
 
         public IQueryable<CommonLayer.CartItem> GetUserCartItems(Guid UserID)
         {
-            return (from CartItems in this.Entities.CartItems
-                    join User in this.Entities.Users on CartItems.UserID equals UserID
-                    select CartItems
+            return (from CartItem in this.Entities.CartItems
+                    join User in this.Entities.Users on CartItem.UserID equals User.ID
+                    where CartItem.UserID == UserID
+                    select CartItem
                     );
         }
 
-        public IQueryable<CommonLayer.Models.CartItemsModel> GetUserCartItemsAsModel(Guid UserID)
+        public IQueryable<CommonLayer.Models.CartItemsModel> GetUserCartItemsAsModel(Guid UserID, Guid UserTypeID)
         {
             return (from CartItem in this.Entities.CartItems
                     join Product in this.Entities.Products on CartItem.ProductID equals Product.ID
                     join ProductPrice in this.Entities.ProductPrices on Product.ID equals ProductPrice.ProductID
                     join User in this.Entities.Users on CartItem.UserID equals User.ID
-                    where CartItem.UserID == UserID
+                    where CartItem.UserID == UserID && ProductPrice.UserTypeID == UserTypeID
                     select new CommonLayer.Models.CartItemsModel()
 
                     {

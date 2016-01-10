@@ -12,8 +12,13 @@ namespace ShoppingCart.Controllers
         public ActionResult Index()
         {
             CommonLayer.User User = new BusinessLayer.Users().GetUser(HttpContext.User.Identity.Name);
+            BusinessLayer.CartItems CartItemsBL = new BusinessLayer.CartItems();
 
-            return View(new BusinessLayer.CartItems().GetUserCartItemsAsModel(User.ID));
+            ViewBag.TotalPrice = CartItemsBL.GetTotalPrice(User);
+            ViewBag.GetTotalVAT = CartItemsBL.GetTotalVAT(User);
+            ViewBag.TotalVATPrice = CartItemsBL.GetTotalVATPrice(User);
+
+            return View(CartItemsBL.GetUserCartItemsAsModel(User));
         }
 
         /// <summary>

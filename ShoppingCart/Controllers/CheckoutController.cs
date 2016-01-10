@@ -14,7 +14,7 @@ namespace ShoppingCart.Controllers
         {
             CommonLayer.User User = new BusinessLayer.Users().GetUser(HttpContext.User.Identity.Name);
 
-            foreach (CommonLayer.CartItem CartItem in new BusinessLayer.CartItems().GetUserCartItems(User.ID))
+            foreach (CommonLayer.CartItem CartItem in new BusinessLayer.CartItems().GetUserCartItems(User))
             {
                 new BusinessLayer.Orders().AddOrder(CartItem);
                 new BusinessLayer.CartItems().DeleteCartItem(CartItem.ID);

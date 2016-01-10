@@ -43,6 +43,11 @@
                     }
                 }
             </table>
+            <div>
+                <h4>Total: &#8364;@ViewBag.TotalPrice</h4>
+                <h4>VAT 18%: &#8364;@ViewBag.GetTotalVAT</h4>
+                <h4>Total VAT: &#8364;@ViewBag.TotalVATPrice</h4>
+            </div>
             <div class="">
                 @Html.ActionLink("Checkout", "Checkout", "Cart", null, new { @class = "btn btn-default" })
             </div>
