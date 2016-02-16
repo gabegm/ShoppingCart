@@ -51,17 +51,17 @@ namespace BusinessLayer
 
         public void SendEmailToCustomer(string Email, string Subject, string Message)
         {
-            SmtpClient smtpClient = new SmtpClient("mail.telecell.com", 25);
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
 
-            smtpClient.Credentials = new System.Net.NetworkCredential("info@telecell.com", "myIDPassword");
-            smtpClient.UseDefaultCredentials = true;
+            smtpClient.Credentials = new System.Net.NetworkCredential("telecellstore@gmail.com", "mobileshop");
+            smtpClient.UseDefaultCredentials = false;
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtpClient.EnableSsl = true;
-
+            
             MailMessage mail = new MailMessage();
 
             //Settings
-            mail.From = new MailAddress("info@telecell", "Telecell");
+            mail.From = new MailAddress("telecellstore@gmail.com", "Telecell");
             mail.To.Add(new MailAddress(Email));
             mail.CC.Add(new MailAddress("gabriel@gaucimaistre.com"));
             mail.Subject = Subject;

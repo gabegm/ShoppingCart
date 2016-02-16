@@ -31,7 +31,6 @@ namespace BusinessLayer
 
         public float GetSalePrice(Guid SaleID, float Price)
         {
-            float SalePrice = 0;
             CommonLayer.Sale Sale = this.GetSale(SaleID);
 
             if(Sale.Start < DateTime.Now && Sale.Stop > DateTime.Now)
@@ -39,7 +38,7 @@ namespace BusinessLayer
                 return Price * ((float)Sale.Value / 100);
             }
 
-            return SalePrice;
+            return Price;
         }
 
         /// <summary>

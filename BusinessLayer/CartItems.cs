@@ -55,10 +55,18 @@ namespace BusinessLayer
         public float GetTotalVAT(CommonLayer.User User)
         {
             float Total = 0;
+            Products ProductsBL = new Products(this.Entities);
 
             foreach (CommonLayer.Models.CartItemsModel CartItems in this.GetUserCartItemsAsModel(User))
             {
-                Total += (CartItems.ProductPrice * 0.18f);
+                if (ProductsBL.isProductOnSale(CartItems.ProductID))
+                {
+                    Total += (new Sales(this.Entities).GetSalePrice(ProductsBL.GetProduct(CartItems.ProductID).SaleID.Value, CartItems.ProductPrice) * 0.18f);
+                }
+                else
+                {
+                    Total += (CartItems.ProductPrice * 0.18f);
+                }
             }
 
             return Total;
@@ -72,10 +80,18 @@ namespace BusinessLayer
         public float GetTotalPrice(CommonLayer.User User)
         {
             float Total = 0;
+            Products ProductsBL = new Products(this.Entities);
 
             foreach(CommonLayer.Models.CartItemsModel CartItems in this.GetUserCartItemsAsModel(User))
             {
-                Total += (CartItems.ProductPrice * CartItems.Quantity); 
+                if (ProductsBL.isProductOnSale(CartItems.ProductID))
+                {
+                    Total += (new Sales(this.Entities).GetSalePrice(ProductsBL.GetProduct(CartItems.ProductID).SaleID.Value, CartItems.ProductPrice) * CartItems.Quantity);
+                }
+                else
+                {
+                    Total += (CartItems.ProductPrice * CartItems.Quantity);
+                }
             }
 
             return Total;
@@ -89,10 +105,18 @@ namespace BusinessLayer
         public float GetTotalVATPrice(CommonLayer.User User)
         {
             float Total = 0;
+            Products ProductsBL = new Products(this.Entities);
 
             foreach (CommonLayer.Models.CartItemsModel CartItems in this.GetUserCartItemsAsModel(User))
             {
-                Total += ((CartItems.ProductPrice * CartItems.Quantity) * 1.18f);
+                if (ProductsBL.isProductOnSale(CartItems.ProductID))
+                {
+                    Total += ((new Sales(this.Entities).GetSalePrice(ProductsBL.GetProduct(CartItems.ProductID).SaleID.Value, CartItems.ProductPrice) * CartItems.Quantity) * 1.18f);
+                }
+                else
+                {
+                    Total += ((CartItems.ProductPrice * CartItems.Quantity) * 1.18f);
+                }
             }
 
             return Total;
@@ -107,7 +131,13 @@ namespace BusinessLayer
         {
             if (!string.IsNullOrEmpty(ID.ToString()))
             {
-                new DataLayer.DACartItems(this.Entities).UpdateCartItem(ID, Quantity);
+                CommonLayer.CartItem CartItem = this.GetCartItem(ID);
+                CommonLayer.Product Product = new Products(this.Entities).GetProduct(CartItem.ProductID);
+
+                if(Product.Quantity > Quantity)
+                {
+                    new DataLayer.DACartItems(this.Entities).UpdateCartItem(ID, Quantity);
+                }
             }
         }
 

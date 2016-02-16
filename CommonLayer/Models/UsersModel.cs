@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CommonLayer.Models
 {
@@ -19,6 +20,7 @@ namespace CommonLayer.Models
         public Guid CountryID { get; set; }
         public string CountryName { get; set; }
         public Guid RoleID { get; set; }
+        //public List<Role> Role { get; set; }
         public string RoleName { get; set; }
         public Guid UserTypeID { get; set; }
         public string UserTypeName { get; set; }

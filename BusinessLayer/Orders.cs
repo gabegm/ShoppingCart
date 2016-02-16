@@ -38,15 +38,24 @@ namespace BusinessLayer
 
             OrderDetail.ID = Guid.NewGuid();
             OrderDetail.ProductQuantity = Cart.Quantity;
-            OrderDetail.ProductPrice = ProductPrice.Price;
+            if (ProductsBL.isProductOnSale(Product.ID))
+            {
+                OrderDetail.ProductPrice = new Sales(this.Entities).GetSalePrice(Product.SaleID.Value, (float)ProductPrice.Price);
+            }
+            else
+            {
+                OrderDetail.ProductPrice = ProductPrice.Price;
+            }
             OrderDetail.ProductVATRate = Product.VATRate;
             OrderDetail.OrderID = Order.ID;
             OrderDetail.ProductID = Cart.ProductID;
 
             new DataLayer.DAOrders(this.Entities).AddNewOrder(Order, OrderDetail);
 
-            //Product.Quantity--;
-            //ProductsBL.UpdateProduct(Product, null, null);
+            Product.Quantity -= OrderDetail.ProductQuantity;
+            ProductsBL.DecreaseQuantity(Product.ID, OrderDetail.ProductQuantity);
+
+            new Email(this.Entities).SendEmailToCustomer(User.Email, "Order Confirmed", "Order status is pending");
             new Email(this.Entities).SendEmailToAdmin("Product Stock Changed", "Product stock now: " + Product.Quantity);
         }
 
@@ -64,7 +73,10 @@ namespace BusinessLayer
         {
             if (!string.IsNullOrEmpty(Order.ID.ToString()) && !string.IsNullOrEmpty(OrderDetail.ID.ToString()))
             {
+                CommonLayer.User User = new Users(this.Entities).GetUser(Order.UserID);
                 new DataLayer.DAOrders(this.Entities).UpdateOrder(Order, OrderDetail);
+                new Email(this.Entities).SendEmailToCustomer(User.Email, "Order Status", "Order status now: " + Order.Status);
+                new Email(this.Entities).SendEmailToAdmin("Order Updated", "Order status now: " + Order.Status);
             }
         }
 

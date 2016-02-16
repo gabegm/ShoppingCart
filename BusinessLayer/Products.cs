@@ -71,9 +71,12 @@ namespace BusinessLayer
                 int num = 0;
                 if(UserTypeID != null && Price != null)
                 {
+                    ProductPrices ProductPricesBL = new ProductPrices(this.Entities);
                     foreach (Guid ID in UserTypeID)
                     {
-                        new ProductPrices(this.Entities).AllocateProductPrice(Product.ID, ID, Price[num++]);
+                        ProductPricesBL.DeallocateProductPrice(ProductPricesBL.GetProductPrice(Product.ID, ID));
+                        ProductPricesBL.AllocateProductPrice(Product.ID, ID, Price[num++]);
+                        new Email(this.Entities).SendEmailToAdmin("Product Stock Changed", "Product ID" + Product.ID+ ", stock now: " + Product.Quantity);
                     }
                 }
             }
@@ -99,6 +102,18 @@ namespace BusinessLayer
             }
 
             return true;
+        }
+
+        public bool isProductOnSale(Guid ID)
+        {
+            CommonLayer.Product Product = this.GetProduct(ID);
+
+            if(Product.SaleID != null)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public void DeleteProduct(Guid ID)
@@ -140,6 +155,7 @@ namespace BusinessLayer
         {
             CommonLayer.Product Product = this.GetProduct(ID);
             Product.Quantity -= Quantity;
+
             new DataLayer.DAProducts().UpdateProduct(Product);
         }
     }
