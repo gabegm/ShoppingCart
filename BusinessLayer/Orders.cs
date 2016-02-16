@@ -45,8 +45,8 @@ namespace BusinessLayer
 
             new DataLayer.DAOrders(this.Entities).AddNewOrder(Order, OrderDetail);
 
-            Product.Quantity--;
-            ProductsBL.UpdateProduct(Product);
+            //Product.Quantity--;
+            //ProductsBL.UpdateProduct(Product, null, null);
             new Email(this.Entities).SendEmailToAdmin("Product Stock Changed", "Product stock now: " + Product.Quantity);
         }
 

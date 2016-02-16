@@ -1,0 +1,61 @@
+﻿@model ShoppingCart.Models.ViewOrder
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/_Shared/_FrontEnd.cshtml";
+}
+
+<div class="col-md-9">
+    <h2>Orders</h2>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Order.Number)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Order.Date)
+                    </th>
+                    <th>
+                        @Html.DisplayName("Quantity")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Price")
+                    </th>
+                    <th>
+                        @Html.DisplayName("VAT")
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model =>  model.Order.Number)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Order.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.OrderDetail.ProductQuantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.OrderDetail.ProductPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.OrderDetail.ProductVATRate)&#37;
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "Index", "Product", new { ID = Model.OrderDetail.ProductID }, null)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <a href="javascript:window.print()">Print Order</a>
+    </div>
+    <div>
+        @Html.ActionLink("Back to Orders", "Index", "Order")
+    </div>
+</div>

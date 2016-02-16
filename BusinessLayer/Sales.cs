@@ -29,6 +29,19 @@ namespace BusinessLayer
             return new DataLayer.DASales(this.Entities).GetSale(ID);
         }
 
+        public float GetSalePrice(Guid SaleID, float Price)
+        {
+            float SalePrice = 0;
+            CommonLayer.Sale Sale = this.GetSale(SaleID);
+
+            if(Sale.Start < DateTime.Now && Sale.Stop > DateTime.Now)
+            {
+                return Price * ((float)Sale.Value / 100);
+            }
+
+            return SalePrice;
+        }
+
         /// <summary>
         /// Adds a new to the database.
         /// </summary>

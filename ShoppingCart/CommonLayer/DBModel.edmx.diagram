@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cc17691bcb5a4372b60da9e5cc0e62b8" Name="Diagram1">
+        <EntityTypeShape EntityType="DBModel.Audit" Width="1.5" PointX="8.25" PointY="15.75" />
+        <EntityTypeShape EntityType="DBModel.CarouselItem" Width="1.5" PointX="5.75" PointY="1.5" />
+        <EntityTypeShape EntityType="DBModel.CartItem" Width="1.5" PointX="8.25" PointY="7.625" />
+        <EntityTypeShape EntityType="DBModel.Category" Width="1.5" PointX="1.5" PointY="14" />
+        <EntityTypeShape EntityType="DBModel.Country" Width="1.5" PointX="1.5" PointY="18.375" />
+        <EntityTypeShape EntityType="DBModel.Menu" Width="1.5" PointX="8" PointY="1" />
+        <EntityTypeShape EntityType="DBModel.OrderDetail" Width="1.5" PointX="10.5" PointY="12.5" />
+        <EntityTypeShape EntityType="DBModel.Order" Width="1.5" PointX="8.25" PointY="12.625" />
+        <EntityTypeShape EntityType="DBModel.ProductPrice" Width="1.5" PointX="3" PointY="7.75" />
+        <EntityTypeShape EntityType="DBModel.Product" Width="1.5" PointX="0.75" PointY="1.875" />
+        <EntityTypeShape EntityType="DBModel.Review" Width="1.5" PointX="11.25" PointY="7.375" />
+        <EntityTypeShape EntityType="DBModel.Role" Width="1.5" PointX="10.25" PointY="2.625" />
+        <EntityTypeShape EntityType="DBModel.Sale" Width="1.5" PointX="1.5" PointY="11.125" />
+        <EntityTypeShape EntityType="DBModel.sysdiagram" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DBModel.Town" Width="1.5" PointX="3.75" PointY="18.125" />
+        <EntityTypeShape EntityType="DBModel.UserAccount" Width="1.5" PointX="3.75" PointY="4.25" />
+        <EntityTypeShape EntityType="DBModel.User" Width="1.5" PointX="6" PointY="6.375" />
+        <EntityTypeShape EntityType="DBModel.UserType" Width="1.5" PointX="0.75" PointY="7.75" />
+        <AssociationConnector Association="DBModel.FK_Audits_Users" />
+        <AssociationConnector Association="DBModel.FK_CartItems_Users" />
+        <AssociationConnector Association="DBModel.FK_ShoppingCartItems_Products" />
+        <AssociationConnector Association="DBModel.FK_Categories_Categories" />
+        <AssociationConnector Association="DBModel.FK_Products_Categories" />
+        <AssociationConnector Association="DBModel.FK_Towns_Countries1" />
+        <AssociationConnector Association="DBModel.FK_Menus_Menus" />
+        <AssociationConnector Association="DBModel.FK_OrderDetails_Orders1" />
+        <AssociationConnector Association="DBModel.FK_OrderDetails_Products" />
+        <AssociationConnector Association="DBModel.FK_Orders_Users" />
+        <AssociationConnector Association="DBModel.FK_ProductPrices_Products" />
+        <AssociationConnector Association="DBModel.FK_ProductPrices_UserTypes" />
+        <AssociationConnector Association="DBModel.FK_Products_Sales" />
+        <AssociationConnector Association="DBModel.FK_Reviews_Products" />
+        <AssociationConnector Association="DBModel.FK_Reviews_Users" />
+        <AssociationConnector Association="DBModel.FK_Users_Towns" />
+        <AssociationConnector Association="DBModel.FK_Users_UserAccounts" />
+        <AssociationConnector Association="DBModel.FK_Users_UserTypes" />
+        <AssociationConnector Association="DBModel.MenuCarouselItems" />
+        <AssociationConnector Association="DBModel.MenuRoles" />
+        <AssociationConnector Association="DBModel.UserAccountRoles" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

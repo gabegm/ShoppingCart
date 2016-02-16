@@ -1,0 +1,104 @@
+﻿@model ShoppingCart.Models.EditProducts
+
+@{
+    ViewBag.Title = "EditProduct";
+    Layout = "~/Views/_Shared/_BackEnd.cshtml";
+}
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h2>Edit Product</h2>
+    @using (Html.BeginForm("EditProduct", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Product.ID)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Product.Name, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Product.Name)
+                    @Html.ValidationMessageFor(model => model.Product.Name)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Product.Description, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Product.Description)
+                    @Html.ValidationMessageFor(model => model.Product.Description)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Product.ImageURL, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Product.ImageURL, new { type = "file" })
+                    @Html.ValidationMessageFor(model => model.Product.ImageURL)
+                </div>
+            </div>
+
+            @foreach (CommonLayer.UserType UserType in Model.UserTypes)
+            {
+                foreach (CommonLayer.ProductPrice ProductPrice in Model.ProductPrices.Where(p => p.ProductID == Model.Product.ID && p.UserTypeID == UserType.ID))
+                {
+                    @Html.Hidden("UserTypeID", UserType.ID)
+                    <div class="form-group">
+                        @Html.Label(UserType.Name + " Price", new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextBox("Price", ProductPrice.Price)
+                            @Html.ValidationMessage("Price")
+                        </div>
+                    </div>
+                }
+            }
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Product.VATRate, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Product.VATRate)
+                    @Html.ValidationMessageFor(model => model.Product.VATRate)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Product.Quantity, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Product.Quantity)
+                    @Html.ValidationMessageFor(model => model.Product.Quantity)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Product.Active, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Active", null, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Product.Category, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Product.CategoryID, (IEnumerable<SelectListItem>)ViewBag.ProductType, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Product.Sale, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Product.SaleID, (IEnumerable<SelectListItem>)ViewBag.Sales, string.Empty, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+    <div>
+        @Html.ActionLink("Back to List", "Products")
+    </div>
+</div>

@@ -1,0 +1,86 @@
+﻿@model ShoppingCart.Models.Orders
+
+@{
+    ViewBag.Title = "EditOrder";
+    Layout = "~/Views/_Shared/_BackEnd.cshtml";
+}
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h2>Edit Order</h2>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Order.ID)
+            @Html.HiddenFor(model => model.OrderDetail.ID)
+            @Html.HiddenFor(model => model.Order.UserID)
+            @Html.HiddenFor(model => model.OrderDetail.ProductID)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Order.Date, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Order.Date)
+                    @Html.ValidationMessageFor(model => model.Order.Date)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Order.Status, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Order.Status)
+                    @Html.ValidationMessageFor(model => model.Order.Status)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Order.Number, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Order.Number)
+                    @Html.ValidationMessageFor(model => model.Order.Number)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.User.Email, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.User.Email)
+                    @Html.ValidationMessageFor(model => model.User.Email)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.OrderDetail.ProductPrice, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.OrderDetail.ProductPrice)
+                    @Html.ValidationMessageFor(model => model.OrderDetail.ProductPrice)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.OrderDetail.ProductQuantity, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.OrderDetail.ProductQuantity)
+                    @Html.ValidationMessageFor(model => model.OrderDetail.ProductQuantity)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.OrderDetail.ProductVATRate, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.OrderDetail.ProductVATRate)
+                    @Html.ValidationMessageFor(model => model.OrderDetail.ProductVATRate)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+    <div>
+        @Html.ActionLink("Back to List", "Orders")
+    </div>
+</div>

@@ -1,0 +1,59 @@
+﻿@model ShoppingCart.Models.ProductReviews
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/_Shared/_FrontEnd.cshtml";
+}
+
+<div class="col-md-9">
+    @using (Html.BeginForm("AddProductToCart", "Product", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Product.ID)
+        <div class="thumbnail">
+            <img class="img-responsive" src="@Model.Product.ImageURL" alt=""> <!--800x300-->
+            <div class="caption-full">
+                @foreach (var ProductPrice in Model.ProductPrices.Where(p => p.ProductID == Model.Product.ID && p.UserTypeID == Model.UserType.ID))
+                {
+                    if (new BusinessLayer.Products().isProductOnSale(Model.Product.ID))
+                    {
+                        <h4 class="pull-right">&#8364;@(new BusinessLayer.Sales().GetSalePrice(Model.Product.SaleID.Value, (float)ProductPrice.Price))</h4>
+                    }
+                    else
+                    {
+                        <h4 class="pull-right">&#8364;@ProductPrice.Price</h4>
+                    }
+                }
+                <h4>
+                    <a href="#">@Model.Product.Name</a>
+                </h4>
+                <p>@Model.Product.Description</p>
+                <div class="">
+                    @Html.ActionLink("Add To Cart", "AddProductToCart", "Product", new { ID = Model.Product.ID }, new { @class = "btn btn-default" })
+                </div>
+            </div>
+        </div>
+    }
+    <div class="well">
+        @foreach (var review in Model.Reviews)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <span>review.Username</span>
+                    <span class="pull-right">review.Date</span>
+                    <p>review.ReviewDescription</p>
+                </div>
+            </div>
+        }
+        @using (Html.BeginForm("AddReview", "Product", FormMethod.Post))
+        {
+            <div class="">
+                @Html.TextArea("ReviewDescription")
+                <div class="">
+                    <a class="btn btn-success">Leave a Review</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

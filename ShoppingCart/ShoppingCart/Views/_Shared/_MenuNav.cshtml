@@ -1,0 +1,37 @@
+﻿@model ShoppingCart.Models.Menus
+
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+        @foreach (var Menu in Model.ParentMenus)
+        {
+            <li>@Html.ActionLink(Menu.Name.ToString(), Menu.ActionName.ToString(), Menu.ControllerName.ToString())</li>
+        }
+        @if (Context.User.Identity.IsAuthenticated)
+        {
+            BusinessLayer.Roles RolesBL = new BusinessLayer.Roles();
+            foreach (CommonLayer.Role Role in RolesBL.GetUserRoles(Context.User.Identity.Name))
+            {
+                if (Role.Code == "ADM")
+                {
+                    <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
+                }
+            }
+        }
+    </ul>
+    @using (@Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "navbar-form navbar-right" }))
+    {
+        <input type="text" id="Search" name="Search" class="form-control" placeholder="Search...">
+    }
+    <ul class="nav navbar-nav navbar-right">
+        @if (!Context.User.Identity.IsAuthenticated)
+        {
+            <li>@Html.ActionLink("Register", "Register", "Account")</li>
+            <li>@Html.ActionLink("Log in", "Login", "Account")</li>
+        }
+        else if (Context.User.Identity.IsAuthenticated)
+        {
+            <li>@Html.ActionLink("Cart("+Model.CartItems.Count()+")", "Index", "Cart")</li>
+            <li>@Html.ActionLink("Log Out(" + @Context.User.Identity.Name + ")", "Logout", "Account")</li>
+        }
+    </ul>
+</div>

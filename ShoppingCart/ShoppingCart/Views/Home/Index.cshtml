@@ -1,0 +1,37 @@
+﻿@model ShoppingCart.Models.UserTypesProductPrices
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/_Shared/_FrontEnd.cshtml";
+}
+
+<div class="col-md-9">
+    @Html.Partial("~/Views/_Shared/_Carousel.cshtml")
+    <div class="row">
+        @foreach (var item in Model.Products)
+        {
+            <div class="col-sm-4 col-lg-4 col-md-4">
+                <div class="thumbnail">
+                    <img src="@Html.DisplayFor(modelItem => item.ImageURL)" alt=""> <!--320x150-->
+                    <div class="caption">
+                        @foreach (var ProductPrice in Model.ProductPrices.Where(p => p.ProductID == item.ID && p.UserTypeID == Model.UserType.ID))
+                        {
+                            if (new BusinessLayer.Products().isProductOnSale(item.ID))
+                            {
+                                <h4 class="pull-right">&#8364;@(new BusinessLayer.Sales().GetSalePrice(item.SaleID, (float)ProductPrice.Price))</h4>
+                            }
+                            else
+                            {
+                                <h4 class="pull-right">&#8364;@ProductPrice.Price</h4>
+                            }
+                        }
+                        <h4>
+                            @Html.ActionLink(Html.DisplayFor(modelItem => item.Name).ToString(), "Index", "Product", new { ID = item.ID }, null)
+                        </h4>
+                        <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

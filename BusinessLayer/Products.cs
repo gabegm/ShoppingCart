@@ -45,7 +45,7 @@ namespace BusinessLayer
         /// Adds the product to the database
         /// </summary>
         /// <param name="Product"></param>
-        public void AddProduct(CommonLayer.Product Product, Guid[] UserTypeID, int[] ProductPrice)
+        public void AddProduct(CommonLayer.Product Product, Guid[] UserTypeID, float[] Price)
         {
             Product.ID = Guid.NewGuid();
             new DataLayer.DAProducts(this.Entities).AddNewProduct(Product);
@@ -54,7 +54,7 @@ namespace BusinessLayer
 
             foreach (Guid ID in UserTypeID)
             {
-                new ProductPrices(this.Entities).AllocateProductPrice(Product.ID, ID, ProductPrice[num++]);
+                new ProductPrices(this.Entities).AllocateProductPrice(Product.ID, ID, Price[num++]);
             }
         }
 
@@ -62,11 +62,20 @@ namespace BusinessLayer
         /// Updates the product in the database
         /// </summary>
         /// <param name="product"></param>
-        public void UpdateProduct(CommonLayer.Product product)
+        public void UpdateProduct(CommonLayer.Product Product, Guid[] UserTypeID, float[] Price)
         {
-            if (!string.IsNullOrEmpty(product.Name))
+            if (!string.IsNullOrEmpty(Product.Name))
             {
-                new DataLayer.DAProducts(this.Entities).UpdateProduct(product);
+                new DataLayer.DAProducts(this.Entities).UpdateProduct(Product);
+
+                int num = 0;
+                if(UserTypeID != null && Price != null)
+                {
+                    foreach (Guid ID in UserTypeID)
+                    {
+                        new ProductPrices(this.Entities).AllocateProductPrice(Product.ID, ID, Price[num++]);
+                    }
+                }
             }
         }
 
@@ -125,6 +134,13 @@ namespace BusinessLayer
                 ExistingCartItem.Quantity++;
                 new DataLayer.DACartItems(this.Entities).UpdateCartItem(ExistingCartItem);
             }
+        }
+
+        public void DecreaseQuantity(Guid ID, int Quantity)
+        {
+            CommonLayer.Product Product = this.GetProduct(ID);
+            Product.Quantity -= Quantity;
+            new DataLayer.DAProducts().UpdateProduct(Product);
         }
     }
 }

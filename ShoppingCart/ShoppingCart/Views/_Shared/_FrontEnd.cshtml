@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Shopping Cart">
+    <meta name="author" content="Gabriel Gauci Maistre">
+    <title>@ViewBag.Title</title>
+
+    <!-- Shopping Cart Core CSS -->
+    <link href="~/content/bootstrap.css" rel="stylesheet">
+    <link href="~/content/frontend.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Telecell", "Index", "Home", null, new { @class = "navbar-brand" })
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            @{Html.RenderAction("RenderMenus", "Home");}
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                @{Html.RenderAction("RenderCategories", "Home");}          
+            </div>
+            @RenderBody()
+        </div>
+    </div>
+    <!-- /.container -->
+
+    <div class="container">
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; 2015-2016 <a href="http://www.gabriel.gaucimaistre.com">Gabriel Gauci Maistre</a></p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!-- /.container -->
+    <!-- jQuery -->
+    <script src="~/Scripts/jquery-2.1.4.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/Scripts/vue.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/Scripts/bootstrap.js"></script>
+
+    <!-- jQuery Validation -->
+    <script src="~/Scripts/jquery.validate.js"></script>
+
+    <!-- jQuery Unobtrusive Validation -->
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+    <!-- Front End JavaScript -->
+    <script src="~/Scripts/frontend.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</body>
+</html>

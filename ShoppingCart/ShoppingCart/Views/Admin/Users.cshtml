@@ -1,0 +1,114 @@
+﻿@model IQueryable<CommonLayer.Models.UsersModel>
+
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/_Shared/_BackEnd.cshtml";
+}
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h2>Users</h2>
+    <p>@Html.ActionLink("Create New", "CreateNewUser")</p>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Email)
+                    </th>
+                    <th>
+                        @Html.DisplayName("Name")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Surname")
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Contact)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().DOB)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Gender)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Active)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().House)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Street)
+                    </th>
+                    <th>
+                        @Html.DisplayName("Town")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Country")
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Username)
+                    </th>
+                    <th>
+                        @Html.DisplayName("Role")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Type")
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.Contact)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.DOB)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.Gender)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.Active)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.House)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.Street)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.TownName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.CountryName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.Username)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.RoleName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.UserTypeName)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditUser", new { ID = user.ID }) |
+                            @Html.ActionLink("Delete", "DeleteUser", new { ID = user.ID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

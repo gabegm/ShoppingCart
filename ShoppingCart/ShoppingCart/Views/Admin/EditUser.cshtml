@@ -1,0 +1,136 @@
+﻿@model ShoppingCart.Models.UserAccountUser
+
+@{
+    ViewBag.Title = "EditUser";
+    Layout = "~/Views/_Shared/_BackEnd.cshtml";
+}
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h2>Edit User</h2>
+    @using (Html.BeginForm("EditUser", "Admin", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.User.ID)
+            @Html.HiddenFor(model => model.UserAccount.ID)
+            @Html.HiddenFor(model => model.UserAccount.Password)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.User.FirstName, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.User.FirstName)
+                    @Html.ValidationMessageFor(model => model.User.FirstName)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.User.LastName, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.User.LastName)
+                    @Html.ValidationMessageFor(model => model.User.LastName)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.User.Email, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.User.Email)
+                    @Html.ValidationMessageFor(model => model.User.Email)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.User.Contact, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.User.Contact)
+                    @Html.ValidationMessageFor(model => model.User.Contact)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.User.DOB, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.User.DOB)
+                    @Html.ValidationMessageFor(model => model.User.DOB)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Gender", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.User.Gender, (IEnumerable<SelectListItem>)ViewBag.Gender, Model.User.Gender, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserAccount.Username, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UserAccount.Username)
+                    @Html.ValidationMessageFor(model => model.UserAccount.Username)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserAccount.Active, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Active", null, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Role", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.ListBox("RoleID", (MultiSelectList)ViewBag.RoleName, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("User Type", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.User.UserTypeID, (IEnumerable<SelectListItem>)ViewBag.UserTypes, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.User.House, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.User.House)
+                    @Html.ValidationMessageFor(model => model.User.House)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.User.Street, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.User.Street)
+                    @Html.ValidationMessageFor(model => model.User.Street)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Town", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.User.TownID, (IEnumerable<SelectListItem>)ViewBag.TownName, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Country", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.User.Town.CountryID, (IEnumerable<SelectListItem>)ViewBag.CountryName, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+    <div>
+        @Html.ActionLink("Back to List", "Users")
+    </div>
+</div>

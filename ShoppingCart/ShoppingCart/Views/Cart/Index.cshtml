@@ -1,0 +1,67 @@
+﻿@model IQueryable<CommonLayer.Models.CartItemsModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/_Shared/_FrontEnd.cshtml";
+}
+
+<div class="col-md-9">
+    <h2>Cart</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayName("Name")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Price")
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Quantity)
+                    </th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    using (Html.BeginForm("UpdateCartItem", "Cart", new { ID = Model.FirstOrDefault().ID }, FormMethod.Post))
+                    {
+                        BusinessLayer.Products ProductsBL = new BusinessLayer.Products();
+                        BusinessLayer.Sales SalesBL = new BusinessLayer.Sales();
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProductName)
+                            </td>
+                            <td>
+                                @if (ProductsBL.isProductOnSale(item.ProductID))
+                                {
+                                    @SalesBL.GetSalePrice(ProductsBL.GetProduct(item.ProductID).SaleID.Value, item.ProductPrice);
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(modelItem => item.ProductPrice)
+                                }
+                            </td>
+                            <td>
+                                @Html.EditorFor(modelItem => item.Quantity, null, "Quantity", null)
+                            </td>
+                            <td>
+                                <input type="submit" value="Update" class="btn-link" />|
+                                @Html.ActionLink("View", "ViewProduct", new { ID = item.ID }) |
+                                @Html.ActionLink("Delete", "DeleteCartItem", new { ID = item.ID })
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+            <div>
+                <h4>Total: &#8364;@ViewBag.TotalPrice</h4>
+                <h4>VAT 18%: &#8364;@ViewBag.GetTotalVAT</h4>
+                <h4>Total VAT: &#8364;@ViewBag.TotalVATPrice</h4>
+            </div>
+            <div class="">
+                @Html.ActionLink("Checkout", "Checkout", "Cart", null, new { @class = "btn btn-default" })
+            </div>
+        </div> 
+    <div>
+        @Html.ActionLink("Back to Products", "Index", "Product")
+    </div>
+</div>
