@@ -1,0 +1,8 @@
+/Users/gabegm/GitProjects/ShoppingCart/DataLayer/obj/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/Users/gabegm/GitProjects/ShoppingCart/DataLayer/obj/Debug/DataLayer.dll
+/Users/gabegm/GitProjects/ShoppingCart/DataLayer/bin/EntityFramework.dll
+/Users/gabegm/GitProjects/ShoppingCart/DataLayer/bin/EntityFramework.SqlServer.dll
+/Users/gabegm/GitProjects/ShoppingCart/DataLayer/bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+/Users/gabegm/GitProjects/ShoppingCart/DataLayer/bin/CommonLayer.dll
+/Users/gabegm/GitProjects/ShoppingCart/DataLayer/bin/roslyn/%(RecursiveDir)%(Filename)%(Extension)
+/Users/gabegm/GitProjects/ShoppingCart/DataLayer/bin/DataLayer.dll

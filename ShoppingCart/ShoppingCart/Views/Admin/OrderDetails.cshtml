@@ -1,0 +1,48 @@
+﻿@model IQueryable<CommonLayer.OrderDetail>
+
+@{
+    ViewBag.Title = "OrderDetails";
+    Layout = "~/Views/_Shared/_BackEnd.cshtml";
+}
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h2>Order Details</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayName("Quantity")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Price")
+                    </th>
+                    <th>
+                        @Html.DisplayName("VAT")
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductQuantity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductVATRate)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditOrderDetails", new { ID = item.ID }, null) |
+                            @Html.ActionLink("Details", "Index", "Product", new { ID = item.ProductID }, null) |
+                            @Html.ActionLink("Delete", "DeleteOrderDetails", new { ID = item.ID }, null)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
